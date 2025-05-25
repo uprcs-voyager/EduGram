@@ -11,9 +11,9 @@ public class ConnectDB {
         String url = "jdbc:sqlite:edugramDB";
         try{
             connection = DriverManager.getConnection(url);
-            System.out.println("Connected to database");
+            System.out.println("==== Connection: success ====");
         }catch (SQLException e){
-            System.out.println("Connection Error: failes to connect");
+            System.out.println("==== Connection: failed ====");
             e.printStackTrace();
         }
     }
@@ -24,10 +24,10 @@ public class ConnectDB {
 
     public void closeConnection(){
         try{
-                if(connection != null){
-                    connection.close();
-                    System.out.println("Connection closed");
-                }
+            if(connection != null){
+                connection.close();
+                System.out.println("==== Connection: closed ====");
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }
