@@ -42,7 +42,32 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
 
     @Override
     public boolean create(UserModel item) {
-        return false;
+        ConnectDB db = new ConnectDB();
+        Connection con = db.getConnetion();
+        if (con == null) {
+            System.out.println("UserModel.create: Can't connect to db");
+            return false;
+        }
+
+        String query = "INSERT INTO user (username, password, nama, email, prof_pic, created_at, updated_at) VALUES (?, ?, ?, ?, ?, datetime('now', 'localtime'), datetime('now', 'localtime'))";
+        try (PreparedStatement pstmt = con.prepareStatement(query)){
+            System.out.println("UserModel.create: Inserting into database");
+            pstmt.setString(1, item.username);
+            pstmt.setString(2, item.password);
+            pstmt.setString(3, item.nama);
+            pstmt.setString(4, item.email);
+            pstmt.setString(5, item.profilePic);
+
+            int affectedRows = pstmt.executeUpdate();
+            System.out.println("UserModel.create: Affected rows: " + affectedRows);
+            return affectedRows > 0;
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("UserModel.create: Can't insert into database");
+            return false;
+        }finally {
+            db.closeConnection();
+        }
     }
 
     @Override
@@ -104,6 +129,7 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
     public static boolean ValidateRegistration(String usernameVal, String passwordVal, String nama, String email) {
         boolean isValid = ValidateUser(usernameVal, passwordVal, false);
         if(!isValid){
+
             return true;
         }
         return false;

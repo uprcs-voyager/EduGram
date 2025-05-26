@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.LoginController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Auth">
    <children>
       <ImageView fx:id="image_login_bg" fitHeight="645.0" fitWidth="844.0" opacity="0.36" pickOnBounds="true">
          <image>
@@ -59,7 +59,7 @@
             </Label>
             <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@css_login.css">
                <children>
-                  <TextField prefHeight="26.0" prefWidth="308.0" styleClass="no-shadow" stylesheets="@css_login.css" text="email@domain.com" />
+                  <TextField fx:id="usernameInp" prefHeight="26.0" prefWidth="308.0" promptText="example@gmail.com" styleClass="no-shadow" stylesheets="@css_login.css" />
                </children>
                <VBox.margin>
                   <Insets left="-6.0" />
@@ -78,13 +78,13 @@
             </Label>
             <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@css_login.css">
                <children>
-                  <PasswordField prefHeight="26.0" prefWidth="308.0" />
+                  <PasswordField fx:id="passInp" prefHeight="26.0" prefWidth="308.0" promptText="Password" />
                </children>
                <VBox.margin>
                   <Insets right="5.0" />
                </VBox.margin>
             </HBox>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="278.0" styleClass="login-button" stylesheets="@css_login.css" text="Login">
+            <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="26.0" prefWidth="278.0" styleClass="login-button" stylesheets="@css_login.css" text="Login">
                <VBox.margin>
                   <Insets right="5.0" top="16.0" />
                </VBox.margin>
