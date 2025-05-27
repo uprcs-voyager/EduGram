@@ -1,5 +1,6 @@
 package app.edugram.models;
 
+import app.edugram.utils.Notices;
 import app.edugram.utils.Sessions;
 import java.sql.*;
 import java.util.List;
@@ -117,6 +118,7 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
                 }
                 return true;
             }
+            Notices.customNote("Username/email atau password salah! Coba lagi!");
             return false;
         } catch (SQLException e) {
             e.printStackTrace();

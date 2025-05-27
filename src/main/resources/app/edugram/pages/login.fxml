@@ -16,7 +16,7 @@
    <children>
       <ImageView fx:id="image_login_bg" fitHeight="645.0" fitWidth="844.0" opacity="0.36" pickOnBounds="true">
          <image>
-            <Image url="@Image/login_backg.jpg" />
+            <Image url="@../assets/Image/login_backg.jpg" />
          </image>
       </ImageView>
       <VBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="818.0" StackPane.alignment="CENTER">
@@ -43,10 +43,10 @@
                </VBox.margin></Label>
             <ImageView fitHeight="59.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Image/pfp_placeholder.jpg" />
+                  <Image url="@../assets/Image/pfp_placeholder.jpg" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="62.0" styleClass="Email-label" stylesheets="@css_login.css" text="Email">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="62.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Email">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -57,15 +57,15 @@
                   <Insets bottom="-3.0" left="4.0" right="4.0" />
                </padding>
             </Label>
-            <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@css_login.css">
+            <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css">
                <children>
-                  <TextField fx:id="usernameInp" prefHeight="26.0" prefWidth="308.0" promptText="example@gmail.com" styleClass="no-shadow" stylesheets="@css_login.css" />
+                  <TextField fx:id="usernameInp" prefHeight="26.0" prefWidth="308.0" promptText="example@gmail.com" styleClass="no-shadow" stylesheets="@../assets/css/css_login.css" />
                </children>
                <VBox.margin>
                   <Insets left="-6.0" />
                </VBox.margin>
             </HBox>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="96.0" styleClass="Email-label" stylesheets="@css_login.css" text="Password">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="96.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Password">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -76,7 +76,7 @@
                   <Insets right="190.0" top="20.0" />
                </VBox.margin>
             </Label>
-            <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@css_login.css">
+            <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css">
                <children>
                   <PasswordField fx:id="passInp" prefHeight="26.0" prefWidth="308.0" promptText="Password" />
                </children>
@@ -84,7 +84,7 @@
                   <Insets right="5.0" />
                </VBox.margin>
             </HBox>
-            <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="26.0" prefWidth="278.0" styleClass="login-button" stylesheets="@css_login.css" text="Login">
+            <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="26.0" prefWidth="278.0" styleClass="login-button" stylesheets="@../assets/css/css_login.css" text="Login">
                <VBox.margin>
                   <Insets right="5.0" top="16.0" />
                </VBox.margin>

@@ -12,7 +12,7 @@ import java.io.IOException;
 public class PageAction {
     public static void switchPage(ActionEvent event, String fxmlPath) {
         try {
-            FXMLLoader loader = new FXMLLoader(PageAction.class.getResource("/app/edugram/" + fxmlPath));
+            FXMLLoader loader = new FXMLLoader(PageAction.class.getResource("/app/edugram/pages/" + fxmlPath));
             Parent root = loader.load();
 
             // Get stage from the event

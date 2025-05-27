@@ -15,8 +15,6 @@ import java.io.IOException;
 
 
 public class Auth {
-    public Notices noticeModel = new Notices();
-
     @FXML
     private Button cancelButton;
     public TextField usernameInp;
@@ -47,11 +45,8 @@ public class Auth {
         if(username.isEmpty() || password.isEmpty()){Notices.formNotFilled();return;}
 
 //        boolean isValid = UserModel.ValidateUser(username, password, true);
-        if(loginAction(event, username, password)){
-            return;
-        }
-        else{
-            System.out.println("Login failed");
+        if(!loginAction(event, username, password)){
+            System.out.println("Auth.loginButtonAction: Login failed");
         }
     }
 
