@@ -4,7 +4,6 @@ import app.edugram.utils.PageAction;
 import app.edugram.utils.Notices;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 import app.edugram.models.UserModel;
@@ -14,7 +13,7 @@ import javafx.scene.layout.Region;
 import java.io.IOException;
 
 
-public class Auth {
+public class AuthController {
     @FXML
     private Button cancelButton;
     public TextField usernameInp;
@@ -33,7 +32,7 @@ public class Auth {
             image_login_bg.fitHeightProperty().bind(parent.heightProperty());
             image_login_bg.setPreserveRatio(false); // Biar selalu isi seluruh area
         }catch (Exception e){
-            System.out.println("Ga ada gambar, tapi aman aja sih");
+            System.out.println("Auth.Initialize: (notice) This content doesn't load / contain image");
         }
     }
 
@@ -82,7 +81,7 @@ public class Auth {
     @FXML
     public boolean loginAction(ActionEvent event, String username, String password){
         if(UserModel.ValidateUser(username, password, true)){
-            PageAction.switchPage(event, "signup.fxml");
+            PageAction.switchPage(event, "dashboard.fxml");
             return true;
         }
         return false;

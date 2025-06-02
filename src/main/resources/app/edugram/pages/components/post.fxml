@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="373.0" style="-fx-background-color: #C3C3C3;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.PostFrameFullController">
+   <children>
+      <ImageView fx:id="postContent" fitHeight="268.0" fitWidth="374.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../assets/image/login_backg.jpg" />
+         </image>
+      </ImageView>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label fx:id="postTitle" text="Title" />
+            <Label fx:id="postDesc" text="Description" />
+         </children>
+      </VBox>
+      <HBox fx:id="tagBox" prefHeight="30.0" prefWidth="200.0">
+         <children>
+<!--            <Button fx:id="tag" mnemonicParsing="false" text="tag" />-->
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="likeBtn" mnemonicParsing="false" onAction="#onLikeClicked" text="like" />
+            <Label fx:id="postLike" text="Label" />
+            <Button fx:id="dislikeBtn" mnemonicParsing="false" onAction="#onDislikeClicked" text="dislike" />
+            <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#onSaveClicked" text="save" />
+            <Button fx:id="profileBtn" mnemonicParsing="false" onAction="#onProfileClicked" text="profile" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

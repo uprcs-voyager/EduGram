@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Auth">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.AuthController">
    <children>
       <ImageView fx:id="image_login_bg" fitHeight="645.0" fitWidth="844.0" opacity="0.36" pickOnBounds="true">
          <image>
-            <Image url="@../assets/Image/login_backg.jpg" />
+            <Image url="@../assets/image/login_backg.jpg" />
          </image>
       </ImageView>
       <VBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="818.0" StackPane.alignment="CENTER">
@@ -43,7 +43,7 @@
                </VBox.margin></Label>
             <ImageView fitHeight="59.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/Image/pfp_placeholder.jpg" />
+                  <Image url="@../assets/image/pfp_placeholder.jpg" />
                </image>
             </ImageView>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="62.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Email">
