@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -20,11 +19,6 @@ public class BerandaController extends BaseController implements Initializable {
     @FXML
     private GridPane postContentGrid;
     private List<PostModel> posts;
-    @FXML
-    private ScrollPane sidebarScrollPane;
-
-    @FXML
-    private VBox sidebarVBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -39,7 +33,7 @@ public class BerandaController extends BaseController implements Initializable {
                 fxmlLoader.setLocation(Main.class.getResource("pages/components/post.fxml"));
                 VBox box = fxmlLoader.load();
 
-                PostFrameController postFrameController = fxmlLoader.getController();
+                PostFrameFullController postFrameController = fxmlLoader.getController();
                 postFrameController.setData(posts.get(i));
 
                 if(columns == 1){
