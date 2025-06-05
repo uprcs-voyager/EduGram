@@ -81,7 +81,7 @@ public class AuthController {
     @FXML
     public boolean loginAction(ActionEvent event, String username, String password){
         if(UserModel.ValidateUser(username, password, true)){
-            PageAction.switchPage(event, "dashboard.fxml");
+            PageAction.switchPage(event, "beranda.fxml");
             return true;
         }
         return false;

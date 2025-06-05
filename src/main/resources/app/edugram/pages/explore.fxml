@@ -28,7 +28,7 @@
          <children>
             <ImageView fitHeight="47.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/Image/logoEdugram.png" />
+                  <Image url="@../assets/Image/cache image/logoEdugram.png" />
                </image>
                <HBox.margin>
                   <Insets right="11.0" />
@@ -49,7 +49,7 @@
                      </styleClass></TextField>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../assets/Image/searchIcon.png" />
+                        <Image url="@../assets/Image/cache image/searchIcon.png" />
                      </image>
                   </ImageView>
                </children>
@@ -81,7 +81,7 @@
                                  <font><Font name="System Bold" size="16.0" /></font>
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image><Image url="@../assets/Image/house-floor-svgrepo-com.png" /></image>
+                                       <image><Image url="@../assets/Image/cache image/house-floor-svgrepo-com.png" /></image>
                                     </ImageView>
                                  </graphic>
                                  <styleClass><String fx:value="line_and_button" /><String fx:value="selected" /><String fx:value="over" /></styleClass>
@@ -97,7 +97,7 @@
                                  <font><Font name="System Bold" size="16.0" /></font>
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image><Image url="@../assets/Image/compass-alt-svgrepo-com.png" /></image>
+                                       <image><Image url="@../assets/Image/cache image/compass-alt-svgrepo-com.png" /></image>
                                     </ImageView>
                                  </graphic>
                                  <styleClass><String fx:value="line_and_button" /><String fx:value="over" /></styleClass>
@@ -113,7 +113,7 @@
                                  <font><Font name="System Bold" size="16.0" /></font>
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image><Image url="@../assets/Image/profile-circle-svgrepo-com.png" /></image>
+                                       <image><Image url="@../assets/Image/cache image/profile-circle-svgrepo-com.png" /></image>
                                     </ImageView>
                                  </graphic>
                                  <styleClass><String fx:value="line_and_button" /><String fx:value="over" /></styleClass>
@@ -148,7 +148,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="250.0" styleClass="profile">
                            <children>
                               <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                                 <image><Image url="@../assets/Image/profile-1341-svgrepo-com.png" /></image>
+                                 <image><Image url="@../assets/Image/cache image/profile-1341-svgrepo-com.png" /></image>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </ImageView>
                               <Label alignment="CENTER" prefHeight="18.0" prefWidth="76.0" styleClass="text_color_white" text="634">
@@ -161,7 +161,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="250.0" styleClass="profile">
                            <children>
                               <ImageView fitHeight="49.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-                                 <image><Image url="@../assets/Image/friend-svgrepo-com.png" /></image>
+                                 <image><Image url="@../assets/Image/cache image/friend-svgrepo-com.png" /></image>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </ImageView>
                               <Label alignment="CENTER" prefHeight="27.0" prefWidth="56.0" styleClass="text_color_white" text="634">
@@ -174,7 +174,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="250.0" styleClass="profile">
                            <children>
                               <ImageView fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                 <image><Image url="@../assets/Image/plus-square-on-square-svgrepo-com.png" /></image>
+                                 <image><Image url="@../assets/Image/cache image/plus-square-on-square-svgrepo-com.png" /></image>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </ImageView>
                               <Label alignment="CENTER" prefHeight="27.0" prefWidth="65.0" styleClass="text_color_white" text="634">
@@ -191,16 +191,16 @@
                   <HBox alignment="CENTER" prefHeight="224.0" prefWidth="250.0" stylesheets="@../assets/css/sidebar.css" VBox.vgrow="ALWAYS">
                      <children>
                         <ImageView fitHeight="41.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
-                           <image><Image url="@../assets/Image/plus-square-on-square-svgrepo-com.png" /></image>
+                           <image><Image url="@../assets/Image/cache image/plus-square-on-square-svgrepo-com.png" /></image>
                            <cursor><Cursor fx:constant="HAND" /></cursor>
                         </ImageView>
                         <ImageView fitHeight="40.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
-                           <image><Image url="@../assets/Image/settings-svgrepo-com.png" /></image>
+                           <image><Image url="@../assets/Image/cache image/settings-svgrepo-com.png" /></image>
                            <HBox.margin><Insets left="16.0" right="10.0" /></HBox.margin>
                            <cursor><Cursor fx:constant="HAND" /></cursor>
                         </ImageView>
                         <ImageView fitHeight="47.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
-                           <image><Image url="@../assets/Image/save-svgrepo-com.png" /></image>
+                           <image><Image url="@../assets/Image/cache image/save-svgrepo-com.png" /></image>
                            <cursor><Cursor fx:constant="HAND" /></cursor>
                         </ImageView>
                      </children>

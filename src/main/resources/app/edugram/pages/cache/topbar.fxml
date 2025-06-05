@@ -22,7 +22,7 @@
          <children>
             <ImageView fitHeight="44.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../assets/Image/logoEdugram.png" />
+                  <Image url="@../../assets/Image/cache image/logoEdugram.png" />
                </image>
             </ImageView>
             <Label text="Edugram">

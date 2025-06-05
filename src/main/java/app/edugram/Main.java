@@ -1,6 +1,4 @@
 package app.edugram;
-import app.edugram.models.ConnectDB;
-import java.sql.*;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

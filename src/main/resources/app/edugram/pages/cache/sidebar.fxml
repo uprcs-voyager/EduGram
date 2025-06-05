@@ -33,7 +33,7 @@
                         <graphic>
                            <ImageView fitHeight="30.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                 <Image url="@../../assets/Image/house-floor-svgrepo-com.png" />
+                                 <Image url="@../../assets/Image/cache image/house-floor-svgrepo-com.png" />
                               </image>
                            </ImageView>
                         </graphic>
@@ -60,7 +60,7 @@
                         <graphic>
                            <ImageView fitHeight="30.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                 <Image url="@../../assets/Image/compass-alt-svgrepo-com.png" />
+                                 <Image url="@../../assets/Image/cache image/compass-alt-svgrepo-com.png" />
                               </image>
                            </ImageView>
                         </graphic>
@@ -87,7 +87,7 @@
                         <graphic>
                            <ImageView fitHeight="30.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                 <Image url="@../../assets/Image/profile-circle-svgrepo-com.png" />
+                                 <Image url="@../../assets/Image/cache image/profile-circle-svgrepo-com.png" />
                               </image>
                            </ImageView>
                         </graphic>
@@ -125,7 +125,7 @@
                   <children>
                      <ImageView fitHeight="20.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../../assets/Image/profile-1341-svgrepo-com.png" />
+                           <Image url="@../../assets/Image/cache image/profile-1341-svgrepo-com.png" />
                         </image>
                         <HBox.margin>
                            <Insets left="29.0" right="1.0" />
@@ -154,7 +154,7 @@
                   <children>
                      <ImageView fitHeight="29.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../../assets/Image/friend-svgrepo-com.png" />
+                           <Image url="@../../assets/Image/cache image/friend-svgrepo-com.png" />
                         </image>
                         <HBox.margin>
                            <Insets left="26.0" right="1.0" />
@@ -180,7 +180,7 @@
                   <children>
                      <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../../assets/Image/video-playlist-svgrepo-com.png" />
+                           <Image url="@../../assets/Image/cache image/video-playlist-svgrepo-com.png" />
                         </image>
                         <HBox.margin>
                            <Insets left="26.0" right="1.0" />
@@ -206,7 +206,7 @@
                   <children>
                      <ImageView fitHeight="21.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../../assets/Image/plus-square-on-square-svgrepo-com.png" />
+                           <Image url="@../../assets/Image/cache image/plus-square-on-square-svgrepo-com.png" />
                         </image>
                         <HBox.margin>
                            <Insets />
@@ -217,7 +217,7 @@
                      </ImageView>
                      <ImageView fitHeight="21.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../../assets/Image/settings-svgrepo-com.png" />
+                           <Image url="@../../assets/Image/cache image/settings-svgrepo-com.png" />
                         </image>
                         <HBox.margin>
                            <Insets left="18.0" right="17.0" />
@@ -228,7 +228,7 @@
                      </ImageView>
                      <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../../assets/Image/save-svgrepo-com.png" />
+                           <Image url="@../../assets/Image/cache image/save-svgrepo-com.png" />
                         </image>
                         <cursor>
                            <Cursor fx:constant="HAND" />
@@ -249,7 +249,7 @@
             <children>
                <ImageView fitHeight="41.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@../../assets/Image/plus-square-on-square-svgrepo-com.png" />
+                     <Image url="@../../assets/Image/cache image/plus-square-on-square-svgrepo-com.png" />
                   </image>
                <HBox.margin>
                   <Insets left="23.0" />
@@ -257,7 +257,7 @@
                </ImageView>
                <ImageView fitHeight="40.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@../../assets/Image/settings-svgrepo-com.png" />
+                     <Image url="@../../assets/Image/cache image/settings-svgrepo-com.png" />
                   </image>
                   <HBox.margin>
                      <Insets left="20.0" right="20.0" />
@@ -265,7 +265,7 @@
                </ImageView>
                <ImageView fitHeight="47.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@../../assets/Image/save-svgrepo-com.png" />
+                     <Image url="@../../assets/Image/cache image/save-svgrepo-com.png" />
                   </image>
                </ImageView>
             </children>
