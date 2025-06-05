@@ -1,0 +1,18 @@
+.username_button {
+    -fx-background-color: #b9d8ff;
+    -fx-text-fill: black;
+    -fx-text-weight: bold;
+}
+
+.sidebar_background {
+    -fx-border-color: transparent transparent #3a1078 transparent;
+    -fx-border-width: 4px;
+}
+.search-bar{
+    -fx-border-width: 1;
+    -fx-border-color: #606060;
+}
+
+.transparent{
+    -fx-background-color: rgba(0,0,0,0);
+}

@@ -11,6 +11,7 @@ module app.edugram {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires jdk.jfr;
+    requires java.desktop;
 
     opens app.edugram to javafx.fxml;
     exports app.edugram;
