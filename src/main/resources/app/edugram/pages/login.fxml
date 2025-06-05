@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Auth">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Auth">
    <children>
       <ImageView fx:id="image_login_bg" fitHeight="645.0" fitWidth="844.0" opacity="0.36" pickOnBounds="true">
          <image>
@@ -89,14 +89,22 @@
                   <Insets right="5.0" top="16.0" />
                </VBox.margin>
             </Button>
-            <Label text="or continue with">
+            <Label text="Belum punya akun? klik tombol dibawah ini">
                <font>
                   <Font size="14.0" />
                </font>
                <VBox.margin>
-                  <Insets top="13.0" />
+                  <Insets top="22.0" />
                </VBox.margin>
             </Label>
+            <Button fx:id="loginBtn1" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="26.0" prefWidth="278.0" styleClass="register-button" stylesheets="@../assets/css/css_login.css" text="Register">
+               <VBox.margin>
+                  <Insets right="5.0" top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
    </children>
