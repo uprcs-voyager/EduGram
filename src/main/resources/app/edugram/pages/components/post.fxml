@@ -12,8 +12,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
-<VBox fx:id="rootContainer" maxHeight="550.0" prefHeight="550.0" prefWidth="1211.0" style="-fx-background-color: #ffff;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.PostFrameController">
+<VBox fx:id="rootContainer" maxHeight="550.0" prefHeight="550.0" prefWidth="1211.0" styleClass="postCard" stylesheets="@../../assets/css/beranda.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.PostFrameController">
    <children>
 
       <GridPane fx:id="upperContent" VBox.vgrow="ALWAYS">
@@ -29,7 +30,7 @@
                <children>
                   <!-- Image fills entire left column -->
                   <StackPane alignment="CENTER_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                     <ImageView fx:id="postContent" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="postContent" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" styleClass="postImage">
                         <image>
                            <Image url="@../../userData/Images/posts/DeepSeeAngel.jpg" />
                         </image>
@@ -47,13 +48,13 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <Label fx:id="postTitle" text="Judul Post" wrapText="true" />
+                  <Label fx:id="postTitle" text="" styleClass="judul_post" wrapText="true" />
                   <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
                      <content>
-                        <Label fx:id="postDesc" text="Deskripsi post..." wrapText="true" />
+                        <Label fx:id="postDesc" text="" styleClass="deskripsi_post" wrapText="true" />
                      </content>
                   </ScrollPane>
-                  <HBox fx:id="tagBox" spacing="5.0">
+                  <HBox fx:id="tagBox" spacing="5.0" styleClass="tagBox">
                      <children>
                         <!-- Example Tag -->
                         <!-- <Button text="Tag1" /> -->
@@ -76,6 +77,9 @@
                      <image>
                         <Image url="@../../userData/Images/profile_pictures/profile.jpg" />
                      </image>
+                     <clip>
+                        <Circle centerX="15.0" centerY="15.0" radius="15.0" />
+                     </clip>
                   </ImageView>
                   <Button fx:id="profileBtn" onAction="#onProfileClicked" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="ProfileUser" />
                </children>
@@ -84,25 +88,23 @@
                <children>
                   <HBox alignment="CENTER" spacing="5.0">
                      <children>
-                        <Button fx:id="likeBtn" onAction="#onLikeClicked" text="Like"
-                                style="-fx-background-color: transparent; -fx-text-fill: transparent; -fx-padding: 0 0 0 0;" >
+                        <Button fx:id="likeBtn" onAction="#onLikeClicked" styleClass="actionButton">
                            <graphic>
-                              <ImageView fitHeight="20" fitWidth="20">
+                              <ImageView fx:id="iconLike" fitHeight="30" fitWidth="30">
                                  <image>
-                                    <Image url="@../../assets/Icons/like.png" />
+                                    <Image url="@../../assets/Image/Icons/post/like.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
 
-                        <Label fx:id="postLike" text="0" />
+                        <Label fx:id="postLike" styleClass="avg_like" text="0" />
 
-                        <Button fx:id="dislikeBtn" onAction="#onDislikeClicked" text="Dislike"
-                                style="-fx-background-color: transparent; -fx-text-fill: transparent; -fx-padding: 0 0 0 0;" >
+                        <Button fx:id="dislikeBtn" onAction="#onDislikeClicked" styleClass="actionButton">
                            <graphic>
-                              <ImageView fitHeight="20" fitWidth="20">
+                              <ImageView fx:id="iconDislike" fitHeight="30" fitWidth="30" styleClass="actionButton">
                                  <image>
-                                    <Image url="@../../assets/Icons/dislike.png" />
+                                    <Image url="@../../assets/Image/Icons/post/dislike.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -111,9 +113,36 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" spacing="5.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button fx:id="cmntBtn" alignment="CENTER_RIGHT" onAction="#onSaveClicked" text="comment" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="saveBtn" onAction="#onSaveClicked" text="Save" />
-                        <Button fx:id="moreBtn" onAction="#onSaveClicked" text="more" />
+                        <Button fx:id="cmntBtn" onAction="#onCommentClicked" styleClass="actionButton" HBox.hgrow="ALWAYS">
+                           <graphic>
+                              <ImageView fitHeight="30" fitWidth="30" fx:id="iconComment">
+                                 <image>
+                                    <Image url="@../../assets/Image/Icons/post/comment.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+
+                        <Button fx:id="saveBtn" onAction="#onSaveClicked" styleClass="actionButton">
+                           <graphic>
+                              <ImageView fitHeight="30" fitWidth="30" fx:id="iconBookmark">
+                                 <image>
+                                    <Image url="@../../assets/Image/Icons/post/bookmark.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+
+                        <Button fx:id="moreBtn" onAction="#onMoreActionClicked" styleClass="actionButton">
+                           <graphic>
+                              <ImageView fitHeight="30" fitWidth="30" fx:id="iconMore">
+                                 <image>
+                                    <Image url="@../../assets/Image/Icons/post/triple-dot.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+
                      </children>
                   </HBox>
                </children>

@@ -2,7 +2,8 @@ package app.edugram.utils;
 
 public class Sessions {
     private static int userId;
-    private static String username, nama;
+    private static String username = "HeBoss";
+    private static String nama = "BigBoss";
 
     public static void setUser(int userId, String username, String nama) {
         Sessions.userId = userId;

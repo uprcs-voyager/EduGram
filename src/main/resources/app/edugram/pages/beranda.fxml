@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -28,7 +29,7 @@
          <children>
             <ImageView fitHeight="47.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/Image/logoEdugram.png" />
+                  <Image url="@../assets/Image/Icons/logoEdugram.png" />
                </image>
                <HBox.margin>
                   <Insets right="11.0" />
@@ -49,7 +50,7 @@
                      </styleClass></TextField>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../assets/Image/searchIcon.png" />
+                        <Image url="@../assets/Image/Icons/searchIcon.png" />
                      </image>
                   </ImageView>
                </children>
@@ -57,7 +58,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/Image/pfp_placeholder.jpg" />
+                  <Image url="@../assets/Image/Icons/pfp_placeholder.jpg" />
                </image>
                <HBox.margin>
                   <Insets right="31.0" />
@@ -81,7 +82,7 @@
                                  <font><Font name="System Bold" size="16.0" /></font>
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image><Image url="@../assets/Image/house-floor-svgrepo-com.png" /></image>
+                                       <image><Image url="@../assets/Image/Icons/house-floor-svgrepo-com.png" /></image>
                                     </ImageView>
                                  </graphic>
                                  <styleClass><String fx:value="line_and_button" /><String fx:value="selected" /><String fx:value="over" /></styleClass>
@@ -97,7 +98,7 @@
                                  <font><Font name="System Bold" size="16.0" /></font>
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image><Image url="@../assets/Image/compass-alt-svgrepo-com.png" /></image>
+                                       <image><Image url="@../assets/Image/Icons/compass-alt-svgrepo-com.png" /></image>
                                     </ImageView>
                                  </graphic>
                                  <styleClass><String fx:value="line_and_button" /><String fx:value="over" /></styleClass>
@@ -113,7 +114,7 @@
                                  <font><Font name="System Bold" size="16.0" /></font>
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image><Image url="@../assets/Image/profile-circle-svgrepo-com.png" /></image>
+                                       <image><Image url="@../assets/Image/Icons/profile-circle-svgrepo-com.png" /></image>
                                     </ImageView>
                                  </graphic>
                                  <styleClass><String fx:value="line_and_button" /><String fx:value="over" /></styleClass>
@@ -134,7 +135,7 @@
                         <VBox alignment="CENTER" prefHeight="75.0" prefWidth="250.0">
                            <children>
                               <ImageView fitHeight="76.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
-                                 <image><Image url="@../assets/Image/pfp_placeholder.jpg" /></image>
+                                 <image><Image url="@../assets/Image/Icons/pfp_placeholder.jpg" /></image>
                                  <VBox.margin><Insets bottom="2.0" /></VBox.margin>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </ImageView>
@@ -148,7 +149,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="250.0" styleClass="profile">
                            <children>
                               <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                                 <image><Image url="@../assets/Image/profile-1341-svgrepo-com.png" /></image>
+                                 <image><Image url="@../assets/Image/Icons/profile-1341-svgrepo-com.png" /></image>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </ImageView>
                               <Label alignment="CENTER" prefHeight="18.0" prefWidth="76.0" styleClass="text_color_white" text="634">
@@ -161,7 +162,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="250.0" styleClass="profile">
                            <children>
                               <ImageView fitHeight="49.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-                                 <image><Image url="@../assets/Image/friend-svgrepo-com.png" /></image>
+                                 <image><Image url="@../assets/Image/Icons/friend-svgrepo-com.png" /></image>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </ImageView>
                               <Label alignment="CENTER" prefHeight="27.0" prefWidth="56.0" styleClass="text_color_white" text="634">
@@ -174,7 +175,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="250.0" styleClass="profile">
                            <children>
                               <ImageView fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                 <image><Image url="@../assets/Image/plus-square-on-square-svgrepo-com.png" /></image>
+                                 <image><Image url="@../assets/Image/Icons/plus-square-on-square-svgrepo-com.png" /></image>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </ImageView>
                               <Label alignment="CENTER" prefHeight="27.0" prefWidth="65.0" styleClass="text_color_white" text="634">
@@ -191,16 +192,16 @@
                   <HBox alignment="CENTER" prefHeight="224.0" prefWidth="250.0" stylesheets="@../assets/css/sidebar.css" VBox.vgrow="ALWAYS">
                      <children>
                         <ImageView fitHeight="41.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
-                           <image><Image url="@../assets/Image/plus-square-on-square-svgrepo-com.png" /></image>
+                           <image><Image url="@../assets/Image/Icons/plus-square-on-square-svgrepo-com.png" /></image>
                            <cursor><Cursor fx:constant="HAND" /></cursor>
                         </ImageView>
                         <ImageView fitHeight="40.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
-                           <image><Image url="@../assets/Image/settings-svgrepo-com.png" /></image>
+                           <image><Image url="@../assets/Image/Icons/settings-svgrepo-com.png" /></image>
                            <HBox.margin><Insets left="16.0" right="10.0" /></HBox.margin>
                            <cursor><Cursor fx:constant="HAND" /></cursor>
                         </ImageView>
                         <ImageView fitHeight="47.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
-                           <image><Image url="@../assets/Image/save-svgrepo-com.png" /></image>
+                           <image><Image url="@../assets/Image/Icons/save-svgrepo-com.png" /></image>
                            <cursor><Cursor fx:constant="HAND" /></cursor>
                         </ImageView>
                      </children>
@@ -216,21 +217,70 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="contentScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS">
-               <content>
-                  <GridPane fx:id="postContentGrid" alignment="TOP_CENTER"> <columnConstraints>
-                     <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
-                  </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                  </GridPane>
-               </content>
-            </ScrollPane>
+            <StackPane alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <ImageView fitHeight="180.0" fitWidth="238.0" layoutX="80.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Image/background/blob1.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="164.0" fitWidth="264.0" layoutX="13.0" layoutY="597.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Image/background/blob4.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-94.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Image/background/blob2.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="344.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Image/background/blob3.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" styleClass="postPanelWrapper" stylesheets="@../assets/css/beranda.css">
+                     <children>
+                        <ScrollPane fx:id="contentScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS">
+                           <content>
+                              <GridPane fx:id="postContentGrid" alignment="TOP_CENTER"> <columnConstraints>
+                                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
+                              </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                     <StackPane.margin>
+                        <Insets left="12.0" right="12.0" top="32.0" />
+                     </StackPane.margin>
+                     <padding>
+                        <Insets left="12.0" right="12.0" top="12.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </StackPane>
          </children>
+         <BorderPane.margin>
+            <Insets left="12.0" right="12.0" top="12.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
 </BorderPane>
