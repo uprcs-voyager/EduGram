@@ -1,5 +1,4 @@
 package app.edugram.controllers;
-
 import app.edugram.models.PostModel;
 import app.edugram.utils.Sessions;
 import javafx.application.Platform;
@@ -30,8 +29,10 @@ public class PostFrameController {
     @FXML private Button tag;
     @FXML private HBox tagBox;
     @FXML private VBox rootContainer;
+    @FXML private Button backtoexplore;
 
     private PostModel currentPost;
+    private Runnable returnToExploreCallBack;
 
     public void initialize() {
         Platform.runLater(() -> {
@@ -43,6 +44,25 @@ public class PostFrameController {
                 postProfile.setClip(clip);
             }
         });
+        if (backtoexplore != null) {
+            backtoexplore.setOnAction((ActionEvent event) -> {
+                if(returnToExploreCallBack != null) {
+                    returnToExploreCallBack.run();
+                }
+            });
+        }
+        showBackButton(false);
+    }
+
+    public void setReturnToExploreCallBack (Runnable CallBack) {
+        this.returnToExploreCallBack = CallBack;
+    }
+
+    public void showBackButton(boolean show) {
+        if(backtoexplore != null) {
+            backtoexplore.setVisible(show);
+            backtoexplore.setManaged(show);
+        }
     }
 
     public void setData(PostModel postModel){

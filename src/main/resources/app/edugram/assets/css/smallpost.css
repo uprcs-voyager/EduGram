@@ -1,0 +1,16 @@
+.button_hover {
+  -fx-background-color: transparent; /* Membuat latar belakang tombol transparan */
+  -fx-border-color: transparent;    /* Menghilangkan border */
+  -fx-background-radius: 0;         /* Menghilangkan radius sudut jika ada */
+  -fx-border-width: 0;              /* Memastikan border width adalah 0 */
+  -fx-padding: 0;
+}
+
+
+.button_hover:hover{
+  -fx-opacity: 0.5;
+}
+
+.button_color {
+  -fx-background-color: #000000;
+}

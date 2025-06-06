@@ -1,5 +1,4 @@
 package app.edugram.controllers;
-
 import app.edugram.Main;
 import app.edugram.models.PostModel;
 import javafx.fxml.FXML;
@@ -9,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;

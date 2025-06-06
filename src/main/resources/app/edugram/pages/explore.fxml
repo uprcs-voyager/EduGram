@@ -19,7 +19,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1306.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.BerandaController">
+<BorderPane fx:id="mainborder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1306.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.ExploreController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="1344.0" styleClass="sidebar_background" stylesheets="@../assets/css/topbar.css" BorderPane.alignment="CENTER">
          <padding>
@@ -188,7 +188,7 @@
                      </children>
                      <padding><Insets top="6.0" /></padding>
                   </VBox>
-                  <HBox alignment="CENTER" prefHeight="224.0" prefWidth="250.0" stylesheets="@../assets/css/sidebar.css" VBox.vgrow="ALWAYS">
+                  <HBox fx:id="hbox" alignment="CENTER" prefHeight="224.0" prefWidth="250.0" stylesheets="@../assets/css/sidebar.css" VBox.vgrow="ALWAYS">
                      <children>
                         <ImageView fitHeight="41.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
                            <image><Image url="@../assets/Image/cache image/plus-square-on-square-svgrepo-com.png" /></image>
@@ -214,16 +214,37 @@
       </ScrollPane>
    </left>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="Vbox_explore" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
+            <HBox fx:id="hbox_explore" alignment="TOP_RIGHT">
+               <children>
+                  <Label text="Explore Page">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="4.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets right="21.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../assets/Image/compass-alt-svgrepo-com.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+
             <ScrollPane fx:id="contentScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS">
                <content>
                   <GridPane fx:id="postContentGrid" alignment="TOP_CENTER"> <columnConstraints>
                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
                   </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
