@@ -89,7 +89,7 @@
                            <graphic>
                               <ImageView fitHeight="20" fitWidth="20">
                                  <image>
-                                    <Image url="@../../assets/Icons/like.png" />
+                                    <Image url="@../../assets/Image/Icons/like.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -101,7 +101,7 @@
                            <graphic>
                               <ImageView fitHeight="20" fitWidth="20">
                                  <image>
-                                    <Image url="@../../assets/Icons/dislike.png" />
+                                    <Image url="@../../assets/Image/Icons/dislike.png" />
                                  </image>
                               </ImageView>
                            </graphic>

@@ -57,7 +57,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/Image/pfp_placeholder.jpg" />
+                  <Image url="@../assets/Image/Icons/pfp_placeholder.jpg" />
                </image>
                <HBox.margin>
                   <Insets right="31.0" />
@@ -134,7 +134,7 @@
                         <VBox alignment="CENTER" prefHeight="75.0" prefWidth="250.0">
                            <children>
                               <ImageView fitHeight="76.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
-                                 <image><Image url="@../assets/Image/pfp_placeholder.jpg" /></image>
+                                 <image><Image url="@../assets/Image/Icons/pfp_placeholder.jpg" /></image>
                                  <VBox.margin><Insets bottom="2.0" /></VBox.margin>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </ImageView>
@@ -231,7 +231,7 @@
                         <Insets right="21.0" />
                      </HBox.margin>
                      <image>
-                        <Image url="@../assets/Image/compass-alt-svgrepo-com.png" />
+                        <Image url="@../assets/Image/Icons/compass-alt-svgrepo-com.png" />
                      </image>
                   </ImageView>
                </children>
