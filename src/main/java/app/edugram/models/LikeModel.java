@@ -32,7 +32,6 @@ public class LikeModel extends BaseModel implements  Toggleable{
     @Override
     public boolean exists(int tableId) {
         String query = "SELECT * FROM like  WHERE id_post = " + tableId + " AND id_user = " + Sessions.getUserId();
-        System.out.println(ConnectDB.startQueryExecution(query, false));
         return ConnectDB.startQueryExecution(query, false);
     }
 }

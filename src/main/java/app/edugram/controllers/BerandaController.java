@@ -41,8 +41,6 @@ public class BerandaController extends BaseController implements Initializable {
         int columns = 0;
         int row = 1;
 
-        setNavData();
-
         try{
             for(int i=0; i<posts.size(); i++){
                 FXMLLoader fxmlLoader = new FXMLLoader();
@@ -63,14 +61,6 @@ public class BerandaController extends BaseController implements Initializable {
         } catch (IOException e){
             e.printStackTrace();
         }
-    }
-
-    private void setNavData() {
-        String profileImagePath = "/app/edugram/userData/Images/profile_pictures/"+Sessions.getProfilePicture();
-        Image image = new Image(getClass().getResource(profileImagePath).toExternalForm());
-        navProfilePicture.setImage(image);
-        
-        navUsername.setText(Sessions.getUsername());
     }
 
     @Override
