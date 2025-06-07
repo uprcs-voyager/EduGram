@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.edugram.pages.BaseView"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<!-- PERUBAHAN DI SINI: fx:id ditambahkan ke BorderPane root -->
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1306.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.BaseViewController">
+    <top>
+        <fx:include fx:id="topbar" source="components/topbar.fxml" />
+    </top>
+    <left>
+        <fx:include fx:id="sidebar" source="components/sidebar.fxml" />
+    </left>
+    <center>
+    </center>
+</BorderPane>

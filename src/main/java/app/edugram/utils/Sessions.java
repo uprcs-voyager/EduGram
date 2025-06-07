@@ -6,11 +6,14 @@ public class Sessions {
     private static String nama = "BigBoss";
     private static String profilePicture = "hiboss.jpg";
 
-    public static void setUser(int userId, String username, String nama, String profilePicture) {
+    public static String currentPage = "beranda";
+
+    public static void setUser(int userId, String username, String nama, String profilePicture, String currentPage) {
         Sessions.userId = userId;
         Sessions.username = username;
         Sessions.nama = nama;
         Sessions.profilePicture = profilePicture;
+        Sessions.currentPage = currentPage;
     }
 
     public static int getUserId() {
@@ -39,4 +42,13 @@ public class Sessions {
         Sessions.nama = null;
         Sessions.profilePicture = null;
     }
+
+    public static String getCurrentPage() {
+        return currentPage;
+    }
+
+    public static void setCurrentPage(String currentPage) {
+        Sessions.currentPage = currentPage;
+    }
+
 }

@@ -55,7 +55,7 @@ public class AuthController {
 
     @FXML
     public void hiddenRedirectAction(ActionEvent event) {
-        PageAction.switchPage(event, "beranda.fxml"); // Real ActionEvent, will work!
+        PageAction.switchPage(event, "baseView.fxml"); // Real ActionEvent, will work!
     }
 
 
@@ -110,7 +110,7 @@ public class AuthController {
             cookie.setPassword(password);
 
             CookieUtil.saveCookie(cookie);
-            PageAction.switchPage(event, "beranda.fxml");
+            PageAction.switchPage(event, "baseView.fxml");
             return true;
         }
         Notices.customNote("Username/email atau password salah! Coba lagi!");

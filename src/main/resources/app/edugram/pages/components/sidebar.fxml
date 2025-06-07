@@ -30,7 +30,7 @@
                                             <image><Image url="@../../assets/Image/Icons/house-floor-svgrepo-com.png" /></image>
                                         </ImageView>
                                     </graphic>
-                                    <styleClass><String fx:value="activated_button" /></styleClass>
+                                    <styleClass><String fx:value="line_and_button" /><String fx:value="over" /></styleClass>
                                     <cursor><Cursor fx:constant="HAND" /></cursor>
                                 </Button>
                             </children>
