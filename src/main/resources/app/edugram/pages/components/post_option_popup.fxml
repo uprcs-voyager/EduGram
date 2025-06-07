@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="popupRoot" alignment="CENTER_LEFT" spacing="5.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-width: 1px; -fx-padding: 10px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.PostOptionPopUpController">
+    <children>
+        <Button fx:id="reportButton" mnemonicParsing="false" prefWidth="120.0" styleClass="popup-button" text="Report">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+        <Button fx:id="editButton" mnemonicParsing="false" prefWidth="120.0" styleClass="popup-button" text="Edit">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+        <Button fx:id="deleteButton" mnemonicParsing="false" prefWidth="120.0" styleClass="popup-button" text="Delete">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+    </children>
+</VBox>

@@ -52,7 +52,7 @@ public class SmallPostFrameController {
 
     @FXML
     public void initialize() {
-        smallpost.setFitWidth(418);
+        smallpost.setFitWidth(420);
         smallpost.setFitHeight(308);
         smallpost.setPreserveRatio(false);
         smallpost.setMouseTransparent(true);
