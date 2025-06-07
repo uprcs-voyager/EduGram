@@ -2,7 +2,6 @@ package app.edugram.controllers;
 import app.edugram.Main;
 import app.edugram.models.DislikeModel;
 import app.edugram.models.LikeModel;
-
 import app.edugram.models.PostModel;
 import app.edugram.models.SaveModel;
 import app.edugram.utils.Sessions;
@@ -22,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -68,34 +66,27 @@ public class PostFrameController {
             }
         });
 //      //////////////// More option button ////////////////////////////////////////
-        if (moreBtn != null) {
+
+            if (moreBtn != null) {
             moreBtn.setOnAction(event -> TombolMoreMunculHilang(event));
-            System.out.println("moreBtn action set."); // Debugging
-        } else {
-            System.err.println("moreBtn is null in PostFrameController.initialize()"); // Debugging
-        }
+            System.out.println("moreBtn action set.");}
+            else {System.err.println("moreBtn is null in PostFrameController.initialize()");}
+
 //      /////////////////More Option Button//////////////////////////////////////////////////////////
 
 //      //////////////// back to explore button ///////////////////////////////////
-        if (backtoexplore != null) {
-            backtoexplore.setOnAction((ActionEvent event) -> {
-                if(returnToExploreCallBack != null) {
-                    returnToExploreCallBack.run();
-                }
-            });
-        }
-        showBackButton(false);
+            if (backtoexplore != null) {
+                backtoexplore.setOnAction((ActionEvent event) -> {
+                    if(returnToExploreCallBack != null) {
+                        returnToExploreCallBack.run();}});}
+            showBackButton(false);}
 
-    }
 
     private void TombolMoreMunculHilang(ActionEvent event) {
         if (currentOptionsPopup != null && currentOptionsPopup.isShowing()) {
             currentOptionsPopup.hide(); // Jika pop-up sedang tampil, sembunyikan
-            currentOptionsPopup = null; // Reset referensi
-        } else {
-            showPostOptionsPopup(); // Jika tidak tampil, tampilkan
-        }
-    }
+            currentOptionsPopup = null;} // Reset referensi
+         else {showPostOptionsPopup();}}
 
     private void showPostOptionsPopup() {
         try {
@@ -105,7 +96,7 @@ public class PostFrameController {
             VBox popupcontent = loader.load();
             PostOptionPopUpController popupController = loader.getController();
             popupController.setPopup(popup);
-
+            popupController.setPostData(this.currentPost);
             popup.getContent().add(popupcontent);
 
             if (moreBtn.getScene() != null && moreBtn.getScene().getWindow() != null) {
@@ -130,7 +121,6 @@ public class PostFrameController {
         }
     }
 
-    // ////////// back to explore buttiono /////////////////////////////////////////////////////
 
 //  /////////////// back to explore function ///////////////////////////////////////
     public void setReturnToExploreCallBack (Runnable CallBack) {
