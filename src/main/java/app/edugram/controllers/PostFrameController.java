@@ -1,7 +1,7 @@
 package app.edugram.controllers;
-
 import app.edugram.models.DislikeModel;
 import app.edugram.models.LikeModel;
+
 import app.edugram.models.PostModel;
 import app.edugram.models.SaveModel;
 import app.edugram.utils.Sessions;
@@ -38,8 +38,12 @@ public class PostFrameController {
     @FXML private ImageView iconBookmark;
     @FXML private ImageView iconMore;
     @FXML private ImageView iconComment;
+    @FXML private Button backtoexplore;
 
     private PostModel currentPost;
+
+    private Runnable returnToExploreCallBack;
+
     private final LikeModel likeModel = new LikeModel();
     private final DislikeModel dislikeModel = new DislikeModel();
     private final SaveModel saveModel = new SaveModel();
@@ -54,6 +58,25 @@ public class PostFrameController {
                 postProfile.setClip(clip);
             }
         });
+        if (backtoexplore != null) {
+            backtoexplore.setOnAction((ActionEvent event) -> {
+                if(returnToExploreCallBack != null) {
+                    returnToExploreCallBack.run();
+                }
+            });
+        }
+        showBackButton(false);
+    }
+
+    public void setReturnToExploreCallBack (Runnable CallBack) {
+        this.returnToExploreCallBack = CallBack;
+    }
+
+    public void showBackButton(boolean show) {
+        if(backtoexplore != null) {
+            backtoexplore.setVisible(show);
+            backtoexplore.setManaged(show);
+        }
     }
 
     public void setData(PostModel postModel){

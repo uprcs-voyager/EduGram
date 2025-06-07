@@ -32,7 +32,7 @@
                   <StackPane alignment="CENTER_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="0">
                      <ImageView fx:id="postContent" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" styleClass="postImage">
                         <image>
-                           <Image url="@../../userData/Images/posts/DeepSeeAngel.jpg" />
+                           <Image url="@../../userData/images/posts/DeepSeeAngel.jpg" />
                         </image>
                      </ImageView>
                   </StackPane>
@@ -48,7 +48,12 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
+<!-- <<<<<<< testfetch -->
+                  <Label fx:id="postTitle" text="" styleClass="judul_post" wrapText="true" />
+                  <Button fx:id="backtoexplore" mnemonicParsing="false" text="Button" />
+<!-- seeing if this will create design conflict -->
                   <Label fx:id="postTitle" styleClass="judul_post" text="" wrapText="true" />
+<!-- >>>>>>> main -->
                   <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
                      <content>
                         <Label fx:id="postDesc" styleClass="deskripsi_post" text="" wrapText="true" />
@@ -94,7 +99,7 @@
                            <graphic>
                               <ImageView fx:id="iconLike" fitHeight="30" fitWidth="30">
                                  <image>
-                                    <Image url="@../../assets/Image/Icons/post/like.png" />
+                                    <Image url="@../../assets/Image/Icons/like.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -106,6 +111,7 @@
                            <graphic>
                               <ImageView fx:id="iconDislike" fitHeight="30" fitWidth="30" styleClass="actionButton">
                                  <image>
+                                    <Image url="@../../assets/Image/Icons/dislike.png" />
                                     <Image url="@../../assets/Image/Icons/post/dislike.png" />
                                  </image>
                               </ImageView>

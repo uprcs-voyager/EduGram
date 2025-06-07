@@ -17,4 +17,6 @@ module app.edugram {
     exports app.edugram;
     exports app.edugram.controllers;
     opens app.edugram.controllers to javafx.fxml;
+    exports app.edugram.controllers.cache;
+    opens app.edugram.controllers.cache to javafx.fxml;
 }
