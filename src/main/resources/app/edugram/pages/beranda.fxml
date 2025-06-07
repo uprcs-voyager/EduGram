@@ -19,6 +19,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.shape.Circle?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1306.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.BerandaController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="1344.0" styleClass="sidebar_background" stylesheets="@../assets/css/topbar.css" BorderPane.alignment="CENTER">
@@ -127,18 +128,35 @@
                   <Line endX="111.0" fill="#7c43ef" startX="-134.0" stroke="#7c43ef" strokeWidth="5.0" />
                   <VBox prefWidth="250.0" stylesheets="@../assets/css/sidebar.css" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="252.0" styleClass="text_color_white" text="Your Profile">
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="252.0" styleClass="text_color_white" text="Account">
                            <VBox.margin><Insets bottom="8.0" /></VBox.margin>
                            <cursor><Cursor fx:constant="HAND" /></cursor>
                         </Label>
                         <VBox alignment="CENTER" prefHeight="75.0" prefWidth="250.0">
                            <children>
-                              <ImageView fitHeight="76.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
-                                 <image><Image url="@../assets/Image/Icons/pfp_placeholder.jpg" /></image>
-                                 <VBox.margin><Insets bottom="2.0" /></VBox.margin>
-                                 <cursor><Cursor fx:constant="HAND" /></cursor>
+                              <ImageView fx:id="navProfilePicture"
+                                         fitHeight="84.0"
+                                         fitWidth="84.0"
+                                         pickOnBounds="true"
+                                         preserveRatio="false">
+                                 <image>
+                                    <Image url="@../assets/Image/Icons/pfp_placeholder.jpg" />
+                                 </image>
+
+                                 <clip>
+                                    <Circle centerX="42" centerY="42" radius="42" />
+                                 </clip>
+
+                                 <VBox.margin>
+                                    <Insets bottom="2.0" />
+                                 </VBox.margin>
+
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </ImageView>
-                              <Label alignment="CENTER" prefHeight="18.0" prefWidth="251.0" styleClass="text_color_white" text="\@Username">
+
+                              <Label fx:id="navUsername" alignment="CENTER" prefHeight="18.0" prefWidth="251.0" styleClass="text_color_white" text="\@Username">
                                  <VBox.margin><Insets /></VBox.margin>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </Label>
@@ -151,7 +169,7 @@
                                  <image><Image url="@../assets/Image/Icons/profile-1341-svgrepo-com.png" /></image>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </ImageView>
-                              <Label alignment="CENTER" prefHeight="18.0" prefWidth="76.0" styleClass="text_color_white" text="634">
+                              <Label fx:id="navFollowing" alignment="CENTER" prefHeight="18.0" prefWidth="76.0" styleClass="text_color_white" text="634">
                                  <font><Font name="System Bold" size="18.0" /></font>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </Label>
@@ -164,7 +182,7 @@
                                  <image><Image url="@../assets/Image/Icons/friend-svgrepo-com.png" /></image>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </ImageView>
-                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="56.0" styleClass="text_color_white" text="634">
+                              <Label fx:id="navFollowers" alignment="CENTER" prefHeight="27.0" prefWidth="56.0" styleClass="text_color_white" text="634">
                                  <font><Font name="System Bold" size="18.0" /></font>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </Label>
@@ -173,11 +191,11 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="250.0" styleClass="profile">
                            <children>
-                              <ImageView fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" smooth="true">
                                  <image><Image url="@../assets/Image/Icons/plus-square-on-square-svgrepo-com.png" /></image>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </ImageView>
-                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="65.0" styleClass="text_color_white" text="634">
+                              <Label fx:id="navPosts" alignment="CENTER" prefHeight="27.0" prefWidth="65.0" styleClass="text_color_white" text="634">
                                  <font><Font name="System Bold" size="18.0" /></font>
                                  <cursor><Cursor fx:constant="HAND" /></cursor>
                               </Label>
@@ -190,16 +208,16 @@
                   </VBox>
                   <HBox alignment="CENTER" prefHeight="224.0" prefWidth="250.0" stylesheets="@../assets/css/sidebar.css" VBox.vgrow="ALWAYS">
                      <children>
-                        <ImageView fitHeight="41.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
+                        <ImageView fx:id="navCreatePost" fitHeight="41.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
                            <image><Image url="@../assets/Image/Icons/plus-square-on-square-svgrepo-com.png" /></image>
                            <cursor><Cursor fx:constant="HAND" /></cursor>
                         </ImageView>
-                        <ImageView fitHeight="40.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
+                        <ImageView fx:id="navSetting" fitHeight="40.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
                            <image><Image url="@../assets/Image/Icons/settings-svgrepo-com.png" /></image>
                            <HBox.margin><Insets left="16.0" right="10.0" /></HBox.margin>
                            <cursor><Cursor fx:constant="HAND" /></cursor>
                         </ImageView>
-                        <ImageView fitHeight="47.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
+                        <ImageView fx:id="navBookmarks" fitHeight="47.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" styleClass="profile">
                            <image><Image url="@../assets/Image/Icons/save-svgrepo-com.png" /></image>
                            <cursor><Cursor fx:constant="HAND" /></cursor>
                         </ImageView>
