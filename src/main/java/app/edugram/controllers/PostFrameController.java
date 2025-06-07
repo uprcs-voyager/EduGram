@@ -1,6 +1,9 @@
 package app.edugram.controllers;
 
+import app.edugram.models.DislikeModel;
+import app.edugram.models.LikeModel;
 import app.edugram.models.PostModel;
+import app.edugram.models.SaveModel;
 import app.edugram.utils.Sessions;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -37,6 +40,9 @@ public class PostFrameController {
     @FXML private ImageView iconComment;
 
     private PostModel currentPost;
+    private final LikeModel likeModel = new LikeModel();
+    private final DislikeModel dislikeModel = new DislikeModel();
+    private final SaveModel saveModel = new SaveModel();
 
     public void initialize() {
         Platform.runLater(() -> {
@@ -77,15 +83,15 @@ public class PostFrameController {
         countAvgPostLike(String.valueOf(postModel.getId()));
         profileBtn.setText(postModel.getPostUsername());
 
-        boolean isLiked = postModel.exists("like", postModel.getId());
+        boolean isLiked = likeModel.exists(postModel.getId());
         likeBtn.setUserData(isLiked ? "hasLiked" : "like");
         setPostIconButton(iconLike, isLiked ? "like-active.png" : "like.png");
 
-        boolean isDisliked = postModel.exists("dislike", postModel.getId());
+        boolean isDisliked = dislikeModel.exists(postModel.getId());
         dislikeBtn.setUserData( isDisliked ? "hasDisliked" : "dislike");
         setPostIconButton(iconDislike, isDisliked ? "dislike-active.png" : "dislike.png");
 
-        boolean isSaved = postModel.exists("save", postModel.getId());
+        boolean isSaved = saveModel.exists(postModel.getId());
         saveBtn.setUserData( isSaved ? "hasSaved" : "save");
         setPostIconButton(iconBookmark, isSaved ? "bookmark-active.png" : "bookmark.png");
 
@@ -117,15 +123,14 @@ public class PostFrameController {
     void likeAction(){
         if("hasLiked".equals(likeBtn.getUserData())){
             System.out.println("like: unsetting");
-            currentPost.unset("like", currentPost.getId());
+            likeModel.unset(currentPost.getId());
             likeBtn.setUserData("like");
             setPostIconButton(iconLike, "like.png");
             return;
         }
         System.out.println("like: setting");
-        List<String> field = List.of("id_user", "id_post");
         List<String> value = List.of(String.valueOf(Sessions.getUserId()), String.valueOf(currentPost.getId()));
-        currentPost.set("like", field, value);
+        likeModel.set(value);
         likeBtn.setUserData("hasLiked");
         setPostIconButton(iconLike,"like-active.png");
     }
@@ -142,15 +147,14 @@ public class PostFrameController {
     void dislikeAction(){
         if("hasDisliked".equals(dislikeBtn.getUserData())){
             System.out.println("dislike: unsetting");
-            currentPost.unset("dislike", currentPost.getId());
+            dislikeModel.unset(currentPost.getId());
             dislikeBtn.setUserData("dislike");
             setPostIconButton(iconDislike, "dislike.png");
             return;
         }
         System.out.println("dislike: setting");
-        List<String> field = List.of("id_user", "id_post");
         List<String> value = List.of(String.valueOf(Sessions.getUserId()), String.valueOf(currentPost.getId()));
-        currentPost.set("dislike", field, value);
+        dislikeModel.set(value);
         dislikeBtn.setUserData("hasDisliked");
         setPostIconButton(iconDislike,"dislike-active.png");
     }
@@ -164,15 +168,14 @@ public class PostFrameController {
     void onSaveClicked(ActionEvent event) {
         if("hasSaved".equals(saveBtn.getUserData())){
             System.out.println("Save: Unsetting");
-            currentPost.unset("save", currentPost.getId());
+            saveModel.unset(currentPost.getId());
             saveBtn.setUserData("save");
             setPostIconButton(iconBookmark, "bookmark.png");
             return;
         }
         System.out.println("save: setting");
-        List<String> field = List.of("id_user", "id_post");
         List<String> value = List.of(String.valueOf(Sessions.getUserId()), String.valueOf(currentPost.getId()));
-        currentPost.set("save", field, value);
+        saveModel.set(value);
         saveBtn.setUserData("hasSaved");
         setPostIconButton(iconBookmark, "bookmark-active.png");
     }

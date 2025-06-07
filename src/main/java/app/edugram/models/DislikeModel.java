@@ -5,7 +5,8 @@ import app.edugram.utils.Sessions;
 
 import java.util.List;
 
-public class LikeModel extends BaseModel implements  Toggleable{
+public class DislikeModel extends BaseModel implements  Toggleable{
+
     @Override
     public boolean validate() {
         return false;
@@ -13,7 +14,7 @@ public class LikeModel extends BaseModel implements  Toggleable{
 
     @Override
     public boolean set(List<String> dbValue) {
-        String query = "INSERT INTO like (id_user, id_post) VALUES (";
+        String query = "INSERT INTO dislike (id_user, id_post) VALUES (";
         for(int i = 0; i < dbValue.size(); i++){
             query += dbValue.get(i);
             if(i != dbValue.size()-1){query += ",";}
@@ -24,15 +25,15 @@ public class LikeModel extends BaseModel implements  Toggleable{
 
     @Override
     public boolean unset(int tableId) {
-        String sql = "DELETE FROM like WHERE id_post = " + tableId + " AND id_user = " + Sessions.getUserId();
+        String sql = "DELETE FROM dislike WHERE id_post = " + tableId + " AND id_user = " + Sessions.getUserId();
 
         return ConnectDB.startQueryExecution(sql, true);
     }
 
     @Override
     public boolean exists(int tableId) {
-        String query = "SELECT * FROM like  WHERE id_post = " + tableId + " AND id_user = " + Sessions.getUserId();
-        System.out.println(ConnectDB.startQueryExecution(query, false));
-        return ConnectDB.startQueryExecution(query, false);
+        String sql = "SELECT * FROM dislike  WHERE id_post = " + tableId + " AND id_user = " + Sessions.getUserId();
+
+        return ConnectDB.startQueryExecution(sql, false);
     }
 }
