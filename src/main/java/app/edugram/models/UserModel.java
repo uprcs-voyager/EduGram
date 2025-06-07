@@ -113,8 +113,9 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
                     int sesIdUser = rs.getInt("id_user");
                     String sesUsername = rs.getString("username");
                     String sesName = rs.getString("nama");
+                    String sesProfilePic = rs.getString("prof_pic");
 
-                    Sessions.setUser(sesIdUser, sesUsername, sesName);
+                    Sessions.setUser(sesIdUser, sesUsername, sesName, sesProfilePic);
                 }
                 return true;
             }

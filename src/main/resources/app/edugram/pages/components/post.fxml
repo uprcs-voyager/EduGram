@@ -16,6 +16,15 @@
 
 <VBox fx:id="rootContainer" maxHeight="550.0" prefHeight="550.0" prefWidth="1211.0" styleClass="postCard" stylesheets="@../../assets/css/beranda.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.PostFrameController">
    <children>
+      <Button fx:id="backtoexplore" mnemonicParsing="false" prefHeight="50.0" prefWidth="95.0" styleClass="actionButton" VBox.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/Image/Icons/back-arrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
 
       <GridPane fx:id="upperContent" VBox.vgrow="ALWAYS">
          <columnConstraints>
@@ -48,11 +57,14 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <Label fx:id="postTitle" text="" styleClass="judul_post" wrapText="true" />
-                  <Button fx:id="backtoexplore" mnemonicParsing="false" text="Button" />
+<!-- <<<<<<< testfetch -->
+                  <Label fx:id="postTitle" styleClass="judul_post" text="" wrapText="true" />
+<!-- seeing if this will create design conflict -->
+                  <Label fx:id="postTitle" styleClass="judul_post" text="" wrapText="true" />
+<!-- >>>>>>> main -->
                   <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
                      <content>
-                        <Label fx:id="postDesc" text="" styleClass="deskripsi_post" wrapText="true" />
+                        <Label fx:id="postDesc" styleClass="deskripsi_post" text="" wrapText="true" />
                      </content>
                   </ScrollPane>
                   <HBox fx:id="tagBox" spacing="5.0" styleClass="tagBox">
@@ -74,15 +86,17 @@
          <children>
             <HBox fx:id="profilePanel" alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="189.0" spacing="5.0" HBox.hgrow="ALWAYS">
                <children>
-                  <ImageView fx:id="postProfile" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="false" HBox.hgrow="ALWAYS">
-                     <image>
-                        <Image url="@../../userData/Images/profile_pictures/profile.jpg" />
-                     </image>
-                     <clip>
-                        <Circle centerX="15.0" centerY="15.0" radius="15.0" />
-                     </clip>
-                  </ImageView>
-                  <Button fx:id="profileBtn" onAction="#onProfileClicked" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="ProfileUser" />
+                  <Button fx:id="profileBtn" onAction="#onProfileClicked" styleClass="username_profile_button" text="ProfileUser">
+                     <graphic>
+                        <ImageView fx:id="postProfile" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="false">
+                           <image>
+                              <Image url="@../../userData/Images/profile_pictures/profile.jpg" />
+                           </image>
+                           <clip>
+                              <Circle centerX="15.0" centerY="15.0" radius="15.0" />
+                           </clip>
+                        </ImageView>
+                     </graphic></Button>
                </children>
             </HBox>
             <HBox fx:id="engagementPanel" prefHeight="30.0" prefWidth="0.0" spacing="5.0" HBox.hgrow="ALWAYS">
@@ -117,7 +131,7 @@
                      <children>
                         <Button fx:id="cmntBtn" onAction="#onCommentClicked" styleClass="actionButton" HBox.hgrow="ALWAYS">
                            <graphic>
-                              <ImageView fitHeight="30" fitWidth="30" fx:id="iconComment">
+                              <ImageView fx:id="iconComment" fitHeight="30" fitWidth="30">
                                  <image>
                                     <Image url="@../../assets/Image/Icons/post/comment.png" />
                                  </image>
@@ -127,7 +141,7 @@
 
                         <Button fx:id="saveBtn" onAction="#onSaveClicked" styleClass="actionButton">
                            <graphic>
-                              <ImageView fitHeight="30" fitWidth="30" fx:id="iconBookmark">
+                              <ImageView fx:id="iconBookmark" fitHeight="30" fitWidth="30">
                                  <image>
                                     <Image url="@../../assets/Image/Icons/post/bookmark.png" />
                                  </image>
@@ -137,7 +151,7 @@
 
                         <Button fx:id="moreBtn" onAction="#onMoreActionClicked" styleClass="actionButton">
                            <graphic>
-                              <ImageView fitHeight="30" fitWidth="30" fx:id="iconMore">
+                              <ImageView fx:id="iconMore" fitHeight="30" fitWidth="30">
                                  <image>
                                     <Image url="@../../assets/Image/Icons/post/triple-dot.png" />
                                  </image>
