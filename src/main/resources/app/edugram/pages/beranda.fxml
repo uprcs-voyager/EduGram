@@ -20,7 +20,7 @@
       <fx:include fx:id="sidebar" source="components/sidebar.fxml" />
    </left>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="contentContainer" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <StackPane alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>

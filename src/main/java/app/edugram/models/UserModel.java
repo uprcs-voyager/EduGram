@@ -1,6 +1,5 @@
 package app.edugram.models;
 
-import app.edugram.utils.Notices;
 import app.edugram.utils.Sessions;
 import java.sql.*;
 import java.util.List;
@@ -119,7 +118,6 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
                 }
                 return true;
             }
-            Notices.customNote("Username/email atau password salah! Coba lagi!");
             return false;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -138,6 +136,38 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
         return false;
     }
 
+    public static boolean exists(String username, String password){
+        ConnectDB db = new ConnectDB();
+        Connection con = db.getConnetion();
+        if(con == null) return false;
+        System.out.println(username);
+        System.out.println(password);
+
+        String query = "SELECT * FROM user  WHERE username = '" + username + "' AND password = '" + password + "'";
+
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            // Check if there's at least one record
+            if(rs.next()) {
+                System.out.println("Record found!");
+                return true; // User exists
+            } else {
+                System.out.println("No record found!");
+                return false; // User doesn't exist
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 //    ========================================
 //    ============ AUTHENTICATION ============
 //    ========================================

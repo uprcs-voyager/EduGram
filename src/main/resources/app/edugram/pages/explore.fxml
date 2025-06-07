@@ -27,7 +27,7 @@
       <fx:include fx:id="sidebar" source="components/sidebar.fxml" />
    </left>
    <center>
-      <VBox fx:id="Vbox_explore" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="contentContainer" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <HBox fx:id="hbox_explore" alignment="TOP_RIGHT">
                <children>

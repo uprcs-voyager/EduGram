@@ -4,7 +4,7 @@ public class Sessions {
     private static int userId;
     private static String username = "HeBoss";
     private static String nama = "BigBoss";
-        private static String profilePicture = "hiboss.jpg";
+    private static String profilePicture = "hiboss.jpg";
 
     public static void setUser(int userId, String username, String nama, String profilePicture) {
         Sessions.userId = userId;

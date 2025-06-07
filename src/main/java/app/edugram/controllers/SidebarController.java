@@ -1,8 +1,10 @@
 package app.edugram.controllers;
 
+import app.edugram.utils.PageAction;
 import app.edugram.utils.Sessions;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +14,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import org.w3c.dom.events.Event;
+
+import javafx.event.ActionEvent;
 import java.io.IOException;
 
 public class SidebarController {
@@ -46,7 +51,7 @@ public class SidebarController {
     public void initialize() {
         // Set initial selection state
         setNavData();
-        updateSelectionState(currentPage);
+//        updateSelectionState(currentPage);
     }
 
     // Setter for navigation handler
@@ -55,50 +60,53 @@ public class SidebarController {
     }
 
     // Method to set current page and update UI accordingly
-    public void setCurrentPage(String pageName) {
+    public void setCurrentPage(ActionEvent event, String pageName) {
         this.currentPage = pageName;
+        PageAction.switchPage(event, pageName+".fxml");
         updateSelectionState(pageName);
     }
 
     // Update visual state based on current page
     private void updateSelectionState(String selectedPage) {
         // Remove selected class from all buttons
-        berandaButton.getStyleClass().removeAll("selected");
-        exploreButton.getStyleClass().removeAll("selected");
-        profileButton.getStyleClass().removeAll("selected");
+        berandaButton.getStyleClass().remove("activated_button");
+        berandaButton.getStyleClass().remove("over");
+        exploreButton.getStyleClass().remove("activated_button");
+        exploreButton.getStyleClass().remove("over");
+        profileButton.getStyleClass().remove("activated_button");
+        profileButton.getStyleClass().remove("over");
 
         // Add selected class to current page button
         switch (selectedPage) {
-            case "Beranda":
-                if (!berandaButton.getStyleClass().contains("selected")) {
-                    berandaButton.getStyleClass().add("selected");
-                }
+            case "beranda":
+//                if (!berandaButton.getStyleClass().contains("activated_button") && !berandaButton.getStyleClass().contains("over")) {
+                    berandaButton.getStyleClass().add("activated_button");
+                    berandaButton.getStyleClass().add("over");
+                    System.out.println(berandaButton.getStyleClass());
                 break;
-            case "Explore":
-                if (!exploreButton.getStyleClass().contains("selected")) {
-                    exploreButton.getStyleClass().add("selected");
-                }
+            case "explore":
+//                if (!exploreButton.getStyleClass().contains("activated_button") && !exploreButton.getStyleClass().contains("over")) {
+                    exploreButton.getStyleClass().add("activated_button");
+                    exploreButton.getStyleClass().add("over");
+                    System.out.println(exploreButton.getStyleClass());
                 break;
-            case "Profile":
-                if (!profileButton.getStyleClass().contains("selected")) {
-                    profileButton.getStyleClass().add("selected");
-                }
+            case "profile":
+//                if (!profileButton.getStyleClass().contains("activated_button") && !profileButton.getStyleClass().contains("over")) {
+                    profileButton.getStyleClass().add("activated_button");
+                    profileButton.getStyleClass().add("over");
                 break;
         }
     }
 
     @FXML
-    private void onBerandaClick() {
-        if (navigationHandler != null && !currentPage.equals("Beranda")) {
-            navigationHandler.onNavigateToPage("Beranda");
-        }
+    private void onBerandaClick(ActionEvent event) {
+        System.out.println("SidebarController: onBerandaClick");
+        setCurrentPage(event, "beranda");
     }
 
     @FXML
-    private void onExploreClick() {
-        if (navigationHandler != null && !currentPage.equals("Explore")) {
-            navigationHandler.onNavigateToPage("Explore");
-        }
+    private void onExploreClick(ActionEvent event) {
+        setCurrentPage(event, "explore");
     }
 
     @FXML

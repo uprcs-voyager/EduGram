@@ -3,10 +3,6 @@
     -fx-border-color: transparent #7C43EF transparent transparent;
     -fx-border-width: 4px;
 }
-.line_and_button {
-    -fx-background-color: #7C43EF;
-    -fx-text-fill: white;
-}
 .vbox_profile {
     -fx-background-color: linear-gradient(to bottom, #7e2ce9, #5c18c9);
     -fx-background-radius: 30;
@@ -20,55 +16,60 @@
 .seperator {
     -fx-background-color: black;
 }
-
-.selected {
-    -fx-background-color: 	#452586;
-    -fx-border-width: 0 0 0 5;
-}
-
-.over:hover {
-    -fx-background-color: 	#a682ee;
-}
-
-.profile:hover {
-    -fx-background-color: 	#3a1078;
-}
-
-
-.sidebar_background {
-    -fx-background-color: linear-gradient(to bottom, #3A1078, 	#7549cd);
-    -fx-border-color: transparent #7C43EF transparent transparent;
-    -fx-border-width: 4px;
-}
 .line_and_button {
     -fx-background-color: #7C43EF;
     -fx-text-fill: white;
 }
-.vbox_profile {
-    -fx-background-color: linear-gradient(to bottom, #7e2ce9, #5c18c9);
-    -fx-background-radius: 30;
-    -fx-effect: dropshadow(gaussian, white, 10, 0, 0, 0);
-}
 
-.text_color_white {
+.activated_button {
+    -fx-background-color: 	#a682ee !important;
+    /*-fx-border-width: 0 0 0 5;*/
     -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-}
-
-.seperator {
-    -fx-background-color: black;
-}
-
-.selected {
-    -fx-background-color: 	#452586;
-    -fx-border-width: 0 0 0 5;
 }
 
 .over:hover {
-    -fx-background-color: 	#a682ee;
+    -fx-background-color: #612fc5;
 }
 
 .profile:hover {
     -fx-background-color: 	#3a1078;
 }
+
+
+/*.sidebar_background {*/
+/*    -fx-background-color: linear-gradient(to bottom, #3A1078, 	#7549cd);*/
+/*    -fx-border-color: transparent #7C43EF transparent transparent;*/
+/*    -fx-border-width: 4px;*/
+/*}*/
+/*.line_and_button {*/
+/*    -fx-background-color: #7C43EF;*/
+/*    -fx-text-fill: white;*/
+/*}*/
+/*.vbox_profile {*/
+/*    -fx-background-color: linear-gradient(to bottom, #7e2ce9, #5c18c9);*/
+/*    -fx-background-radius: 30;*/
+/*    -fx-effect: dropshadow(gaussian, white, 10, 0, 0, 0);*/
+/*}*/
+
+/*.text_color_white {*/
+/*    -fx-text-fill: white;*/
+/*    -fx-font-size: 14px;*/
+/*    -fx-font-weight: bold;*/
+/*}*/
+
+/*.seperator {*/
+/*    -fx-background-color: black;*/
+/*}*/
+
+/*.selected {*/
+/*    -fx-background-color: 	#452586;*/
+/*    -fx-border-width: 0 0 0 5;*/
+/*}*/
+
+/*.over:hover {*/
+/*    -fx-background-color: 	#a682ee;*/
+/*}*/
+
+/*.profile:hover {*/
+/*    -fx-background-color: 	#3a1078;*/
+/*}*/

@@ -2,6 +2,9 @@ package app.edugram.controllers;
 
 import app.edugram.utils.PageAction;
 import app.edugram.utils.Notices;
+import app.edugram.utils.cookies.CookieUtil;
+import app.edugram.utils.cookies.UserCookie;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -14,6 +17,7 @@ import java.io.IOException;
 
 
 public class AuthController {
+    public Button hiddenRedirectButton;
     @FXML
     private Button cancelButton;
     public TextField usernameInp;
@@ -25,6 +29,12 @@ public class AuthController {
 
     @FXML
     public void initialize() {
+        if(checkCookie()) {
+            Platform.runLater(() -> {
+                hiddenRedirectButton.fire(); // This creates a proper ActionEvent
+            });
+            return;
+        }
         try{
             Region parent = (Region) image_login_bg.getParent();
 
@@ -35,6 +45,19 @@ public class AuthController {
             System.out.println("Auth.Initialize: (notice) This content doesn't load / contain image");
         }
     }
+
+    public boolean checkCookie() {
+        UserCookie cookie = CookieUtil.loadCookie();
+        System.out.println("Checking cookie for user: '" + cookie.getUsername() + "'");
+
+        return UserModel.ValidateUser(cookie.getUsername(), cookie.getPassword(), true);
+    }
+
+    @FXML
+    public void hiddenRedirectAction(ActionEvent event) {
+        PageAction.switchPage(event, "beranda.fxml"); // Real ActionEvent, will work!
+    }
+
 
     @FXML
     public void loginButtonAction(ActionEvent event) throws IOException {
@@ -81,9 +104,16 @@ public class AuthController {
     @FXML
     public boolean loginAction(ActionEvent event, String username, String password){
         if(UserModel.ValidateUser(username, password, true)){
+            UserCookie cookie = new UserCookie();
+            cookie.setLoggedIn(true);
+            cookie.setUsername(username);
+            cookie.setPassword(password);
+
+            CookieUtil.saveCookie(cookie);
             PageAction.switchPage(event, "beranda.fxml");
             return true;
         }
+        Notices.customNote("Username/email atau password salah! Coba lagi!");
         return false;
     }
 

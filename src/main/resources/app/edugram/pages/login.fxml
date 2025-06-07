@@ -14,6 +14,8 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.AuthController">
    <children>
+      <!-- Add this to your FXML -->
+      <Button fx:id="hiddenRedirectButton" visible="false" onAction="#hiddenRedirectAction"/>
       <ImageView fx:id="image_login_bg" fitHeight="645.0" fitWidth="844.0" opacity="0.36" pickOnBounds="true">
          <image>
             <Image url="@../assets/Image/background/login_backg.jpg" />
