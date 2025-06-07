@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class PostModel extends BaseModel implements Toggleable, CRUDable{
     private String postContent;
@@ -53,18 +55,21 @@ public class PostModel extends BaseModel implements Toggleable, CRUDable{
         List<PostModel> posts = new ArrayList<>();
 
         String sql = "SELECT\n" +
-                "    p.id_post, p.id_user, u.username, p.img_post, p.title_post, p.desc_post, u.prof_pic,\n" +
+                "    p.id_post,p.id_user,u.username,p.img_post,p.title_post,p.desc_post,u.prof_pic,\n" +
                 "    COUNT(DISTINCT l.id_like) AS like_count,\n" +
                 "    COUNT(DISTINCT dl.id_dislike) AS dislike_count,\n" +
-                "    COUNT(DISTINCT c.id_com) AS comment_count, \n" +
-                "\tGROUP_CONCAT(DISTINCT t.nama_tag) AS tags\n" +
+                "    COUNT(DISTINCT c.id_com) AS comment_count,\n" +
+                "    CASE\n" +
+                "        WHEN COUNT(DISTINCT t.nama_tag) = 0 THEN NULL\n" +
+                "        ELSE GROUP_CONCAT(DISTINCT CONCAT(t.nama_tag, '-', type_tag))\n" +
+                "    END AS tags\n" +
                 "FROM post p\n" +
-                "    LEFT JOIN like l ON p.id_post = l.id_post\n" +
-                "    LEFT JOIN dislike dl ON p.id_post = dl.id_post\n" +
-                "    LEFT JOIN comment c ON p.id_post = c.id_post\n" +
-                "    JOIN user u ON p.id_user = u.id_user\n" +
-                "\tLEFT JOIN postTag pt ON p.id_post = pt.id_post\n" +
-                "    LEFT JOIN tag t ON pt.id_tag = t.id_tag\n" +
+                "         LEFT JOIN like l ON p.id_post = l.id_post\n" +
+                "         LEFT JOIN dislike dl ON p.id_post = dl.id_post\n" +
+                "         LEFT JOIN comment c ON p.id_post = c.id_post\n" +
+                "         JOIN user u ON p.id_user = u.id_user\n" +
+                "         LEFT JOIN postTag pt ON p.id_post = pt.id_post\n" +
+                "         LEFT JOIN tag t ON pt.id_tag = t.id_tag\n" +
                 "GROUP BY p.id_post;\n";
 
         ConnectDB db = new ConnectDB();
@@ -135,6 +140,7 @@ public class PostModel extends BaseModel implements Toggleable, CRUDable{
     @Override
     public boolean exists(String table, int tableId) {
         String sql = "SELECT * FROM " + table + " WHERE id_post = " + tableId + " AND id_user = " + Sessions.getUserId();
+        System.out.println(Sessions.getUserId());
 
         return startQueryExecution(sql, false);
     }

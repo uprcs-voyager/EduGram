@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -215,21 +216,70 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="contentScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS">
-               <content>
-                  <GridPane fx:id="postContentGrid" alignment="TOP_CENTER"> <columnConstraints>
-                     <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
-                  </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                  </GridPane>
-               </content>
-            </ScrollPane>
+            <StackPane alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <ImageView fitHeight="180.0" fitWidth="238.0" layoutX="80.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Image/background/blob1.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="164.0" fitWidth="264.0" layoutX="13.0" layoutY="597.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Image/background/blob4.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-94.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Image/background/blob2.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="344.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Image/background/blob3.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" styleClass="postPanelWrapper" stylesheets="@../assets/css/beranda.css">
+                     <children>
+                        <ScrollPane fx:id="contentScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS">
+                           <content>
+                              <GridPane fx:id="postContentGrid" alignment="TOP_CENTER"> <columnConstraints>
+                                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
+                              </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                     <StackPane.margin>
+                        <Insets left="12.0" right="12.0" top="32.0" />
+                     </StackPane.margin>
+                     <padding>
+                        <Insets left="12.0" right="12.0" top="12.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </StackPane>
          </children>
+         <BorderPane.margin>
+            <Insets left="12.0" right="12.0" top="12.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
 </BorderPane>

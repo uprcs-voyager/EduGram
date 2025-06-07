@@ -16,7 +16,7 @@
    <children>
       <ImageView fx:id="image_login_bg" fitHeight="645.0" fitWidth="844.0" opacity="0.36" pickOnBounds="true">
          <image>
-            <Image url="@../assets/Image/Icons/login_backg.jpg" />
+            <Image url="@../assets/Image/background/login_backg.jpg" />
          </image>
       </ImageView>
       <VBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="818.0" StackPane.alignment="CENTER">

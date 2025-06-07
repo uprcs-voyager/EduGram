@@ -26,9 +26,14 @@ public class PostFrameController {
     @FXML private Button profileBtn;
     @FXML private ImageView postProfile;
     @FXML private Button saveBtn;
-    @FXML private Button tag;
+//    @FXML private Button tag;
     @FXML private HBox tagBox;
     @FXML private VBox rootContainer;
+    @FXML private ImageView iconLike;
+    @FXML private ImageView iconDislike;
+    @FXML private ImageView iconBookmark;
+    @FXML private ImageView iconMore;
+    @FXML private ImageView iconComment;
     @FXML private Button backtoexplore;
 
     private PostModel currentPost;
@@ -92,29 +97,26 @@ public class PostFrameController {
         countAvgPostLike(String.valueOf(postModel.getId()));
         profileBtn.setText(postModel.getPostUsername());
 
-        if(postModel.exists("like", postModel.getId())){
-            likeBtn.setUserData("hasLiked");
-        } else {
-            likeBtn.setUserData("like");
-        }
-        if(postModel.exists("dislike", postModel.getId())){
-            dislikeBtn.setUserData("hasDisliked");
-        } else {
-            dislikeBtn.setUserData("dislike");
-        }
-        if(postModel.exists("save", postModel.getId())){
-            saveBtn.setUserData("hasSaved");
-        } else {
-            saveBtn.setUserData("save");
-        }
+        boolean isLiked = postModel.exists("like", postModel.getId());
+        likeBtn.setUserData(isLiked ? "hasLiked" : "like");
+        setPostIconButton(iconLike, isLiked ? "like-active.png" : "like.png");
+
+        boolean isDisliked = postModel.exists("dislike", postModel.getId());
+        dislikeBtn.setUserData( isDisliked ? "hasDisliked" : "dislike");
+        setPostIconButton(iconDislike, isDisliked ? "dislike-active.png" : "dislike.png");
+
+        boolean isSaved = postModel.exists("save", postModel.getId());
+        saveBtn.setUserData( isSaved ? "hasSaved" : "save");
+        setPostIconButton(iconBookmark, isSaved ? "bookmark-active.png" : "bookmark.png");
 
         tagBox.getChildren().clear();
 
         List<String> tags = currentPost.getTags();
         if(tags != null && !tags.isEmpty()){
             for(String tagName : tags){
-                Button tagButton = new Button(tagName);
-                tagButton.getStyleClass().add("tag-button");
+                String[] tag = tagName.split("-");
+                Button tagButton = new Button("#"+tag[0]);
+                tagButton.getStyleClass().addAll(tag[1].equals("a") ? "built_in_tag" : "user_made_tag", "tagButton");
                 tagButton.setOnAction(event -> {
                     System.out.println("Tag Clicked: " + tagName);
                 });
@@ -137,6 +139,7 @@ public class PostFrameController {
             System.out.println("like: unsetting");
             currentPost.unset("like", currentPost.getId());
             likeBtn.setUserData("like");
+            setPostIconButton(iconLike, "like.png");
             return;
         }
         System.out.println("like: setting");
@@ -144,6 +147,7 @@ public class PostFrameController {
         List<String> value = List.of(String.valueOf(Sessions.getUserId()), String.valueOf(currentPost.getId()));
         currentPost.set("like", field, value);
         likeBtn.setUserData("hasLiked");
+        setPostIconButton(iconLike,"like-active.png");
     }
 
     @FXML
@@ -160,6 +164,7 @@ public class PostFrameController {
             System.out.println("dislike: unsetting");
             currentPost.unset("dislike", currentPost.getId());
             dislikeBtn.setUserData("dislike");
+            setPostIconButton(iconDislike, "dislike.png");
             return;
         }
         System.out.println("dislike: setting");
@@ -167,6 +172,7 @@ public class PostFrameController {
         List<String> value = List.of(String.valueOf(Sessions.getUserId()), String.valueOf(currentPost.getId()));
         currentPost.set("dislike", field, value);
         dislikeBtn.setUserData("hasDisliked");
+        setPostIconButton(iconDislike,"dislike-active.png");
     }
 
     void countAvgPostLike(String idPost) {
@@ -180,6 +186,7 @@ public class PostFrameController {
             System.out.println("Save: Unsetting");
             currentPost.unset("save", currentPost.getId());
             saveBtn.setUserData("save");
+            setPostIconButton(iconBookmark, "bookmark.png");
             return;
         }
         System.out.println("save: setting");
@@ -187,10 +194,27 @@ public class PostFrameController {
         List<String> value = List.of(String.valueOf(Sessions.getUserId()), String.valueOf(currentPost.getId()));
         currentPost.set("save", field, value);
         saveBtn.setUserData("hasSaved");
+        setPostIconButton(iconBookmark, "bookmark-active.png");
     }
 
     @FXML
     void onProfileClicked(ActionEvent event) {
         System.out.println("Profile button clicked for user " + currentPost.getPostUsername());
+    }
+
+    @FXML
+    void onCommentClicked(ActionEvent event) {
+        System.out.println("comment button clicked for post  " + currentPost.getId());
+    }
+
+    @FXML
+    void onMoreActionClicked(ActionEvent event){
+        System.out.println("more action button clicked for post  " + currentPost.getId());
+    }
+
+    void setPostIconButton(ImageView iconPost, String iconImage) {
+        String imagePath = "/app/edugram/assets/Image/Icons/post/"+iconImage;
+        Image image = new Image(getClass().getResource(imagePath).toExternalForm());
+        iconPost.setImage(image);
     }
 }
