@@ -25,7 +25,7 @@ public class ExploreController extends BaseController implements Initializable {
     private ScrollPane contentScrollPane;
 
     @FXML
-    private VBox Vbox_explore;
+    private VBox contentContainer;
 
     @FXML
     private HBox hbox_explore;
@@ -82,8 +82,8 @@ public class ExploreController extends BaseController implements Initializable {
             postFrameController.setReturnToExploreCallBack(() -> showExploreGrid());
             postFrameController.showBackButton(true);
 
-            Vbox_explore.getChildren().clear();
-            Vbox_explore.getChildren().add(postDetailView);
+            contentContainer.getChildren().clear();
+            contentContainer.getChildren().add(postDetailView);
 
 
         } catch (IOException e) {
@@ -93,9 +93,9 @@ public class ExploreController extends BaseController implements Initializable {
     }
 
     public void showExploreGrid(){
-        Vbox_explore.getChildren().clear();
-        Vbox_explore.getChildren().add(tulisanExplore);
-        Vbox_explore.getChildren().add(exploreGridView);
+        contentContainer.getChildren().clear();
+        contentContainer.getChildren().add(tulisanExplore);
+        contentContainer.getChildren().add(exploreGridView);
 
     }
 

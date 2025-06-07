@@ -12,6 +12,7 @@ module app.edugram {
     requires eu.hansolo.tilesfx;
     requires jdk.jfr;
     requires java.desktop;
+    requires com.google.gson;
 
     opens app.edugram to javafx.fxml;
     exports app.edugram;
@@ -19,4 +20,6 @@ module app.edugram {
     opens app.edugram.controllers to javafx.fxml;
     exports app.edugram.controllers.cache;
     opens app.edugram.controllers.cache to javafx.fxml;
+    opens app.edugram.utils.cookies to com.google.gson;
+
 }

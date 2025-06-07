@@ -23,16 +23,7 @@ public class BerandaController extends BaseController implements Initializable {
     private List<PostModel> posts;
 
     @FXML private GridPane postContentGrid;
-    @FXML private ScrollPane sidebarScrollPane;
-    @FXML private VBox sidebarVBox;
-    @FXML private ImageView navBookmarks;
-    @FXML private ImageView navCreatePost;
-    @FXML private Label navFollowers;
-    @FXML private Label navFollowing;
-    @FXML private Label navPosts;
-    @FXML private ImageView navProfilePicture;
-    @FXML private ImageView navSetting;
-    @FXML private Label navUsername;
+    @FXML private VBox contentContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
