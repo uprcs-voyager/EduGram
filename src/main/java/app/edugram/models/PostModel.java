@@ -140,7 +140,6 @@ public class PostModel extends BaseModel implements Toggleable, CRUDable{
     @Override
     public boolean exists(String table, int tableId) {
         String sql = "SELECT * FROM " + table + " WHERE id_post = " + tableId + " AND id_user = " + Sessions.getUserId();
-        System.out.println(Sessions.getUserId());
 
         return startQueryExecution(sql, false);
     }

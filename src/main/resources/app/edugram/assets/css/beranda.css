@@ -67,3 +67,12 @@ Label {-fx-font-family: Inter;}
 .judul_post{-fx-font-size: 18px;-fx-font-weight: bold;}
 
 .deskripsi_post{-fx-font-size: 15px;}
+
+.username_profile_button{-fx-background-color:transparent;-fx-font-weight: bold;-fx-font-size: 18px}
+
+/*.profile-pic-container {*/
+/*    -fx-background-size: cover;*/
+/*    -fx-background-position: center;*/
+/*    -fx-background-radius: 42px;*/
+/*    -fx-border-radius: 42px;*/
+/*}*/
