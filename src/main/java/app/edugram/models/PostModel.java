@@ -1,11 +1,9 @@
 package app.edugram.models;
 
 import app.edugram.utils.Notices;
+import app.edugram.utils.Sessions;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +27,42 @@ public class PostModel extends BaseModel implements CRUDable{
 
     @Override
     public boolean create(Object item) {
-        return false;
+        String query = "INSERT INTO post " +
+                "(title_post, desc_post, img_post, created_at, updated_at, id_user)" +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        PostModel post = (PostModel) item;
+        ConnectDB db = new ConnectDB();
+        try (Connection con = db.getConnetion();
+             PreparedStatement stmt = con.prepareStatement(query)) {
+
+            // Check connection
+            if (con == null) {
+                return false;
+            }
+
+            // Set parameters
+            stmt.setString(1, post.getTitle());
+            stmt.setString(2, post.getDescription());
+            stmt.setString(3, post.getPostContent());
+
+            // Auto-generate timestamps
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            stmt.setTimestamp(4, now);  // created_at
+            stmt.setTimestamp(5, now);  // updated_at
+
+            stmt.setInt(6, Sessions.getUserId());
+
+            // Execute and return result
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            // Log the error (replace with your logging framework)
+            System.err.println("Error creating post: " + e.getMessage());
+            return false;
+        }finally {
+            db.closeConnection();
+        }
     }
 
     @Override
@@ -39,11 +72,50 @@ public class PostModel extends BaseModel implements CRUDable{
 
     @Override
     public boolean update(Object item) {
+        String query = "UPDATE post SET " +
+                "title_post = ?, " +
+                "desc_post = ?, " +
+                "img_post = ?, " +
+                "updated_at = ? " +
+                "WHEREE id_post = ? ";
+
+        PostModel post = (PostModel) item;
+        ConnectDB db = new ConnectDB();
+        try(Connection con = db.getConnetion();
+            PreparedStatement stmt = con.prepareStatement(query)){
+
+            stmt.setString(1, post.getTitle());
+            stmt.setString(2, post.getDescription());
+            stmt.setString(3, post.getPostContent());
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            stmt.setTimestamp(4, now);
+            stmt.setInt(5, post.getId());
+
+            return stmt.executeUpdate() > 0;
+        }catch (SQLException e){
+            System.err.println("Error updating post: " + e.getMessage());
+        }finally {
+            db.closeConnection();
+        }
         return false;
     }
 
     @Override
     public boolean delete(int id) {
+        String query = "DELETE FROM post WHERE id_post = ?";
+        ConnectDB db = new ConnectDB();
+
+        try(Connection con = db.getConnetion();
+            PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
+        }catch (SQLException e){
+            System.err.println("Error deleting post: " + e.getMessage());
+        }finally {
+            db.closeConnection();
+        }
+
         return false;
     }
 
