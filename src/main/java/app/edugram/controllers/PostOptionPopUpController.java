@@ -2,6 +2,8 @@ package app.edugram.controllers;
 import app.edugram.Main;
 import app.edugram.models.PostModel;
 import app.edugram.utils.Sessions;
+import javafx.scene.control.Alert;
+import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
+import javafx.scene.control.ButtonType;
 
 public class PostOptionPopUpController {
     @FXML private VBox popupRoot;
@@ -85,7 +88,36 @@ public class PostOptionPopUpController {
         if (ownerPopup != null) {
             ownerPopup.hide();
         }
+        String postTitle = (currentPost != null) ? currentPost.getTitle() : "Postingan ini";
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Konfirmasi Penghapusan");
+        alert.setHeaderText(null); // Tidak perlu header text
+        alert.setContentText("Apakah Anda yakin ingin menghapus \"" + postTitle + "\"?\n" +
+                "Tindakan ini tidak dapat dibatalkan.");
+
+        if (ownerPopup != null && ownerPopup.getOwnerWindow() != null) {
+            alert.initOwner(ownerPopup.getOwnerWindow());
+        } else {
+            // Fallback jika tidak ada owner window
+            System.err.println("Warning: Could not set owner window for delete alert.");
+        }
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // Pengguna mengklik OK (Yakin Hapus)
+            System.out.println("User confirmed delete for post: " + postTitle);
+            // tempat menambahkan logika penghapusan ( maybe )
+            System.out.println("Post deleted successfully! (Demo)");
+        } else {
+            // Pengguna mengklik Batal atau menutup alert
+            System.out.println("Delete action cancelled for post: " + postTitle);
+             if (ownerPopup != null) {
+                 ownerPopup.show(ownerPopup.getOwnerWindow(), ownerPopup.getX(), ownerPopup.getY());
+             }
+        }
+
     }
+
 
     private void showreportpopup () {
         try {
