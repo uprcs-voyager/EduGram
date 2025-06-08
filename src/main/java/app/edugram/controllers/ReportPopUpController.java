@@ -21,6 +21,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.scene.control.Label;
 import app.edugram.models.PostModel;
+import javafx.stage.Window;
+import javafx.scene.control.Alert;
 
 
 public class ReportPopUpController {
@@ -66,13 +68,30 @@ public class ReportPopUpController {
     private void handleSubmitReport() {
         String reason = reportReasonTextArea.getText();
         String reportedPostTitle = (currentPost != null) ? currentPost.getTitle() : "N/A";
+
+        if (reason.trim().isEmpty()) { // Menggunakan trim() untuk mengabaikan spasi kosong
+            System.out.println("Alasan laporan tidak boleh kosong!");
+
+            Alert alert = new Alert(Alert.AlertType.WARNING); // Tipe WARNING
+            alert.setTitle("Peringatan");
+            alert.setHeaderText(null); // Tidak ada header text
+            alert.setContentText("Alasan laporan tidak boleh kosong. Mohon masukkan alasan Anda.");
+
+            // Set owner window agar alert muncul di atas pop-up laporan
+            if (ownerPopup != null && ownerPopup.getOwnerWindow() != null) {
+                alert.initOwner(ownerPopup.getOwnerWindow());
+            } else {
+                System.err.println("Warning: Could not set owner window for validation alert.");
+            }
+
+            alert.showAndWait(); // Tampilkan alert dan tunggu hingga ditutup
+            return; // Hentikan proses jika alasan kosong
+        }
+
+
         System.out.println("Tombol Laporkan di pop-up laporan diklik.");
         System.out.println("Postingan Dilaporkan: " + reportedPostTitle);
         System.out.println("Alasan Laporan: " + reason);
-        if(reason.trim().isEmpty()) {
-            System.out.println("isi laporan tidak boleh kosong");
-            return;
-        }
         if (ownerPopup != null) {
             ownerPopup.hide();
         }
