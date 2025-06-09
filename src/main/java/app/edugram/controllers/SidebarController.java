@@ -1,15 +1,25 @@
 package app.edugram.controllers;
 
+import app.edugram.Main;
 import app.edugram.utils.Sessions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
+import javafx.stage.Popup;
+import javafx.stage.Window;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,9 +35,11 @@ public class SidebarController implements Initializable {
 
     // ... sisa field @FXML Anda ...
     @FXML private ImageView navProfilePicture;
+    @FXML private ImageView navCreatePost;
     @FXML private Label navUsername;
 
     public void onCreatePostClick(MouseEvent mouseEvent) {
+        showCreatePostDialog();
     }
 
     public void onSettingsClick(MouseEvent mouseEvent) {
@@ -53,6 +65,12 @@ public class SidebarController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Set data pengguna awal
         setNavData();
+        if (navCreatePost != null) {
+            navCreatePost.setOnMouseClicked(this::onCreatePostClick); // Mengikat event klik ke metode
+            System.out.println("Create Post ImageView action set in SidebarController.");
+        } else {
+            System.err.println("createPostImageView is null in SidebarController.initialize(). Check sidebar.fxml fx:id.");
+        }
     }
 
     // Method ini dipanggil oleh BaseViewController untuk mengubah style tombol
@@ -103,6 +121,54 @@ public class SidebarController implements Initializable {
     public void onProfileClick(ActionEvent event) {
         if (navigationHandler != null) {
             navigationHandler.onNavigateToPage("profile");
+        }
+    }
+
+
+    private void showCreatePostDialog() {
+        System.out.println("Attempting to show create post dialog from SidebarController...");
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("pages/components/tambahpostpopup.fxml"));
+            VBox createPostLayout = loader.load(); // Root dari FXML pop-up Anda
+
+            TambahPostController controller = loader.getController();
+
+            Stage dialogStage = new Stage(); // <--- Buat Stage baru untuk dialog
+            dialogStage.setTitle("Buat Postingan Baru");
+            dialogStage.initModality(Modality.APPLICATION_MODAL); // <--- Set modality agar dialog memblokir aplikasi
+            dialogStage.setResizable(false); // Opsional: nonaktifkan resize
+
+            dialogStage.setScene(new Scene(createPostLayout)); // Set Scene untuk Stage dialog
+
+            // Dapatkan pemilik dialog (Stage utama aplikasi)
+            Window ownerWindow = null;
+            if (navCreatePost != null && navCreatePost.getScene() != null && navCreatePost.getScene().getWindow() != null) {
+                ownerWindow = navCreatePost.getScene().getWindow();
+            }
+            // Karena Anda tidak ingin mengubah BaseViewController, kita tetap menggunakan cara ini.
+
+            if (ownerWindow != null) {
+                dialogStage.initOwner(ownerWindow); // <--- Set Stage utama sebagai pemilik dialog ini
+                System.out.println("Dialog owner set to main application window.");
+            } else {
+                System.err.println("Owner window for dialog not found. Dialog might appear independently.");
+            }
+
+            controller.setDialogStage(dialogStage); // <--- Teruskan Stage dialog ini ke controllernya
+
+            // Opsional: Posisikan dialog di tengah pemiliknya atau di tengah layar
+            if (dialogStage.getOwner() != null) {
+                // Untuk memposisikan di tengah owner, Anda mungkin perlu perhitungan X/Y yang lebih detail
+                // Untuk kemudahan, kita bisa centerOnScreen() atau manual X/Y.
+                dialogStage.centerOnScreen();
+            }
+
+
+            dialogStage.showAndWait(); // <--- Tampilkan dialog dan tunggu hingga ditutup
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load create post dialog: " + e.getMessage());
         }
     }
 

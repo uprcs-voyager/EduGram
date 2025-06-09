@@ -77,7 +77,7 @@ public class PostModel extends BaseModel implements CRUDable{
                 "desc_post = ?, " +
                 "img_post = ?, " +
                 "updated_at = ? " +
-                "WHEREE id_post = ? ";
+                "WHERE id_post = ? ";
 
         PostModel post = (PostModel) item;
         ConnectDB db = new ConnectDB();
