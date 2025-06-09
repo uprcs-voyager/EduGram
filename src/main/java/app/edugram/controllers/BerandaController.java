@@ -21,13 +21,11 @@ import java.util.ResourceBundle;
 public class BerandaController extends BaseController implements Initializable {
 
     @FXML private GridPane postContentGrid;
-    @FXML private VBox contentContainer;
-    @FXML private ScrollPane contentScrollPane; // This matches your FXML
-    // Loading indicator - we'll create it programmatically
+    @FXML private ScrollPane contentScrollPane;
 
     // Lazy loading variables
     private int currentPage = 0;
-    private final int postsPerPage = 6;
+    private final int postsPerPage = 5;
     private boolean isLoading = false;
     private boolean hasMorePosts = true;
     private List<PostModel> allPosts = new ArrayList<>();
