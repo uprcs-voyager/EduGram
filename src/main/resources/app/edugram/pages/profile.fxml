@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<VBox fx:id="contentContainer" prefHeight="700.0" prefWidth="1000.0" styleClass="profile-page-root" stylesheets="@../assets/css/profile.css" BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="app.edugram.controllers.ProfileController">
+   <children>
+      <HBox>
+         <ImageView fx:id="profilePictureView" styleClass="profile-picture">
+         <clip><Circle /></clip>
+         </ImageView>
+
+      <VBox>
+         <Label fx:id="usernameLabel" styleClass="username-label" text="YourUsername" />
+         <HBox>
+            <VBox><Label fx:id="postCountLabel" styleClass="stat-number" text="123" /><Label styleClass="stat-text" text="Posts" /></VBox>
+            <VBox><Label fx:id="followersCountLabel" styleClass="stat-number" text="456" /><Label styleClass="stat-text" text="Followers" /></VBox>
+            <VBox><Label fx:id="followingCountLabel" styleClass="stat-number" text="789" /><Label styleClass="stat-text" text="Following" /></VBox>
+         </HBox>
+         <Button fx:id="editProfileButton" styleClass="action-button" text="Edit Profile" />
+      </VBox>
+      </HBox>
+   <Label fx:id="bioLabel" text="This is a dummy bio." />
+
+   <ScrollPane>
+      <GridPane fx:id="userPostsGrid" hgap="5.0" vgap="5.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33" />
+            <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33" />
+            <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33" />
+         </columnConstraints>
+         <ImageView fitHeight="150" fitWidth="150" styleClass="post-thumbnail" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <image><Image url="@../userData/images/posts/concrete1.jpg" /></image>
+         </ImageView>
+         <ImageView fitHeight="150" fitWidth="150" styleClass="post-thumbnail" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <image><Image url="@../userData/images/posts/concrete1.jpg" /></image>
+         </ImageView>
+            <rowConstraints>
+               <RowConstraints />
+            </rowConstraints>
+      </GridPane>
+   </ScrollPane>
+   </children>
+</VBox>
