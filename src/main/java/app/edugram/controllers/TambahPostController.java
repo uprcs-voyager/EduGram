@@ -1,6 +1,7 @@
 package app.edugram.controllers;
 import app.edugram.Main;
 import app.edugram.models.PostModel;
+import app.edugram.utils.PageAction;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -32,14 +33,6 @@ public class TambahPostController {
 
     private Stage dialogStage;
     private File selectedImageFile;
-
-    public interface PostCreationListener {
-        void onPostCreated();
-    }
-    private PostCreationListener postCreationListener;
-    public void setPostCreationListener(PostCreationListener listener) {
-        this.postCreationListener = listener;
-    }
 
     public void initialize() {
         browseImageButton.setOnAction(event -> handleBrowseImage());
@@ -151,18 +144,10 @@ public class TambahPostController {
             showAlert(Alert.AlertType.INFORMATION, "Sukses", "Postingan berhasil dibuat!", currentWindowForAlert);
             if (dialogStage != null) {
                 dialogStage.close(); // <--- UBAH INI: Tutup Stage dialog setelah sukses
-            }
 
-            if (postCreationListener != null) {
-                postCreationListener.onPostCreated();
-                System.out.println("Notified PostCreationListener that a post was created.");
             }
-            // TODO: Refresh tampilan postingan di ExploreController atau DashboardController
-            // Anda bisa menambahkan Runnable callback di sini, mirip dengan setReturnToExploreCallBack
         } else {
             showAlert(Alert.AlertType.ERROR, "Gagal", "Gagal membuat postingan. Silakan coba lagi.", currentWindowForAlert);
-
-
         }
 
     }

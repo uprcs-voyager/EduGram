@@ -46,17 +46,15 @@ public class PostOptionPopUpController {
         reportButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white;");
         editButton.setStyle("-fx-background-color: #2196f3; -fx-text-fill: white;");
         deleteButton.setStyle("-fx-background-color: #607d8b; -fx-text-fill: white;");
-
-        // Untuk tujuan demonstrasi front-end
-        // sehingga Edit dan Delete terlihat terus. Di produksi, ini akan disesuaikan.
-        editButton.setVisible(true);
-        editButton.setManaged(true);
-        deleteButton.setVisible(true);
-        deleteButton.setManaged(true);
     }
 
     public void setPostData(PostModel post) {
         this.currentPost = post;
+        boolean isVisible = currentPost.getUserId().equals(String.valueOf(Sessions.getUserId()));
+        editButton.setVisible(isVisible);
+        editButton.setManaged(isVisible);
+        deleteButton.setVisible(isVisible);
+        deleteButton.setManaged(isVisible);
     }
 
     public void setPostFrameController(PostFrameController controller) {
@@ -99,15 +97,12 @@ public class PostOptionPopUpController {
         if (ownerPopup != null && ownerPopup.getOwnerWindow() != null) {
             alert.initOwner(ownerPopup.getOwnerWindow());
         } else {
-            // Fallback jika tidak ada owner window
             System.err.println("Warning: Could not set owner window for delete alert.");
         }
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Pengguna mengklik OK (Yakin Hapus)
-            System.out.println("User confirmed delete for post: " + postTitle);
-            // tempat menambahkan logika penghapusan ( maybe )
-            System.out.println("Post deleted successfully! (Demo)");
+            PostModel del = new PostModel();
+            del.delete(currentPost.getId());
         } else {
             // Pengguna mengklik Batal atau menutup alert
             System.out.println("Delete action cancelled for post: " + postTitle);

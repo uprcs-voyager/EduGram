@@ -83,7 +83,7 @@ public class AuthController {
 
         boolean isValid = UserModel.ValidateUser(username, password, false);
         if(isValid){
-            Notices.customNote("Username dan password yang dipilih sudah diambil! Coba kombinasi lain!");
+            Notices.customNote( "Notice","Username yang dipilih sudah diambil! Coba kombinasi lain!");
             return;
         }
 
@@ -113,7 +113,7 @@ public class AuthController {
             PageAction.switchPage(event, "baseView.fxml");
             return true;
         }
-        Notices.customNote("Username/email atau password salah! Coba lagi!");
+        Notices.customNote("Invalid login", "Username/email atau password salah! Coba lagi!");
         return false;
     }
 

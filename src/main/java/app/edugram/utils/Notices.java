@@ -19,9 +19,9 @@ public class Notices {
         alert.showAndWait();
     }
 
-    public static void customNote(String note){
+    public static void customNote(String title, String note){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Notice");
+        alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(note);
         alert.showAndWait();
