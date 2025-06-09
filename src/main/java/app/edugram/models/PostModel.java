@@ -125,23 +125,34 @@ public class PostModel extends BaseModel implements CRUDable{
 
         String sql = """
                 SELECT
-                    p.id_post,p.id_user,u.username,p.img_post,p.title_post,p.desc_post,u.prof_pic,
+                    p.id_post,
+                    p.id_user,
+                    u.username,
+                    p.img_post,
+                    p.title_post,
+                    p.desc_post,
+                    u.prof_pic,
                     COUNT(DISTINCT l.id_like) AS like_count,
                     COUNT(DISTINCT dl.id_dislike) AS dislike_count,
                     COUNT(DISTINCT c.id_com) AS comment_count,
                     CASE
                         WHEN COUNT(DISTINCT t.nama_tag) = 0 THEN NULL
-                        ELSE GROUP_CONCAT(DISTINCT CONCAT(t.nama_tag, '-', type_tag))
+                        ELSE GROUP_CONCAT(DISTINCT t.nama_tag || '-' || t.type_tag)
                     END AS tags
                 FROM post p
-                         LEFT JOIN like l ON p.id_post = l.id_post
-                         LEFT JOIN dislike dl ON p.id_post = dl.id_post
-                         LEFT JOIN comment c ON p.id_post = c.id_post
-                         JOIN user u ON p.id_user = u.id_user
-                         LEFT JOIN postTag pt ON p.id_post = pt.id_post
-                         LEFT JOIN tag t ON pt.id_tag = t.id_tag
-                GROUP BY p.id_post;
+                LEFT JOIN like l ON p.id_post = l.id_post
+                LEFT JOIN dislike dl ON p.id_post = dl.id_post
+                LEFT JOIN comment c ON p.id_post = c.id_post
+                JOIN user u ON p.id_user = u.id_user
+                LEFT JOIN postTag pt ON p.id_post = pt.id_post
+                LEFT JOIN tag t ON pt.id_tag = t.id_tag
+                GROUP BY p.id_post
+                ORDER BY
+                    (COUNT(DISTINCT l.id_like) - COUNT(DISTINCT dl.id_dislike)) DESC,
+                    p.id_post DESC;
+                ;
                 """;
+//        MAX(CASE WHEN pt.id_tag IN (1, 2, 3) THEN 1 ELSE 0 END) DESC,
 
         ConnectDB db = new ConnectDB();
         Connection con = db.getConnetion();
@@ -217,6 +228,74 @@ public class PostModel extends BaseModel implements CRUDable{
         }
         return sumCount;
     }
+
+    private String getQuery(){
+        String query = """
+                SELECT
+                    p.id_post,
+                    p.id_user,
+                    u.username,
+                    p.img_post,
+                    p.title_post,
+                    p.desc_post,
+                    u.prof_pic,
+                    COUNT(DISTINCT l.id_like) AS like_count,
+                    COUNT(DISTINCT dl.id_dislike) AS dislike_count,
+                    COUNT(DISTINCT c.id_com) AS comment_count,
+                    CASE
+                        WHEN COUNT(DISTINCT t.nama_tag) = 0 THEN NULL
+                        ELSE GROUP_CONCAT(DISTINCT t.nama_tag || '-' || t.type_tag)
+                        END AS tags
+                FROM post p
+                         LEFT JOIN like l ON p.id_post = l.id_post
+                         LEFT JOIN dislike dl ON p.id_post = dl.id_post
+                         LEFT JOIN comment c ON p.id_post = c.id_post
+                         JOIN user u ON p.id_user = u.id_user
+                         LEFT JOIN postTag pt ON p.id_post = pt.id_post
+                         LEFT JOIN tag t ON pt.id_tag = t.id_tag
+                GROUP BY p.id_post
+                ORDER BY
+                """;
+//        MAX(CASE WHEN pt.id_tag IN (1, 2, 3) THEN 1 ELSE 0 END) DESC,
+        if (new UserPrefTagModel().exists(Sessions.getUserId())) {
+            String tagQuery = "SELECT id_tag FROM userPrefTags WHERE id_user = " + Sessions.getUserId();
+            ConnectDB db = new ConnectDB();
+            Connection con = db.getConnetion();
+            if (con == null) return null;
+
+            try (
+                    PreparedStatement pstmt = con.prepareStatement(tagQuery);
+                    ResultSet rs = pstmt.executeQuery()
+            ) {
+                StringBuilder inClause = new StringBuilder();
+                while (rs.next()) {
+                    int tagId = rs.getInt("id_tag");
+                    if (inClause.length() > 0) {
+                        inClause.append(",");
+                    }
+                    inClause.append(tagId);
+                }
+
+                if (inClause.length() > 0) {
+                    query += " MAX(CASE WHEN pt.id_tag IN (" + inClause + ") THEN 1 ELSE 0 END) DESC, ";
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                db.closeConnection();
+            }
+        }
+
+        query += """
+                (COUNT(DISTINCT l.id_like) - COUNT(DISTINCT dl.id_dislike)) DESC,
+                    p.id_post DESC;
+                """;
+        return query;
+    }
+
+
+
+
 
 //    ================================ GETTER SETTER ================================
 //     GETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTER

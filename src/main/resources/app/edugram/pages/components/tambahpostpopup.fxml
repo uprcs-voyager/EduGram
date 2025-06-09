@@ -73,6 +73,9 @@
                 <Insets top="15.0" />
             </VBox.margin>
         </HBox>
+
+        <!-- Invisible Button -->
+        <Button fx:id="invisibleButton" mnemonicParsing="false" visible="false" managed="false" />
     </children>
     <padding>
         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />

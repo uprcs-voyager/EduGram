@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,11 +18,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
-import javafx.scene.control.Button;
-import javafx.event.ActionEvent;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.File;
 
 public class PostFrameController {
     @FXML private ImageView postContent;
@@ -49,7 +49,6 @@ public class PostFrameController {
     private PostModel currentPost;
     private Popup currentOptionsPopup;
     private Runnable returnToExploreCallBack;
-    private ContextMenu currentContextMenu;
 
     private final LikeModel likeModel = new LikeModel();
     private final DislikeModel dislikeModel = new DislikeModel();
@@ -67,9 +66,7 @@ public class PostFrameController {
         });
 //      //////////////// More option button ////////////////////////////////////////
 
-            if (moreBtn != null) {
-            moreBtn.setOnAction(event -> TombolMoreMunculHilang(event));
-            System.out.println("moreBtn action set.");}
+            if (moreBtn != null) {moreBtn.setOnAction(event -> TombolMoreMunculHilang(event));}
             else {System.err.println("moreBtn is null in PostFrameController.initialize()");}
 
 //      /////////////////More Option Button//////////////////////////////////////////////////////////
@@ -79,82 +76,30 @@ public class PostFrameController {
                 backtoexplore.setOnAction((ActionEvent event) -> {
                     if(returnToExploreCallBack != null) {
                         returnToExploreCallBack.run();}});}
-            showBackButton(false);}
-
-
-    private void TombolMoreMunculHilang(ActionEvent event) {
-        if (currentOptionsPopup != null && currentOptionsPopup.isShowing()) {
-            currentOptionsPopup.hide(); // Jika pop-up sedang tampil, sembunyikan
-            currentOptionsPopup = null;} // Reset referensi
-         else {showPostOptionsPopup();}}
-
-    private void showPostOptionsPopup() {
-        try {
-            Popup popup = new Popup();
-
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("pages/components/post_option_popup.fxml"));
-            VBox popupcontent = loader.load();
-            PostOptionPopUpController popupController = loader.getController();
-            popupController.setPopup(popup);
-            popupController.setPostData(this.currentPost);
-            popup.getContent().add(popupcontent);
-
-            if (moreBtn.getScene() != null && moreBtn.getScene().getWindow() != null) {
-                // Konversi koordinat lokal tombol ke koordinat layar
-                double x = moreBtn.localToScreen(moreBtn.getBoundsInLocal()).getMinX();
-                double y = moreBtn.localToScreen(moreBtn.getBoundsInLocal()).getMaxY();
-
-                popup.show(moreBtn.getScene().getWindow(), x, y);
-                System.out.println("Popup shown at X: " + x + ", Y: " + y); // Debugging
-
-                currentOptionsPopup = popup;
-                popup.setAutoHide(true);
-                popup.setHideOnEscape(true);
-
-            } else {
-                System.err.println("moreBtn is not attached to a scene/window. Cannot show popup."); // Debugging
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Failed to load post options popup.");
-        }
+            showBackButton(false);
     }
-
-
-//  /////////////// back to explore function ///////////////////////////////////////
-    public void setReturnToExploreCallBack (Runnable CallBack) {
-        this.returnToExploreCallBack = CallBack;
-    }
-    public void showBackButton(boolean show) {
-        if(backtoexplore != null) {
-            backtoexplore.setVisible(show);
-            backtoexplore.setManaged(show);
-        }
-    }
-
-    //  /////////////// back to explore function ///////////////////////////////////////
 
     public void setData(PostModel postModel){
         this.currentPost = postModel;
 
-        String imageFilename = postModel.getPostContent();
-        String profileFilename = postModel.getProfile();
-        try {
-            URL imageResource = getClass().getResource("/app/edugram/userData/Images/posts/" + imageFilename);
-            URL profileResource = getClass().getResource("/app/edugram/userData/Images/profile_pictures/" + profileFilename);
+        String mainPath = "src/main/resources/app/edugram/userData/Images/";
+        Path projectRoot = Paths.get("").toAbsolutePath();
+        Path postImagePath = projectRoot.resolve(mainPath + "posts/" + postModel.getPostContent());
+        Path profileImagePath = projectRoot.resolve(mainPath + "profile_pictures/" + postModel.getProfile());
 
-            if (imageResource != null && profileResource != null) {
-                Image image = new Image(imageResource.toExternalForm());
-                postContent.setImage(image);
+        File postImageFile = postImagePath.toFile();
+        File profileImageFile = profileImagePath.toFile();
 
-                Image profile = new Image(profileResource.toExternalForm());
-                postProfile.setImage(profile);
-            } else {
-                System.err.println("ERROR: Image file not found in resources: " + imageFilename);
+        if (postImageFile.exists() && profileImageFile.exists()) {
+            postContent.setImage(new Image(postImageFile.toURI().toString()));
+            postProfile.setImage(new Image(profileImageFile.toURI().toString()));
+        } else {
+            if (!postImageFile.exists()) {
+                System.err.println("Post image not found: " + postImageFile.getAbsolutePath());
             }
-        } catch (Exception e) {
-            System.err.println("FATAL: Could not load image. Error: " + e.getMessage());
+            if (!profileImageFile.exists()) {
+                System.err.println("Profile image not found: " + profileImageFile.getAbsolutePath());
+            }
         }
 
         postTitle.setText(postModel.getTitle());
@@ -279,4 +224,59 @@ public class PostFrameController {
         Image image = new Image(getClass().getResource(imagePath).toExternalForm());
         iconPost.setImage(image);
     }
+
+    private void TombolMoreMunculHilang(ActionEvent event) {
+        if (currentOptionsPopup != null && currentOptionsPopup.isShowing()) {
+            currentOptionsPopup.hide(); // Jika pop-up sedang tampil, sembunyikan
+            currentOptionsPopup = null;} // Reset referensi
+        else {showPostOptionsPopup();}
+    }
+
+    private void showPostOptionsPopup() {
+        try {
+            Popup popup = new Popup();
+
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("pages/components/post_option_popup.fxml"));
+            VBox popupcontent = loader.load();
+            PostOptionPopUpController popupController = loader.getController();
+            popupController.setPopup(popup);
+            popupController.setPostData(this.currentPost);
+            popup.getContent().add(popupcontent);
+
+            if (moreBtn.getScene() != null && moreBtn.getScene().getWindow() != null) {
+                // Konversi koordinat lokal tombol ke koordinat layar
+                double x = moreBtn.localToScreen(moreBtn.getBoundsInLocal()).getMinX();
+                double y = moreBtn.localToScreen(moreBtn.getBoundsInLocal()).getMaxY();
+
+                popup.show(moreBtn.getScene().getWindow(), x, y);
+                System.out.println("Popup shown at X: " + x + ", Y: " + y); // Debugging
+
+                currentOptionsPopup = popup;
+                popup.setAutoHide(true);
+                popup.setHideOnEscape(true);
+
+            } else {
+                System.err.println("moreBtn is not attached to a scene/window. Cannot show popup."); // Debugging
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load post options popup.");
+        }
+    }
+
+    //  /////////////// back to explore function ///////////////////////////////////////
+    public void setReturnToExploreCallBack (Runnable CallBack) {
+        this.returnToExploreCallBack = CallBack;
+    }
+    public void showBackButton(boolean show) {
+        if(backtoexplore != null) {
+            backtoexplore.setVisible(show);
+            backtoexplore.setManaged(show);
+        }
+    }
+
+    //  /////////////// back to explore function ///////////////////////////////////////
+
 }
+
