@@ -5,6 +5,7 @@ import app.edugram.models.LikeModel;
 import app.edugram.models.PostModel;
 import app.edugram.models.SaveModel;
 import app.edugram.utils.Sessions;
+import app.edugram.utils.PostClickHandler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,6 +50,7 @@ public class PostFrameController {
     private PostModel currentPost;
     private Popup currentOptionsPopup;
     private Runnable returnToExploreCallBack;
+    private PostClickHandler postClickHandler;
 
     private final LikeModel likeModel = new LikeModel();
     private final DislikeModel dislikeModel = new DislikeModel();
@@ -73,10 +75,7 @@ public class PostFrameController {
 
 //      //////////////// back to explore button ///////////////////////////////////
             if (backtoexplore != null) {
-                backtoexplore.setOnAction((ActionEvent event) -> {
-                    if(returnToExploreCallBack != null) {
-                        returnToExploreCallBack.run();}});}
-            showBackButton(false);
+            showBackButton(false); }
     }
 
     public void setData(PostModel postModel){
@@ -265,10 +264,30 @@ public class PostFrameController {
         }
     }
 
-    //  /////////////// back to explore function ///////////////////////////////////////
-    public void setReturnToExploreCallBack (Runnable CallBack) {
-        this.returnToExploreCallBack = CallBack;
+    public void setPostClickHandler(PostClickHandler handler) {
+        this.postClickHandler = handler;
+
+        if(backtoexplore != null) {
+            backtoexplore.setOnAction(this::handlePostBack);
+        } else {
+            System.out.println("buttonpost is null");
+        }
     }
+
+    public void handlePostBack(ActionEvent event) {
+        if(currentPost == null) {
+            System.err.println("ERROR: current post is null");
+            return;
+        } if(postClickHandler != null) {
+            postClickHandler.onPostBackClicked(currentPost);
+        }
+    }
+
+
+    //  /////////////// back to explore function ///////////////////////////////////////
+//    public void setReturnToExploreCallBack (Runnable CallBack) {
+//        this.returnToExploreCallBack = CallBack;
+//    }
     public void showBackButton(boolean show) {
         if(backtoexplore != null) {
             backtoexplore.setVisible(show);

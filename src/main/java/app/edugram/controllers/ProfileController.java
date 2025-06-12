@@ -1,55 +1,34 @@
 package app.edugram.controllers;
+
 import app.edugram.Main;
 import app.edugram.models.PostModel;
+import app.edugram.utils.PostClickHandler;
 import app.edugram.utils.Sessions;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import javafx.fxml.FXMLLoader;
-import java.io.File; // Untuk memuat dari File
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.file.Paths; // Untuk Path
-import java.util.List;
-import java.util.ResourceBundle;
-import app.edugram.utils.Sessions;
-import java.net.MalformedURLException; // Untuk URL gambar
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox; // Atau HBox, tergantung root smallpost.fxml Anda
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
-import javafx.application.Platform; // Untuk pembaruan UI di JavaFX Thread
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class ProfileController {
-    // === Elemen FXML untuk Informasi Profil ===
-    @FXML private VBox rootContainer;
+public class ProfileController implements Initializable, PostClickHandler {
+    // --- FXML Elements for User Info (dummy for now) ---
+    @FXML private VBox contentContainer;
     @FXML private ImageView profilePictureView;
     @FXML private Label usernameLabel;
     @FXML private Label postCountLabel;
@@ -58,35 +37,172 @@ public class ProfileController {
     @FXML private Label bioLabel;
     @FXML private Button editProfileButton;
 
-    // === Elemen FXML untuk Grid Postingan ===
-    @FXML private ScrollPane contentScrollPane;
-    @FXML private GridPane userPostsGrid;
 
-    // Optional: Untuk navigasi antar halaman jika diperlukan
+    // --- FXML Elements for Post Grid ---
+    @FXML private ScrollPane contentScrollPane;
+    @FXML private GridPane userPostsGrid; // Ini akan menampung smallpost.fxml
+    @FXML private HBox hbox_profile;
+    // Daftar semua postingan yang akan ditampilkan (mirip allPosts di ExploreController)
+    private List<PostModel> allPostsToDisplay;
+
+    // Optional: Untuk navigasi antar halaman (misalnya ke detail post)
     private BaseViewController parentController;
+
+    private Node ProfileGridView;
+    private Node HboxProfile;
 
     public void setParentController(BaseViewController parentController) {
         this.parentController = parentController;
     }
 
-    public void initialize() {
-        // --- Bagian 1: Mengisi Data Informasi Profil (Dummy untuk Tampilan Awal) ---
-        // Anda bisa mengganti ini nanti dengan data asli dari database
-        usernameLabel.setText("NamaPenggunaAnda");
-        postCountLabel.setText("XX");    // Akan diisi dari DB nanti
-        followersCountLabel.setText("YY"); // Akan diisi dari DB nanti
-        followingCountLabel.setText("ZZ"); // Akan diisi dari DB nanti
-        bioLabel.setText("Ini adalah biografi singkat saya. Selamat datang di profil saya!");
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ProfileGridView = contentScrollPane;
+        HboxProfile = hbox_profile;
 
-        // Muat gambar profil dummy/placeholder
+        // Inisialisasi Tampilan Info Profil dengan Placeholder ---
+        usernameLabel.setText("@" + Sessions.getUsername());
+        postCountLabel.setText("??"); // Akan diupdate nanti
+        followersCountLabel.setText("??");
+        followingCountLabel.setText("??");
+        bioLabel.setText("Ini adalah halaman profil sementara yang menampilkan semua postingan.");
+
+        loadDefaultProfilePicture(); // Muat gambar profil placeholder
+
+        if (editProfileButton != null) {
+            editProfileButton.setOnAction(event -> System.out.println("Tombol Edit Profile diklik (dummy)!"));
+        }
+
+        // Muat Semua Postingan dari Model ---
+        loadAllPostsAndDisplay();
+    }
+
+    private void loadAllPostsAndDisplay() {
+        // Operasi database harus di background thread
+        Task<List<PostModel>> loadPostsTask = new Task<List<PostModel>>() {
+            @Override
+            protected List<PostModel> call() throws Exception {
+                PostModel post = new PostModel();
+                return post.listAll();
+            }
+        };
+
+        loadPostsTask.setOnSucceeded(e -> {
+            Platform.runLater(() -> {
+                allPostsToDisplay = loadPostsTask.getValue();
+                System.out.println("Semua postingan berhasil dimuat ke ProfileController: " + allPostsToDisplay.size());
+                displayPostsInGrid(allPostsToDisplay);
+                postCountLabel.setText(String.valueOf(allPostsToDisplay.size()));
+            });
+        });
+
+        loadPostsTask.setOnFailed(e -> {
+            Platform.runLater(() -> {
+                System.err.println("Gagal memuat postingan di ProfileController: " + loadPostsTask.getException().getMessage());
+                loadPostsTask.getException().printStackTrace();
+                userPostsGrid.getChildren().clear();
+                userPostsGrid.add(new Label("Gagal memuat postingan."), 0, 0);
+                GridPane.setColumnSpan(userPostsGrid.getChildren().get(0), 3);
+            });
+        });
+
+        Thread thread = new Thread(loadPostsTask);
+        thread.setDaemon(true); // Biarkan thread berhenti saat aplikasi ditutup
+        thread.start();
+    }
+
+    private void displayPostsInGrid(List<PostModel> postsToDisplay) {
+        Platform.runLater(() -> {
+            userPostsGrid.getChildren().clear(); // Bersihkan grid sebelumnya
+
+            if (postsToDisplay.isEmpty()) {
+                userPostsGrid.add(new Label("Belum ada postingan untuk ditampilkan."), 0, 0);
+                GridPane.setColumnSpan(userPostsGrid.getChildren().get(0), 3); // Span label across 3 columns
+                return;
+            }
+
+            int columns = 0;
+            int row = 0;
+            int maxCols = userPostsGrid.getColumnConstraints().size();
+
+            try {
+                for (PostModel post : postsToDisplay) {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(Main.class.getResource("pages/components/smallpost.fxml"));
+                    VBox box = fxmlLoader.load(); // Asumsi root smallpost.fxml adalah VBox
+
+                    SmallPostFrameController smallPostFrameController = fxmlLoader.getController();
+                    smallPostFrameController.setData(post); // Set data PostModel ke SmallPostFrameController
+//                  smallPostFrameController.setProfileController(this);
+                    smallPostFrameController.setPostClickHandler(this);
+
+                    // Logic untuk menempatkan di grid (sama seperti di ExploreController)
+                    userPostsGrid.add(box, columns, row);
+                    GridPane.setMargin(box, new Insets(1, 1, 1, 1));
+
+                    columns++;
+                    if (columns == maxCols) {
+                        columns = 0;
+                        row++;
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.err.println("Gagal memuat smallpost.fxml untuk grid profil: " + e.getMessage());
+            }
+        });
+    }
+
+    // --- Helper Methods ---
+    public void onPostClicked(PostModel post) {
+        detailPost(post);
+    }
+    public void onPostBackClicked(PostModel post) {
+        backToProfile();
+    }
+
+
+    // Menangani klik pada smallpost (mirip ExploreController::ShowPostDetail)
+    public void detailPost(PostModel post ) {
         try {
-            // Pastikan Anda memiliki 'default_profile.png' di src/main/resources/app/edugram/assets/Image/
-            Image dummyProfilePic = new Image(getClass().getResource("/app/edugram/assets/Image/default_profile.png").toExternalForm());
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pages/components/post.fxml"));
+            VBox postDetailView = fxmlLoader.load();
+
+            PostFrameController postFrameController = fxmlLoader.getController();
+            postFrameController.setData(post);
+            postFrameController.setPostClickHandler(this);
+            postFrameController.showBackButton(true);
+
+            contentContainer.setAlignment(javafx.geometry.Pos.TOP_CENTER);
+
+            contentContainer.getChildren().clear();
+            contentContainer.getChildren().add(postDetailView);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load post details: " + post.getTitle());
+        }
+    }
+
+    // Helper: Mencari PostModel berdasarkan ID dari daftar 'allPostsToDisplay'
+    private PostModel findPostById(int postId) {
+        if (allPostsToDisplay != null) {
+            for (PostModel post : allPostsToDisplay) {
+                if (post.getId() == postId) {
+                    return post;
+                }
+            }
+        }
+        return null;
+    }
+
+    // Helper: Muat gambar placeholder default untuk profil
+    private void loadDefaultProfilePicture() {
+        try {
+            Image dummyProfilePic = new Image(getClass().getResource("/app/edugram/userData/images/profile_pictures/lapwiing.jpg").toExternalForm());
             profilePictureView.setImage(dummyProfilePic);
-            // Kunci ukuran agar gambar profil tetap konsisten
             profilePictureView.setFitWidth(120);
             profilePictureView.setFitHeight(120);
-            // Clip agar bulat (sesuai FXML)
             Circle clip = new Circle(profilePictureView.getFitWidth() / 2,
                     profilePictureView.getFitHeight() / 2,
                     profilePictureView.getFitWidth() / 2);
@@ -94,103 +210,21 @@ public class ProfileController {
         } catch (Exception e) {
             System.err.println("Gagal memuat gambar profil default: " + e.getMessage());
         }
+    }
 
-        // Tambahkan event handler dummy untuk tombol edit
-        if (editProfileButton != null) {
-            editProfileButton.setOnAction(event -> System.out.println("Tombol Edit Profile diklik (dummy)!"));
+    // Helper: Mendapatkan gambar placeholder default (jika diperlukan di tempat lain)
+    private Image getDefaultProfilePlaceholder() {
+        try {
+            return new Image(getClass().getResource("/app/edugram/userData/images/profile_pictures/lapwiing.jpg").toExternalForm());
+        } catch (Exception e) {
+            System.err.println("Gagal memuat gambar placeholder default: " + e.getMessage());
+            return null;
         }
-
-        // --- Bagian 2: Mengisi Grid Postingan Menggunakan Logika Mirip Explore ---
-        // Panggil metode untuk memuat semua postingan dari database
-        // (Ini akan sama persis dengan yang dilakukan di BerandaController untuk explore)
-        loadAllPostsIntoUserGrid();
     }
 
-    // Metode ini akan mengambil semua postingan dari database, mirip dengan halaman Explore.
-    // Nanti, Anda bisa memodifikasi query ini untuk hanya mengambil postingan pengguna tertentu.
-    private void loadAllPostsIntoUserGrid() {
-        List<PostModel> allPosts = new ArrayList<>();
-        try (Connection conn = DatabaseManager.getConnection()) {
-            // Sesuaikan query SQL ini dengan struktur database Anda.
-            // Pastikan kolom-kolom yang diambil sesuai dengan PostModel Anda.
-            String query = "SELECT p.id, p.user_id, p.title, p.description, p.image_filename, p.tags, p.created_at, " +
-                    "u.username, u.profile_picture_filename " +
-                    "FROM posts p JOIN users u ON p.user_id = u.id ORDER BY p.created_at DESC";
-
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                PostModel post = new PostModel(
-                        rs.getInt("id"),
-                        rs.getInt("user_id"),
-                        rs.getString("title"),
-                        rs.getString("description"),
-                        rs.getString("image_filename"), // Ini adalah nama file gambar post
-                        rs.getString("tags"),
-                        rs.getTimestamp("created_at")
-                );
-                // Penting: Set username dan profile picture dari JOIN untuk SmallPostController
-                post.setPostUsername(rs.getString("username"));
-                post.setProfile(rs.getString("profile_picture_filename"));
-
-                allPosts.add(post);
-            }
-        } catch (SQLException e) {
-            System.err.println("Error memuat semua postingan untuk grid profil: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        // Setelah semua PostModel berhasil dimuat, tampilkan di GridPane
-        displayPostsInGrid(allPosts);
+    public void backToProfile() {
+        contentContainer.getChildren().clear();
+        contentContainer.getChildren().add(ProfileGridView);
     }
 
-    // Metode ini bertanggung jawab menempatkan setiap PostModel ke dalam smallpost.fxml
-    // dan menambahkannya ke GridPane. Ini adalah inti dari re-use komponen.
-    private void displayPostsInGrid(List<PostModel> posts) {
-        // Penting: Pastikan operasi UI di JavaFX Application Thread
-        Platform.runLater(() -> {
-            userPostsGrid.getChildren().clear(); // Bersihkan grid sebelumnya jika ada
-            int col = 0;
-            int row = 0;
-            int maxCols = userPostsGrid.getColumnConstraints().size(); // Ambil jumlah kolom dari FXML
-
-            for (PostModel post : posts) {
-                try {
-                    FXMLLoader loader = new FXMLLoader(Main.class.getResource("components/smallpost.fxml"));
-                    VBox smallPostCard = loader.load(); // Root dari smallpost.fxml harus VBox atau HBox
-                    SmallPostController smallPostController = loader.getController();
-
-                    // Panggil metode setData di SmallPostController yang menerima PostModel
-                    // SmallPostController Anda akan menggunakan data ini untuk memuat gambar
-                    smallPostController.setData(post);
-
-                    // Tambahkan komponen smallpost ke grid
-                    userPostsGrid.add(smallPostCard, col, row);
-
-                    // Tambahkan event handler untuk klik pada smallpost (opsional, tapi bagus untuk interaksi)
-                    final int postId = post.getId();
-                    smallPostCard.setOnMouseClicked(event -> handleSmallPostClick(postId));
-
-                    col++;
-                    if (col == maxCols) { // Pindah ke baris baru jika kolom sudah penuh
-                        col = 0;
-                        row++;
-                    }
-                } catch (IOException e) {
-                    System.err.println("Gagal memuat smallpost.fxml untuk post ID " + post.getId() + ": " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    // Metode untuk menangani klik pada smallpost (mirip BerandaController)
-    private void handleSmallPostClick(int postId) {
-        System.out.println("Thumbnail post ID " + postId + " diklik di halaman Profile.");
-        // Di sini Anda bisa memanggil parentController untuk navigasi ke tampilan detail post
-        // if (parentController != null) {
-        //     parentController.loadPage("post_detail_page", String.valueOf(postId));
-        // }
-    }
 }
