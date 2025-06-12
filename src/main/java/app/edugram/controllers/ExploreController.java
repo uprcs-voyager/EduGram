@@ -1,6 +1,7 @@
 package app.edugram.controllers;
 import app.edugram.Main;
 import app.edugram.models.PostModel;
+import app.edugram.utils.PostClickHandler;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ExploreController extends BaseController implements Initializable {
+public class ExploreController extends BaseController implements Initializable, PostClickHandler {
     @FXML private GridPane postContentGrid;
     @FXML private ScrollPane contentScrollPane;
     @FXML private VBox contentContainer;
@@ -140,7 +141,7 @@ public class ExploreController extends BaseController implements Initializable {
                     return new ArrayList<>();
                 }
 
-                // Simulate network delay (remove this in production)
+                // Simulate network delay (remove this in production) <- lmao
                 Thread.sleep(500);
 
                 List<PostModel> batch = allPosts.subList(startIndex, endIndex);
@@ -216,7 +217,8 @@ public class ExploreController extends BaseController implements Initializable {
 
         SmallPostFrameController smallPostFrameController = fxmlLoader.getController();
         smallPostFrameController.setData(post);
-        smallPostFrameController.setExploreController(this);
+//        smallPostFrameController.setExploreController(this);
+        smallPostFrameController.setPostClickHandler(this);
 
         postContentGrid.add(box, columns, row);
         GridPane.setMargin(box, new Insets(2, 2, 1, 2));
@@ -254,6 +256,16 @@ public class ExploreController extends BaseController implements Initializable {
         return posts;
     }
 
+
+    public void onPostClicked(PostModel post) {
+        ShowPostDetail(post);
+    }
+
+
+    public void onPostBackClicked(PostModel post) {
+        showExploreGrid();
+    }
+
     public void ShowPostDetail(PostModel post){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pages/components/post.fxml"));
@@ -261,8 +273,9 @@ public class ExploreController extends BaseController implements Initializable {
 
             PostFrameController postFrameController = fxmlLoader.getController();
             postFrameController.setData(post);
-            postFrameController.setReturnToExploreCallBack(() -> showExploreGrid());
+            postFrameController.setPostClickHandler(this);
             postFrameController.showBackButton(true);
+
 
             contentContainer.getChildren().clear();
             contentContainer.getChildren().add(postDetailView);

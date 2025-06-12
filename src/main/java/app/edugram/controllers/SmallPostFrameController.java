@@ -1,6 +1,7 @@
 package app.edugram.controllers;
 import app.edugram.Main;
 import app.edugram.models.PostModel;
+import app.edugram.utils.PostClickHandler;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -48,11 +49,12 @@ public class SmallPostFrameController {
 
     private PostModel getCurrentPost;
     private ExploreController exploreController;
-
+    private ProfileController profileController;
+    private PostClickHandler postClickHandler;
 
     @FXML
     public void initialize() {
-        smallpost.setFitWidth(415);
+        smallpost.setFitWidth(416);
         smallpost.setFitHeight(308);
         smallpost.setPreserveRatio(false);
         smallpost.setMouseTransparent(true);
@@ -60,15 +62,17 @@ public class SmallPostFrameController {
         postTooltip = new Tooltip();
         Tooltip.install(buttonpost, postTooltip);
 
-        if (buttonpost != null) {
-            buttonpost.setOnAction(this::handlePostClick);
-        }
+
 
     }
 
-    public void setExploreController(ExploreController exploreController) {
-        this.exploreController = exploreController;
-    }
+//    public void setExploreController(ExploreController exploreController) {
+//        this.exploreController = exploreController;
+//    }
+//
+//    public void setProfileController(ProfileController profileController) {
+//        this.profileController = profileController;
+//    }
 
     public void setData(PostModel postModel){
         this.currentPost = postModel;
@@ -96,15 +100,26 @@ public class SmallPostFrameController {
 
     }
 
+    public void setPostClickHandler(PostClickHandler handler) {
+        this.postClickHandler = handler;
+
+        if(buttonpost != null) {
+            buttonpost.setOnAction(this::handlePostClick);
+        } else {
+            System.out.println("buttonpost is null");
+        }
+    }
+
     private void handlePostClick(ActionEvent event) {
         if (currentPost == null) {
             System.err.println("ERROR: current post is null");
             return;
         }
-        if (exploreController != null) {
-            exploreController.ShowPostDetail(currentPost);
-        } else {
-            System.err.println("ERROR: exploreController is null");
+        if (postClickHandler != null) {
+            postClickHandler.onPostClicked(currentPost);
+        }
+        else {
+            System.err.println("ERROR: profilecontroller is null");
         }
     }
 
