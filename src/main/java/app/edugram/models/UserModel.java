@@ -8,11 +8,16 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
 //    ========================================
 //    ===== DIGUNAKAN UNTUK USER PROFILE =====
 //    ========================================
+    private int id;
     private String username;
     private String password;
     private String nama;
     private String email;
     private String profilePic;
+
+    public UserModel() {
+        // Default constructor
+    }
 
     public UserModel(String username, String password, String nama, String email, String profilePic) {
         this.username = username;
@@ -35,6 +40,15 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
     public String getNama() {return nama;}
     public String getEmail() {return email;}
     public String getProfilePic() {return profilePic;}
+
+    // Setters
+    public void setId(int id) { this.id = id; } // Setter untuk ID
+    public void setUsername(String username) { this.username = username; }
+    public void setPassword(String password) { this.password = password; }
+    public void setNama(String nama) { this.nama = nama; }
+    public void setEmail(String email) { this.email = email; }
+    public void setProfilePic(String profilePic) { this.profilePic = profilePic; }
+
 
 //    ========================================
 //    ===== DIGUNAKAN UNTUK USER PROFILE =====
