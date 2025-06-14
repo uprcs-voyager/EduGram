@@ -27,7 +27,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProfileController implements Initializable, PostClickHandler {
-    public String whoProfile = "";
+    // ---- Controller's variabels ----
+    public int whoseProfile = Sessions.getUserId();
+
     // --- FXML Elements for User Info (dummy for now) ---
     @FXML private VBox contentContainer;
     @FXML private ImageView profilePictureView;
@@ -38,15 +40,12 @@ public class ProfileController implements Initializable, PostClickHandler {
     @FXML private Label bioLabel;
     @FXML private Button editProfileButton;
 
-
     // --- FXML Elements for Post Grid ---
     @FXML private ScrollPane contentScrollPane;
     @FXML private GridPane userPostsGrid; // Ini akan menampung smallpost.fxml
     @FXML private HBox hbox_profile;
-    // Daftar semua postingan yang akan ditampilkan (mirip allPosts di ExploreController)
     private List<PostModel> allPostsToDisplay;
 
-    // Optional: Untuk navigasi antar halaman (misalnya ke detail post)
     private BaseViewController parentController;
 
     private Node ProfileGridView;
@@ -84,7 +83,7 @@ public class ProfileController implements Initializable, PostClickHandler {
             @Override
             protected List<PostModel> call() throws Exception {
                 PostModel post = new PostModel();
-                return post.listAll("profile");
+                return post.listAll(whoseProfile == Sessions.getUserId() ? "myProfile" : "profile-" + whoseProfile);
             }
         };
 

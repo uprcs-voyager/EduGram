@@ -23,18 +23,14 @@ public class BaseViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Atur "jembatan" antara BaseViewController dan SidebarController
-        // Ini akan memanggil method setNavigationHandler di SidebarController
         sidebarController.setNavigationHandler(pageName -> loadPage(pageName));
 
-        // Muat halaman default saat pertama kali dibuka
         loadPage("beranda");
     }
 
     // Method untuk memuat dan mengganti konten di tengah BorderPane
     public void loadPage(String fxmlName) {
         try {
-            // Update tampilan tombol aktif di sidebar SEBELUM memuat halaman baru
             sidebarController.updateSelectionState(fxmlName);
 
             // Path ke file FXML halaman (misal: "beranda.fxml", "explore.fxml")

@@ -202,6 +202,7 @@ public class PostModel extends BaseModel implements CRUDable{
     }
 
     private String getQuery(String type){
+        System.out.println(type);
         String query = """
                 SELECT
                     p.id_post,
@@ -247,6 +248,8 @@ public class PostModel extends BaseModel implements CRUDable{
                         query += " pt.id_tag = '" + UPM.get(i) + "'";
                         if(!(i == UPM.size() - 1)){
                             query += " OR ";
+                        }else{
+                            query += " OR p.id_user = " + Sessions.getUserId();
                         }
                     }
                 }
@@ -257,9 +260,8 @@ public class PostModel extends BaseModel implements CRUDable{
                     (COUNT(DISTINCT l.id_like) - COUNT(DISTINCT dl.id_dislike)) DESC,
                     p.id_post DESC;
                         """;
-                System.out.println(query);
                 break;
-            case "profile":
+            case "myProfile":
                 query += """
                         WHERE p.id_user = """ + Sessions.getUserId() + """
                          GROUP BY p.id_post
@@ -267,8 +269,9 @@ public class PostModel extends BaseModel implements CRUDable{
                             p.created_at desc; 
                         """;
                 break;
+            case "":
+                break;
         }
-        System.out.println(query);
         return query;
     }
 
