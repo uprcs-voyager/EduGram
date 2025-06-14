@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,107 +12,152 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.AuthController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.SignupController">
    <children>
-      <ImageView fx:id="image_login_bg" fitHeight="600.0" fitWidth="800.0" opacity="0.36" pickOnBounds="true">
+      <!-- Add this to your FXML -->
+      <Button fx:id="hiddenRedirectButton" visible="false" />
+      <ImageView fx:id="image_signup_bg" fitHeight="645.0" fitWidth="844.0" opacity="0.36" pickOnBounds="true">
          <image>
-            <Image url="@../assets/Image/background/login_backg.jpg" />
+            <Image url="@../assets/Image/background/registerbg.png" />
          </image>
       </ImageView>
-      <VBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="100.0" StackPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="818.0" StackPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" text="EduGram" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="27.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="66.0" top="48.0" />
+                  <Insets bottom="35.0" top="29.0" />
                </VBox.margin>
             </Label>
-            <Label text="Sign up" translateY="70.0">
+            <Label text="Signup">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
+               <VBox.margin>
+                  <Insets top="-22.0" />
+               </VBox.margin>
             </Label>
-            <Label text="Masukan Email anda" translateY="65.0">
+            <Label text="Daftarkan akun anda">
                <font>
                   <Font size="14.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="21.0" />
+                  <Insets bottom="28.0" />
                </VBox.margin></Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="51.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Email" translateY="50.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
+            <ImageView fx:id="pfp_imageview" fitHeight="59.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/Image/Icons/pfp_placeholder.jpg" />
+               </image>
                <VBox.margin>
-                  <Insets right="234.0" />
+                  <Insets />
                </VBox.margin>
+            </ImageView>
+            <Button fx:id="addprofile_button" mnemonicParsing="false" prefHeight="26.0" prefWidth="137.0" styleClass="register-button" stylesheets="@../assets/css/css_login.css" text="+ profile picture">
+               <VBox.margin>
+                  <Insets bottom="18.0" />
+               </VBox.margin>
+            </Button>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="68.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Nama">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
                <padding>
-                  <Insets bottom="-4.0" left="4.0" right="4.0" />
+                  <Insets bottom="-3.0" left="4.0" right="4.0" />
                </padding>
+               <VBox.margin>
+                  <Insets right="218.0" />
+               </VBox.margin>
             </Label>
             <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css">
                <children>
-                  <TextField prefHeight="26.0" prefWidth="1000.0" styleClass="no-shadow" stylesheets="@../assets/css/css_login.css" text="email@domain.com" translateY="50.0" />
+                  <TextField fx:id="nama_textfield" prefHeight="26.0" prefWidth="289.0" promptText="Masukan nama anda" styleClass="no-shadow" stylesheets="@../assets/css/css_login.css">
+                     <HBox.margin>
+                        <Insets bottom="11.0" />
+                     </HBox.margin>
+                  </TextField>
                </children>
                <VBox.margin>
                   <Insets left="-6.0" />
                </VBox.margin>
             </HBox>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="87.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Password" translateX="-95.0" translateY="60.0">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="99.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Username">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
                <padding>
-                  <Insets bottom="-4.0" left="4.0" right="4.0" />
+                  <Insets bottom="-3.0" left="4.0" right="4.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets right="186.0" />
+               </VBox.margin>
+            </Label>
+            <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css">
+               <children>
+                  <TextField fx:id="username_textfield" prefHeight="26.0" prefWidth="289.0" promptText="Masukan username anda" styleClass="no-shadow" stylesheets="@../assets/css/css_login.css">
+                     <HBox.margin>
+                        <Insets bottom="11.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <VBox.margin>
+                  <Insets left="-6.0" />
+               </VBox.margin>
+            </HBox>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="62.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Email">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="222.0" top="-1.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="-3.0" left="4.0" right="4.0" />
                </padding>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="58.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Nama" translateX="-110.0" translateY="85.0">
+            <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css">
+               <children>
+                  <TextField fx:id="email_textfield" prefHeight="26.0" prefWidth="308.0" promptText="example@gmail.com" styleClass="no-shadow" stylesheets="@../assets/css/css_login.css" />
+               </children>
+               <VBox.margin>
+                  <Insets left="-6.0" />
+               </VBox.margin>
+            </HBox>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="96.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Password">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
                <padding>
-                  <Insets bottom="-4.0" left="4.0" right="4.0" />
+                  <Insets bottom="1.0" left="4.0" right="4.0" />
                </padding>
+               <VBox.margin>
+                  <Insets right="190.0" top="11.0" />
+               </VBox.margin>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="100.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Username" translateX="-90.0" translateY="110.0">
+            <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css">
+               <children>
+                  <PasswordField fx:id="password_textfield" prefHeight="26.0" prefWidth="308.0" promptText="Password" />
+               </children>
+               <VBox.margin>
+                  <Insets right="5.0" />
+               </VBox.margin>
+            </HBox>
+            <Button fx:id="register" mnemonicParsing="false" prefHeight="26.0" prefWidth="278.0" styleClass="login-button" stylesheets="@../assets/css/css_login.css" text="Register">
+               <VBox.margin>
+                  <Insets right="5.0" top="16.0" />
+               </VBox.margin>
+            </Button>
+            <Label text="Atau sudah punya akun, Klik dibawah ini">
                <font>
-                  <Font size="18.0" />
+                  <Font size="14.0" />
                </font>
-               <padding>
-                  <Insets bottom="-4.0" left="4.0" right="4.0" />
-               </padding>
+               <VBox.margin>
+                  <Insets bottom="2.0" top="15.0" />
+               </VBox.margin>
             </Label>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Daftar" translateY="150.0" />
-            <Label text="jika sudah punya akun" translateX="-40.0" translateY="150.0" />
+            <Button fx:id="login" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" styleClass="login-button" stylesheets="@../assets/css/css_login.css" text="Login" />
          </children>
       </VBox>
-      <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css">
-         <children>
-            <TextField prefHeight="26.0" prefWidth="1000.0" styleClass="no-shadow" stylesheets="@../assets/css/css_login.css" text="email@domain.com" translateY="70.0" />
-         </children>
-      </HBox>
-      <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css" translateY="50.0">
-         <children>
-            <TextField prefHeight="26.0" prefWidth="1000.0" styleClass="no-shadow" stylesheets="@../assets/css/css_login.css" text="email@domain.com" translateY="70.0" />
-         </children>
-      </HBox>
-      <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css" translateY="70.0">
-         <children>
-            <TextField prefHeight="26.0" prefWidth="1000.0" styleClass="no-shadow" stylesheets="@../assets/css/css_login.css" text="email@domain.com" translateY="100.0" />
-         </children>
-      </HBox>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" translateY="-150.0">
-         <image>
-<!--            <Image url="@images.png" />-->
-         </image>
-      </ImageView>
-      <ImageView fitHeight="61.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" translateX="20.0" translateY="-100.0">
-         <image>
-<!--            <Image url="@download%20(2)%20(1).png" />-->
-         </image>
-      </ImageView>
-      <Label text="klik disini" textFill="#0073ff" translateX="50.0" translateY="233.0" />
    </children>
 </StackPane>
