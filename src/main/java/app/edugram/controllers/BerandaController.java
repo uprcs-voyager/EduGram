@@ -245,7 +245,7 @@ public class BerandaController extends BaseController implements Initializable {
     public List<PostModel> initData() {
         System.out.println("initData() called");
         PostModel post = new PostModel();
-        List<PostModel> posts = post.listAll();
+        List<PostModel> posts = post.listAll("beranda");
         System.out.println("initData() returning " + posts.size() + " posts");
         return posts;
     }

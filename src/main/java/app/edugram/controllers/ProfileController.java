@@ -83,7 +83,7 @@ public class ProfileController implements Initializable, PostClickHandler {
             @Override
             protected List<PostModel> call() throws Exception {
                 PostModel post = new PostModel();
-                return post.listAll();
+                return post.listAll("profile");
             }
         };
 

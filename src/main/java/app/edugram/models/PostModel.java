@@ -120,7 +120,7 @@ public class PostModel extends BaseModel implements CRUDable{
     }
 
     @Override
-    public List<PostModel> listAll() {
+    public List<PostModel> listAll(String type) {
         List<PostModel> posts = new ArrayList<>();
 
         String sql = """
@@ -150,7 +150,6 @@ public class PostModel extends BaseModel implements CRUDable{
                 ORDER BY
                     (COUNT(DISTINCT l.id_like) - COUNT(DISTINCT dl.id_dislike)) DESC,
                     p.id_post DESC;
-                ;
                 """;
 //        MAX(CASE WHEN pt.id_tag IN (1, 2, 3) THEN 1 ELSE 0 END) DESC,
 
@@ -229,7 +228,7 @@ public class PostModel extends BaseModel implements CRUDable{
         return sumCount;
     }
 
-    private String getQuery(){
+    private String getQuery(String type){
         String query = """
                 SELECT
                     p.id_post,
@@ -245,52 +244,35 @@ public class PostModel extends BaseModel implements CRUDable{
                     CASE
                         WHEN COUNT(DISTINCT t.nama_tag) = 0 THEN NULL
                         ELSE GROUP_CONCAT(DISTINCT t.nama_tag || '-' || t.type_tag)
-                        END AS tags
+                    END AS tags
                 FROM post p
-                         LEFT JOIN like l ON p.id_post = l.id_post
-                         LEFT JOIN dislike dl ON p.id_post = dl.id_post
-                         LEFT JOIN comment c ON p.id_post = c.id_post
-                         JOIN user u ON p.id_user = u.id_user
-                         LEFT JOIN postTag pt ON p.id_post = pt.id_post
-                         LEFT JOIN tag t ON pt.id_tag = t.id_tag
+                LEFT JOIN like l ON p.id_post = l.id_post
+                LEFT JOIN dislike dl ON p.id_post = dl.id_post
+                LEFT JOIN comment c ON p.id_post = c.id_post
+                JOIN user u ON p.id_user = u.id_user
+                LEFT JOIN postTag pt ON p.id_post = pt.id_post
+                LEFT JOIN tag t ON pt.id_tag = t.id_tag
                 GROUP BY p.id_post
-                ORDER BY
                 """;
-//        MAX(CASE WHEN pt.id_tag IN (1, 2, 3) THEN 1 ELSE 0 END) DESC,
-        if (new UserPrefTagModel().exists(Sessions.getUserId())) {
-            String tagQuery = "SELECT id_tag FROM userPrefTags WHERE id_user = " + Sessions.getUserId();
-            ConnectDB db = new ConnectDB();
-            Connection con = db.getConnetion();
-            if (con == null) return null;
-
-            try (
-                    PreparedStatement pstmt = con.prepareStatement(tagQuery);
-                    ResultSet rs = pstmt.executeQuery()
-            ) {
-                StringBuilder inClause = new StringBuilder();
-                while (rs.next()) {
-                    int tagId = rs.getInt("id_tag");
-                    if (inClause.length() > 0) {
-                        inClause.append(",");
-                    }
-                    inClause.append(tagId);
-                }
-
-                if (inClause.length() > 0) {
-                    query += " MAX(CASE WHEN pt.id_tag IN (" + inClause + ") THEN 1 ELSE 0 END) DESC, ";
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                db.closeConnection();
-            }
-        }
-
-        query += """
-                (COUNT(DISTINCT l.id_like) - COUNT(DISTINCT dl.id_dislike)) DESC,
+        switch (type){
+            case "beranda":
+                query += """
+                        ORDER BY
+                    (COUNT(DISTINCT l.id_like) - COUNT(DISTINCT dl.id_dislike)) DESC,
                     p.id_post DESC;
-                """;
+                        """;
+                break;
+            case "explore":
+                query += """
+                        ORDER BY
+                    (COUNT(DISTINCT l.id_like) - COUNT(DISTINCT dl.id_dislike)) DESC,
+                    p.id_post DESC
+                        """;
+            case "profile":
+                query += "WHERE p.id_user = " + Sessions.getUserId();
+        }
         return query;
+
     }
 
 
