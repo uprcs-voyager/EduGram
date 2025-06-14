@@ -205,6 +205,7 @@ public class PostFrameController {
 
     @FXML
     void onProfileClicked(ActionEvent event) {
+
         System.out.println("Profile button clicked for user " + currentPost.getPostUsername());
     }
 

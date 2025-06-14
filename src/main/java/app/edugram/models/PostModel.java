@@ -123,34 +123,7 @@ public class PostModel extends BaseModel implements CRUDable{
     public List<PostModel> listAll(String type) {
         List<PostModel> posts = new ArrayList<>();
 
-        String sql = """
-                SELECT
-                    p.id_post,
-                    p.id_user,
-                    u.username,
-                    p.img_post,
-                    p.title_post,
-                    p.desc_post,
-                    u.prof_pic,
-                    COUNT(DISTINCT l.id_like) AS like_count,
-                    COUNT(DISTINCT dl.id_dislike) AS dislike_count,
-                    COUNT(DISTINCT c.id_com) AS comment_count,
-                    CASE
-                        WHEN COUNT(DISTINCT t.nama_tag) = 0 THEN NULL
-                        ELSE GROUP_CONCAT(DISTINCT t.nama_tag || '-' || t.type_tag)
-                    END AS tags
-                FROM post p
-                LEFT JOIN like l ON p.id_post = l.id_post
-                LEFT JOIN dislike dl ON p.id_post = dl.id_post
-                LEFT JOIN comment c ON p.id_post = c.id_post
-                JOIN user u ON p.id_user = u.id_user
-                LEFT JOIN postTag pt ON p.id_post = pt.id_post
-                LEFT JOIN tag t ON pt.id_tag = t.id_tag
-                GROUP BY p.id_post
-                ORDER BY
-                    (COUNT(DISTINCT l.id_like) - COUNT(DISTINCT dl.id_dislike)) DESC,
-                    p.id_post DESC;
-                """;
+        String sql = getQuery(type);
 //        MAX(CASE WHEN pt.id_tag IN (1, 2, 3) THEN 1 ELSE 0 END) DESC,
 
         ConnectDB db = new ConnectDB();
@@ -238,6 +211,7 @@ public class PostModel extends BaseModel implements CRUDable{
                     p.title_post,
                     p.desc_post,
                     u.prof_pic,
+                    p.created_at,
                     COUNT(DISTINCT l.id_like) AS like_count,
                     COUNT(DISTINCT dl.id_dislike) AS dislike_count,
                     COUNT(DISTINCT c.id_com) AS comment_count,
@@ -252,37 +226,55 @@ public class PostModel extends BaseModel implements CRUDable{
                 JOIN user u ON p.id_user = u.id_user
                 LEFT JOIN postTag pt ON p.id_post = pt.id_post
                 LEFT JOIN tag t ON pt.id_tag = t.id_tag
-                GROUP BY p.id_post
                 """;
+//        System.out.println(query);
         switch (type){
-            case "beranda":
+            case "explore":
                 query += """
+                        GROUP BY p.id_post
+                        ORDER BY
+                    (COUNT(DISTINCT l.id_like) - COUNT(DISTINCT dl.id_dislike)) DESC,
+                    p.id_post DESC; 
+                        """;
+                break;
+            case "beranda":
+                List<String> UPM = UserPrefTagModel.listAll(); // user's preferred tags
+                boolean isThere= UPM != null && !UPM.isEmpty();
+                System.out.println(isThere);
+                if(isThere){
+                    query += " WHERE ";
+                    for (int i = 0; i < UPM.size(); i++){
+                        query += " pt.id_tag = '" + UPM.get(i) + "'";
+                        if(!(i == UPM.size() - 1)){
+                            query += " OR ";
+                        }
+                    }
+                }
+
+                query += """
+                        GROUP BY p.id_post
                         ORDER BY
                     (COUNT(DISTINCT l.id_like) - COUNT(DISTINCT dl.id_dislike)) DESC,
                     p.id_post DESC;
                         """;
+                System.out.println(query);
                 break;
-            case "explore":
-                query += """
-                        ORDER BY
-                    (COUNT(DISTINCT l.id_like) - COUNT(DISTINCT dl.id_dislike)) DESC,
-                    p.id_post DESC
-                        """;
             case "profile":
-                query += "WHERE p.id_user = " + Sessions.getUserId();
+                query += """
+                        WHERE p.id_user = """ + Sessions.getUserId() + """
+                         GROUP BY p.id_post
+                        ORDER BY
+                            p.created_at desc; 
+                        """;
+                break;
         }
+        System.out.println(query);
         return query;
-
     }
-
-
-
-
 
 //    ================================ GETTER SETTER ================================
 //     GETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTER
 //    ===============================================================================
-
     public String getPostContent() {
         return postContent;
     }

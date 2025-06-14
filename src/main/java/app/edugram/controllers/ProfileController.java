@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProfileController implements Initializable, PostClickHandler {
+    public String whoProfile = "";
     // --- FXML Elements for User Info (dummy for now) ---
     @FXML private VBox contentContainer;
     @FXML private ImageView profilePictureView;
