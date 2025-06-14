@@ -1,67 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.AuthController">
-   <left>
-      <AnchorPane prefWidth="228.0" style="-fx-background-color: #3A1078;" BorderPane.alignment="CENTER">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.AuthController">
+   <children>
+      <ImageView fx:id="image_login_bg" fitHeight="600.0" fitWidth="800.0" opacity="0.36" pickOnBounds="true">
+         <image>
+            <Image url="@../assets/Image/background/login_backg.jpg" />
+         </image>
+      </ImageView>
+      <VBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="100.0" StackPane.alignment="CENTER">
          <children>
-            <Label layoutX="-138.0" layoutY="154.0" rotate="-90.0" text="EDUGRAM" textFill="WHITE">
+            <Label alignment="CENTER" contentDisplay="CENTER" text="EduGram" textAlignment="CENTER">
                <font>
-                  <Font size="70.0" />
+                  <Font name="System Bold" size="27.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="66.0" top="48.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="Sign up" translateY="70.0">
+               <font>
+                  <Font name="System Bold" size="23.0" />
                </font>
             </Label>
+            <Label text="Masukan Email anda" translateY="65.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="21.0" />
+               </VBox.margin></Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="51.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Email" translateY="50.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="234.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="-4.0" left="4.0" right="4.0" />
+               </padding>
+            </Label>
+            <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css">
+               <children>
+                  <TextField prefHeight="26.0" prefWidth="1000.0" styleClass="no-shadow" stylesheets="@../assets/css/css_login.css" text="email@domain.com" translateY="50.0" />
+               </children>
+               <VBox.margin>
+                  <Insets left="-6.0" />
+               </VBox.margin>
+            </HBox>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="87.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Password" translateX="-95.0" translateY="60.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets bottom="-4.0" left="4.0" right="4.0" />
+               </padding>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="58.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Nama" translateX="-110.0" translateY="85.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets bottom="-4.0" left="4.0" right="4.0" />
+               </padding>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="100.0" styleClass="Email-label" stylesheets="@../assets/css/css_login.css" text="Username" translateX="-90.0" translateY="110.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets bottom="-4.0" left="4.0" right="4.0" />
+               </padding>
+            </Label>
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Daftar" translateY="150.0" />
+            <Label text="jika sudah punya akun" translateX="-40.0" translateY="150.0" />
          </children>
-      </AnchorPane>
-   </left>
-   <right>
-      <AnchorPane prefHeight="200.0" prefWidth="370.0" style="-fx-background-color: #F7F7F8;" BorderPane.alignment="CENTER">
+      </VBox>
+      <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css">
          <children>
-            <Label layoutX="127.0" layoutY="6.0" text="SIGNUP">
-               <font>
-                  <Font name="System Bold" size="31.0" />
-               </font>
-            </Label>
-            <Label layoutX="20.0" layoutY="124.0" text="Username">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <TextField fx:id="usernameInp" layoutX="118.0" layoutY="122.0" promptText="Username" />
-            <Label layoutX="22.0" layoutY="153.0" text="Password">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <TextField fx:id="passInp" layoutX="117.0" layoutY="156.0" promptText="Password" />
-            <Button fx:id="regisButton" layoutX="51.0" layoutY="269.0" mnemonicParsing="false" onAction="#RegisterButtonAction" prefHeight="24.0" prefWidth="268.0" style="-fx-background-color: #7C43EF;" text="Sign up" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="gotoLogin" layoutX="51.0" layoutY="332.0" mnemonicParsing="false" onAction="#gotoLogin" prefHeight="24.0" prefWidth="268.0" style="-fx-background-color: #7C43EF;" text="Go to lofin" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Button>
-            <TextField fx:id="namaInp" layoutX="116.0" layoutY="89.0" promptText="Nama" />
-            <Label layoutX="51.0" layoutY="91.0" text="NAMA">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="24.0" layoutY="184.0" text="Email">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <TextField fx:id="emailInp" layoutX="118.0" layoutY="187.0" promptText="Email " />
+            <TextField prefHeight="26.0" prefWidth="1000.0" styleClass="no-shadow" stylesheets="@../assets/css/css_login.css" text="email@domain.com" translateY="70.0" />
          </children>
-      </AnchorPane>
-   </right>
-</BorderPane>
+      </HBox>
+      <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css" translateY="50.0">
+         <children>
+            <TextField prefHeight="26.0" prefWidth="1000.0" styleClass="no-shadow" stylesheets="@../assets/css/css_login.css" text="email@domain.com" translateY="70.0" />
+         </children>
+      </HBox>
+      <HBox maxHeight="72.0" prefHeight="100.0" prefWidth="800.0" styleClass="email_Hbox-Textfield" stylesheets="@../assets/css/css_login.css" translateY="70.0">
+         <children>
+            <TextField prefHeight="26.0" prefWidth="1000.0" styleClass="no-shadow" stylesheets="@../assets/css/css_login.css" text="email@domain.com" translateY="100.0" />
+         </children>
+      </HBox>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" translateY="-150.0">
+         <image>
+<!--            <Image url="@images.png" />-->
+         </image>
+      </ImageView>
+      <ImageView fitHeight="61.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" translateX="20.0" translateY="-100.0">
+         <image>
+<!--            <Image url="@download%20(2)%20(1).png" />-->
+         </image>
+      </ImageView>
+      <Label text="klik disini" textFill="#0073ff" translateX="50.0" translateY="233.0" />
+   </children>
+</StackPane>

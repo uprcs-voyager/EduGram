@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DisplacementMap?>
+<?import javafx.scene.effect.FloatMap?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<VBox fx:id="contentContainer" alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" styleClass="profile-page-root" stylesheets="@../assets/css/profile.css" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.ProfileController">
+   <children>
+      <ScrollPane fx:id="contentScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS">
+         <content>
+            <VBox fx:id="scrollableContentWrapper" alignment="TOP_CENTER">
+                    <children>
+      <HBox fx:id="hbox_profile" alignment="CENTER">
+      <VBox alignment="CENTER">
+            <ImageView fx:id="profilePictureView" styleClass="profile-picture">
+            <clip>
+                  <Circle />
+               </clip>
+            </ImageView>
+         <Label fx:id="usernameLabel" styleClass="username-label" text="YourUsername" />
+         <HBox alignment="CENTER" prefHeight="88.0" prefWidth="638.0">
+            <VBox alignment="CENTER"><Label fx:id="postCountLabel" styleClass="stat-number" text="123" /><Label styleClass="stat-text" text="Posts" /></VBox>
+            <VBox alignment="CENTER" prefHeight="50.0" prefWidth="150.0"><Label fx:id="followersCountLabel" styleClass="stat-number" text="456" /><Label styleClass="stat-text" text="Followers" /></VBox>
+            <VBox alignment="CENTER"><Label fx:id="followingCountLabel" styleClass="stat-number" text="789" /><Label styleClass="stat-text" text="Following" /></VBox>
+         </HBox>
+         <Button fx:id="editProfileButton" alignment="CENTER" contentDisplay="CENTER" prefHeight="33.0" prefWidth="638.0" styleClass="action-button" text="Edit Profile">
+               <effect>
+                  <DisplacementMap>
+                     <mapData>
+                        <FloatMap />
+                     </mapData>
+                  </DisplacementMap>
+               </effect></Button>
+      </VBox>
+      </HBox>
+   <Label fx:id="bioLabel" prefHeight="44.0" prefWidth="109.0" text="This is a dummy bio.">
+         <VBox.margin>
+            <Insets bottom="12.0" />
+         </VBox.margin>
+      </Label>
+
+
+      <GridPane fx:id="userPostsGrid" alignment="TOP_CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33" />
+            <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33" />
+            <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33" />
+         </columnConstraints>
+         <ImageView fitHeight="150" fitWidth="150" styleClass="post-thumbnail" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <image><Image url="@../assets/Image/Icons/loading.png" /></image>
+         </ImageView>
+         <ImageView fitHeight="150.0" fitWidth="150" styleClass="post-thumbnail" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <image><Image url="@../assets/Image/Icons/loading.png" /></image>
+         </ImageView>
+            <ImageView fitHeight="150" fitWidth="150" styleClass="post-thumbnail" GridPane.halignment="CENTER">
+               <image>
+                  <Image url="@../assets/Image/Icons/loading.png" />
+               </image>
+            </ImageView>
+            <rowConstraints>
+               <RowConstraints />
+            </rowConstraints>
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
+      </GridPane>
+                    </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</VBox>

@@ -1,0 +1,47 @@
+/* profile.css */
+
+.profile-page-root {
+    -fx-background-color: #fafafa; /* Latar belakang ala Instagram */
+}
+
+.profile-picture {
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    /* -fx-border-radius: 60px; (Jika clip tidak bekerja sesuai harapan) */
+}
+
+.username-label {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.stat-number {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.stat-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666;
+}
+
+.action-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-border-color: #000000;
+    -fx-font-size: 14px;
+    -fx-padding: 6px 16px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.post-thumbnail {
+    -fx-background-color: #eee; /* Warna dasar thumbnail */
+    -fx-min-width: 120px; /* Sesuaikan ukuran min/max sesuai desain Anda */
+    -fx-min-height: 120px;
+    -fx-max-width: 250px;
+    -fx-max-height: 250px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 0); /* Efek bayangan ringan */
+}
+
+/* Tambahkan kelas CSS lain yang Anda definisikan di FXML */
