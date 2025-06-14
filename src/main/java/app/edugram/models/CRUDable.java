@@ -11,5 +11,5 @@ public interface CRUDable<T> {
 
     boolean delete(int id);
 
-    List<T> listAll();
+    List<T> listAll(String type);
 }

@@ -86,7 +86,7 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
     }
 
     @Override
-    public List<UserModel> listAll() {
+    public List<UserModel> listAll(String type) {
         return List.of();
     }
 
