@@ -269,8 +269,15 @@ public class PostModel extends BaseModel implements CRUDable{
                             p.created_at desc; 
                         """;
                 break;
-            case "":
-                break;
+        }
+        if(type.startsWith("profile-")){
+            String profileId = type.substring(8);
+            query += """
+                        WHERE p.id_user = """ + profileId + """
+                         GROUP BY p.id_post
+                        ORDER BY
+                            p.created_at desc; 
+                        """;
         }
         return query;
     }
