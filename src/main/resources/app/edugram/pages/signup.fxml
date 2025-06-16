@@ -48,7 +48,7 @@
                </VBox.margin></Label>
             <ImageView fx:id="pfp_imageview" fitHeight="59.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/Image/Icons/pfp_placeholder.jpg" />
+                  <Image url="@../userData/Images/profile_pictures/pfp_placeholder.jpg" />
                </image>
                <VBox.margin>
                   <Insets />

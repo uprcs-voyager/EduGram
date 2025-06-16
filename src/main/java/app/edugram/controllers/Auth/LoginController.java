@@ -114,9 +114,4 @@ public class LoginController {
     public void gotoRegis(ActionEvent event){
         PageAction.switchPage(event, "signup.fxml");
     }
-
-    @FXML
-    public void gotoLogin(ActionEvent event){
-        PageAction.switchPage(event, "login.fxml");
-    }
 }

@@ -1,6 +1,8 @@
 package app.edugram.controllers.Auth;
 import app.edugram.controllers.Components.PilihGambarProfile;
+import app.edugram.models.UserModel;
 import app.edugram.utils.PageAction;
+import app.edugram.utils.cookies.CookieUtil;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,10 +16,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.embed.swing.SwingFXUtils;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriter;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.IIOImage;
+import javax.imageio.stream.ImageOutputStream;
+import java.net.CookieHandler;
+import java.time.LocalDateTime;
+import java.util.Iterator;
 
 import java.io.IOException;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
+import java.util.Random;
 
 public class SignupController {
     @FXML private ImageView image_signup_bg;
@@ -47,18 +66,17 @@ public class SignupController {
 
         addprofile_button.setOnAction(event -> handleAddProfilePicture());
         loadDefaultProfilePicture();
+        register.setOnAction(this::handleRegisterButton);
 
-
-//        register.setOnAction(this::handleRegisterButton);
+        CookieUtil.clearCookie();
         login.setOnAction(this::handleLoginButton);
 
-
-}
+    }
     private void loadDefaultProfilePicture() {
         try {
-            // Pastikan path ini benar dan file ada
-            File defaultImage = new File(getClass().getResource("app/edugram/userData/images/profile_pictures/hiboss.jpg").toURI());
-            selectedProfileImageFile = defaultImage; // Set default image sebagai selected
+            // Use leading slash for absolute path from resources root
+            File defaultImage = new File(Objects.requireNonNull(getClass().getResource("/app/edugram/userData/Images/profile_pictures/pfp_placeholder.jpg")).toURI());
+            selectedProfileImageFile = defaultImage;
             Image image = new Image(defaultImage.toURI().toString());
             pfp_imageview.setImage(image);
         } catch (Exception e) {
@@ -101,97 +119,131 @@ public class SignupController {
         }
     }
 
+    private void handleRegisterButton(ActionEvent event) {
+        String nama = nama_textfield.getText().trim();
+        String username = username_textfield.getText().trim();
+        String email = email_textfield.getText().trim();
+        String password = password_textfield.getText();
 
+        // Validasi input dasar
+        if (nama.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Input Kosong", "Semua kolom harus diisi.", register.getScene().getWindow());
+            return;
+        }
 
-//    private void handleRegisterButton(ActionEvent event) {
-//        String nama = nama_textfield.getText().trim();
-//        String username = username_textfield.getText().trim();
-//        String email = email_textfield.getText().trim();
-//        String password = password_textfield.getText(); // Tidak perlu trim password
-//
-//        // Validasi input dasar
-//        if (nama.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-//            showAlert(Alert.AlertType.WARNING, "Input Kosong", "Semua kolom harus diisi.", register.getScene().getWindow());
-//            return;
-//        }
-//
-//        // Validasi gambar profil (harus ada, bahkan jika itu placeholder default)
-//        if (selectedProfileImageFile == null || !selectedProfileImageFile.exists()) {
-//            showAlert(Alert.AlertType.WARNING, "Gambar Profil Belum Dipilih", "Mohon pilih gambar profil Anda.", register.getScene().getWindow());
-//            return;
-//        }
-//
-//        // Cek validasi registrasi (cek duplikasi username/email)
-//        // Panggil ValidateRegistration yang baru di UserModel
-//        boolean isRegistrationValid = UserModel.ValidateRegistration(username, password, nama, email);
-//        if (!isRegistrationValid) {
-//            showAlert(Alert.AlertType.ERROR, "Registrasi Gagal", "Username atau Email sudah terdaftar. Mohon gunakan yang lain.", register.getScene().getWindow());
-//            return;
-//        }
-//
-//
-//        // Buat objek UserModel baru
-//        UserModel newUser = new UserModel();
-//        newUser.setNama(nama);
-//        newUser.setUsername(username);
-//        newUser.setEmail(email);
-//        newUser.setPassword(password);
-//        newUser.setProfilePic("pfp_placeholder.jpg"); // Atur default dulu
-//
-//
-//        // Coba daftarkan pengguna ke database
-//        boolean registrationSuccess = newUser.create(newUser); // Panggil metode create() di UserModel
-//
-//        if (registrationSuccess) {
-//            // Setelah registrasi berhasil, ID pengguna baru sudah ada di objek newUser
-//            // berkat Statement.RETURN_GENERATED_KEYS di metode create().
-//
-//            // --- Proses Menyalin Gambar Profil ke Direktori Aplikasi ---
-//            // Hanya salin jika gambar yang dipilih BUKAN gambar placeholder default
-//            try {
-//                // Dapatkan path sumber dari selectedProfileImageFile
-//                String sourcePath = selectedProfileImageFile.getAbsolutePath();
-//                String defaultPlaceholderPath = new File(getClass().getResource("/app/edugram/assets/Image/Icons/pfp_placeholder.jpg").toURI()).getAbsolutePath();
-//
-//                if (!sourcePath.equals(defaultPlaceholderPath)) { // Hanya salin jika bukan placeholder
-//                    // Buat nama file unik untuk gambar profil (gunakan ID pengguna)
-//                    String profileImageFileName = "user_" + newUser.getId() + "_" + System.currentTimeMillis() + "_" + selectedProfileImageFile.getName();
-//                    Path targetDirPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "app", "edugram", "userData", "Images", "profile_pictures");
-//
-//                    if (!Files.exists((java.nio.file.Path) targetDirPath)) {
-//                        Files.createDirectories((java.nio.file.Path) targetDirPath);
-//                        System.out.println("SignupController: Created profile picture directory: " + targetDirPath.toString());
-//                    }
-//
-//                    Path targetPath = (Path) ((java.nio.file.Path) targetDirPath).resolve(profileImageFileName);
-//                    Files.copy(selectedProfileImageFile.toPath(), (java.nio.file.Path) targetPath, StandardCopyOption.REPLACE_EXISTING);
-//                    System.out.println("SignupController: Gambar profil berhasil disimpan ke: " + targetPath.toString());
-//
-//
-//                    boolean updatePicSuccess = newUser.updateProfilePicture(newUser.getId(), profileImageFileName);
-//                    if (updatePicSuccess) {
-//                        System.out.println("SignupController: Path gambar profil di database berhasil diperbarui.");
-//                    } else {
-//                        System.err.println("SignupController: Gagal memperbarui path gambar profil di database.");
-//                    }
-//                } else {
-//                    System.out.println("SignupController: Menggunakan gambar profil default, tidak perlu menyalin.");
-//                }
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                showAlert(Alert.AlertType.ERROR, "Error Menyimpan Gambar", "Gagal menyimpan gambar profil: " + e.getMessage(), register.getScene().getWindow());
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                showAlert(Alert.AlertType.ERROR, "Error", "Terjadi kesalahan saat mengelola gambar profil: " + e.getMessage(), register.getScene().getWindow());
-//            }
-//
-//            showAlert(Alert.AlertType.INFORMATION, "Registrasi Sukses", "Akun Anda berhasil dibuat!", register.getScene().getWindow());
-//            PageAction.loadPage("pages/login.fxml", register); // Redirect ke halaman login
-//        } else {
-//            showAlert(Alert.AlertType.ERROR, "Registrasi Gagal", "Gagal mendaftar. Terjadi kesalahan pada database.", register.getScene().getWindow());
-//        }
-//    }
+        boolean isRegistrationValid = UserModel.ValidateRegistration(username, password, nama, email);
+        if (!isRegistrationValid) {
+            showAlert(Alert.AlertType.ERROR, "Registrasi Gagal", "Username atau Email sudah terdaftar. Mohon gunakan yang lain.", register.getScene().getWindow());
+            return;
+        }
+
+        // Buat objek UserModel baru
+        UserModel newUser = new UserModel();
+        newUser.setNama(nama);
+        newUser.setUsername(username);
+        newUser.setEmail(email);
+        newUser.setPassword(password);
+        String newProfileName = isProfilePictureChanged() ? createNewProfileName() : "pfp_placeholder.jpg";
+        newUser.setProfilePic(newProfileName);
+
+        if (newUser.create(newUser)) {
+            storeProfileImage(newProfileName);
+            showAlert(Alert.AlertType.INFORMATION, "Registrasi Sukses", "Akun Anda berhasil dibuat!", register.getScene().getWindow());
+            PageAction.switchPage(event, "login.fxml");
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Registrasi Gagal", "Gagal mendaftar. Terjadi kesalahan pada database.", register.getScene().getWindow());
+        }
+    }
+
+    private void storeProfileImage(String newFileName) {
+        if (!isProfilePictureChanged()) {
+            System.out.println("Using default placeholder, skipping image storage");
+            return;
+        }
+
+        try {
+            // Create target directory if it doesn't exist
+            Path targetDir = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "app", "edugram", "userData", "Images", "profile_pictures");
+            if (!Files.exists(targetDir)) {
+                Files.createDirectories(targetDir);
+            }
+
+            // 1. Get the image from the ImageView
+            Image currentImage = pfp_imageview.getImage();
+            BufferedImage originalBufferedImage = SwingFXUtils.fromFXImage(currentImage, null);
+
+            // 2. *** FIX: Convert to RGB color space to prevent "Bogus input colorspace" error ***
+            // Create a new BufferedImage with a compatible RGB type
+            BufferedImage rgbImage = new BufferedImage(
+                    originalBufferedImage.getWidth(),
+                    originalBufferedImage.getHeight(),
+                    BufferedImage.TYPE_INT_RGB
+            );
+
+            // Draw the original image onto the new RGB image. This performs the conversion.
+            rgbImage.createGraphics().drawImage(originalBufferedImage, 0, 0, null);
+            // **********************************************************************************
+
+            File outputFile = targetDir.resolve(newFileName).toFile();
+
+            // 3. Compress and save the NEW RGB-converted image
+            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+            ImageWriter writer = writers.next();
+            ImageOutputStream ios = ImageIO.createImageOutputStream(outputFile);
+            writer.setOutput(ios);
+
+            ImageWriteParam param = writer.getDefaultWriteParam();
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            param.setCompressionQuality(0.8f); // 80% quality
+
+            // Write the rgbImage, NOT the original bufferedImage
+            writer.write(null, new IIOImage(rgbImage, null, null), param);
+
+            ios.close();
+            writer.dispose();
+
+            System.out.println("Profile image stored and compressed: " + newFileName);
+
+        } catch (IOException e) {
+            System.err.println("Failed to store profile image: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isProfilePictureChanged() {
+        Image currentImage = pfp_imageview.getImage();
+        if (currentImage == null) {
+            return false;
+        }
+
+        String currentUrl = currentImage.getUrl();
+        System.out.println(currentUrl);
+        return currentUrl != null && !currentUrl.contains("pfp_placeholder.jpg");
+    }
+
+    private String createNewProfileName(){
+//        ---- create new profile file's name ----
+        Random randomInt = new Random();
+        String getRandomNumber = String.valueOf(randomInt.nextInt(1000) + 1000);
+
+        LocalDateTime getDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+        String formatDate = getDateTime.format(formatter);
+//        ---- get extension ----
+        String imageUrl = pfp_imageview.getImage().getUrl();
+        String imageExtension = "";
+        if (imageUrl != null) {
+            imageExtension = imageUrl.substring(imageUrl.lastIndexOf(".") + 1).toLowerCase();
+            // Remove any query parameters if present
+            if (imageExtension.contains("?")) {
+                imageExtension = imageExtension.substring(0, imageExtension.indexOf("?"));
+            }
+            System.out.println("Extension: " + imageExtension);
+        }
+
+        String newProfileName = "profile_" + getRandomNumber + formatDate + "." + imageExtension;
+        return newProfileName;
+    }
 
     private void handleLoginButton(ActionEvent event) {
         PageAction.switchPage(event, "login.fxml");

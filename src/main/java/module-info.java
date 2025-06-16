@@ -13,6 +13,7 @@ module app.edugram {
     requires jdk.jfr;
     requires java.desktop;
     requires com.google.gson;
+    requires javafx.swing;
 
     opens app.edugram to javafx.fxml;
     exports app.edugram;

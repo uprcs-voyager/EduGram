@@ -81,7 +81,7 @@
                             <children>
                                 <ImageView fx:id="navProfilePicture" fitHeight="84.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../../assets/Image/Icons/pfp_placeholder.jpg" />
+                                        <Image url="@../../userData/Images/profile_pictures/pfp_placeholder.jpg" />
                                     </image>
                                     <clip>
                                         <Circle centerX="42" centerY="42" radius="42" />
