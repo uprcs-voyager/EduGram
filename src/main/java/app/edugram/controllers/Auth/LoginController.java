@@ -29,7 +29,7 @@ public class AuthController {
 
     @FXML
     public void initialize() {
-        if(checkCookie()) {
+        if(CookieUtil.checkCookie()) {
             Platform.runLater(() -> {
                 hiddenRedirectButton.fire(); // This creates a proper ActionEvent
             });
@@ -44,13 +44,6 @@ public class AuthController {
         }catch (Exception e){
             System.out.println("Auth.Initialize: (notice) This content doesn't load / contain image");
         }
-    }
-
-    public boolean checkCookie() {
-        UserCookie cookie = CookieUtil.loadCookie();
-        System.out.println("Checking cookie for user: '" + cookie.getUsername() + "'");
-
-        return UserModel.ValidateUser(cookie.getUsername(), cookie.getPassword(), true);
     }
 
     @FXML
