@@ -38,17 +38,6 @@ public class SidebarController implements Initializable {
     @FXML private ImageView navCreatePost;
     @FXML private Label navUsername;
 
-    public void onCreatePostClick(MouseEvent mouseEvent) {
-        showCreatePostDialog();
-    }
-
-    public void onSettingsClick(MouseEvent mouseEvent) {
-    }
-
-    public void onBookmarksClick(MouseEvent mouseEvent) {
-    }
-
-
     // Interface untuk berkomunikasi dengan BaseViewController
     public interface NavigationHandler {
         void onNavigateToPage(String pageName);
@@ -121,6 +110,22 @@ public class SidebarController implements Initializable {
     public void onProfileClick(ActionEvent event) {
         if (navigationHandler != null) {
             navigationHandler.onNavigateToPage("profile");
+        }
+    }
+
+    @FXML
+    public void onCreatePostClick(MouseEvent mouseEvent) {
+        showCreatePostDialog();
+    }
+
+    @FXML
+    public void onSettingsClick(MouseEvent mouseEvent) {
+    }
+
+    @FXML
+    public void onBookmarksClick(MouseEvent mouseEvent) {
+        if (navigationHandler != null) {
+            navigationHandler.onNavigateToPage("bookmark");
         }
     }
 

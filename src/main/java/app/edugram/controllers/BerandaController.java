@@ -20,6 +20,7 @@ public class BerandaController extends BaseController implements Initializable {
 
     @FXML private GridPane postContentGrid;
     @FXML private ScrollPane contentScrollPane;
+    @FXML private VBox contentContainer;
 
     // Lazy loading variables
     private int currentPage = 0;
@@ -206,6 +207,7 @@ public class BerandaController extends BaseController implements Initializable {
 
         PostFrameController postFrameController = fxmlLoader.getController();
         postFrameController.setData(post);
+        postFrameController.setContetnContainer(contentContainer);
 
         postContentGrid.add(box, columns, row);
         GridPane.setMargin(box, new Insets(10));

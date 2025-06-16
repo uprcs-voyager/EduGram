@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 
 public class ProfileController implements Initializable, PostClickHandler {
     // ---- Controller's variabels ----
-    public int whoseProfile = Sessions.getUserId();
+    public int whoseProfileId = Sessions.getUserId();
 
     // --- FXML Elements for User Info (dummy for now) ---
     @FXML private VBox contentContainer;
@@ -60,14 +60,7 @@ public class ProfileController implements Initializable, PostClickHandler {
         ProfileGridView = contentScrollPane;
         HboxProfile = hbox_profile;
 
-        // Inisialisasi Tampilan Info Profil dengan Placeholder ---
-        usernameLabel.setText("@" + Sessions.getUsername());
-        postCountLabel.setText("??"); // Akan diupdate nanti
-        followersCountLabel.setText("??");
-        followingCountLabel.setText("??");
-        bioLabel.setText("Ini adalah halaman profil sementara yang menampilkan semua postingan.");
-
-        loadDefaultProfilePicture(); // Muat gambar profil placeholder
+        loadUserProfileInformation();
 
         if (editProfileButton != null) {
             editProfileButton.setOnAction(event -> System.out.println("Tombol Edit Profile diklik (dummy)!"));
@@ -77,13 +70,29 @@ public class ProfileController implements Initializable, PostClickHandler {
         loadAllPostsAndDisplay();
     }
 
+    public void setUserData(int userId) {
+        this.whoseProfileId = userId;
+        loadAllPostsAndDisplay();
+    }
+
+    public void loadUserProfileInformation(){
+        // Inisialisasi Tampilan Info Profil dengan Placeholder ---
+        usernameLabel.setText("@" + Sessions.getUsername());
+        postCountLabel.setText("??"); // Akan diupdate nanti
+        followersCountLabel.setText("??");
+        followingCountLabel.setText("??");
+        bioLabel.setText("Ini adalah halaman profil sementara yang menampilkan semua postingan.");
+
+        loadDefaultProfilePicture();
+    }
+
     private void loadAllPostsAndDisplay() {
         // Operasi database harus di background thread
         Task<List<PostModel>> loadPostsTask = new Task<List<PostModel>>() {
             @Override
             protected List<PostModel> call() throws Exception {
                 PostModel post = new PostModel();
-                return post.listAll(whoseProfile == Sessions.getUserId() ? "myProfile" : "profile-" + whoseProfile);
+                return post.listAll(whoseProfileId == Sessions.getUserId() ? "myProfile" : "profile-" + whoseProfileId);
             }
         };
 

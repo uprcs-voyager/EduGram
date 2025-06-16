@@ -17,8 +17,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -79,11 +83,13 @@ public class SmallPostFrameController {
 
         String imageFilename = postModel.getPostContent();
         try {
-            URL imageResource = getClass().getResource("/app/edugram/userData/Images/posts/" + imageFilename);
+            String mainPath = "src/main/resources/app/edugram/userData/Images/";
+            Path projectRoot = Paths.get("").toAbsolutePath();
+            Path postImagePath = projectRoot.resolve(mainPath + "posts/" + imageFilename);
 
-
-            if (imageResource != null) {
-                Image image = new Image(imageResource.toExternalForm());
+            File postImageFile = postImagePath.toFile();
+            if (postImageFile.exists()) {
+                Image image = new Image(postImageFile.toURI().toString());
                 smallpost.setImage(image);
             } else {
                 System.err.println("ERROR: Image file not found in resources: " + imageFilename);

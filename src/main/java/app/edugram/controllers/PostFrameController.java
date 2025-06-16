@@ -4,12 +4,15 @@ import app.edugram.models.DislikeModel;
 import app.edugram.models.LikeModel;
 import app.edugram.models.PostModel;
 import app.edugram.models.SaveModel;
+import app.edugram.utils.PageAction;
 import app.edugram.utils.Sessions;
 import app.edugram.utils.PostClickHandler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,6 +22,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -203,10 +208,25 @@ public class PostFrameController {
         setPostIconButton(iconBookmark, "bookmark-active.png");
     }
 
+    private VBox contentContainer;
+    public void setContetnContainer(VBox contentContainer){
+        this.contentContainer = contentContainer;
+    }
     @FXML
     void onProfileClicked(ActionEvent event) {
-
         System.out.println("Profile button clicked for user " + currentPost.getPostUsername());
+        try {
+            FXMLLoader loader = new FXMLLoader(PageAction.class.getResource("/app/edugram/pages/profile.fxml"));
+            VBox userProfile = loader.load();
+
+            ProfileController profileFrameController = loader.getController();
+            profileFrameController.setUserData(Integer.parseInt(currentPost.getUserId()));
+
+            contentContainer.getChildren().clear();
+            contentContainer.getChildren().add(userProfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
