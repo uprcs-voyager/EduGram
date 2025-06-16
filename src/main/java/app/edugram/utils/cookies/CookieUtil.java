@@ -1,5 +1,6 @@
 package app.edugram.utils.cookies;
 
+import app.edugram.models.UserModel;
 import app.edugram.utils.cookies.UserCookie;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,6 +17,13 @@ public class CookieUtil {
         } catch (IOException e) {
             return new UserCookie(); // Return default if file not found
         }
+    }
+
+    public static boolean checkCookie() {
+        UserCookie cookie = CookieUtil.loadCookie();
+        System.out.println("Checking cookie for user: '" + cookie.getUsername() + "'");
+
+        return UserModel.ValidateUser(cookie.getUsername(), cookie.getPassword(), true);
     }
 
     public static void saveCookie(UserCookie cookie) {

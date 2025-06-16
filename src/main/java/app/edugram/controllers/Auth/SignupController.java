@@ -1,47 +1,23 @@
-package app.edugram.controllers;
+package app.edugram.controllers.Auth;
+import app.edugram.controllers.Components.PilihGambarProfile;
 import app.edugram.utils.PageAction;
-import  javafx.scene.shape.Path;
-import app.edugram.utils.Notices;
-import app.edugram.utils.cookies.CookieUtil;
-import app.edugram.utils.cookies.UserCookie;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
-import app.edugram.models.UserModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import app.edugram.Main;
-import app.edugram.models.PostModel;
-import app.edugram.utils.PostClickHandler;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 
 import java.io.File;
-import java.io.IOException;
 
 public class SignupController {
     @FXML private ImageView image_signup_bg;

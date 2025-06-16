@@ -1,4 +1,4 @@
-package app.edugram.controllers;
+package app.edugram.controllers.Components;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

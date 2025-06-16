@@ -1,4 +1,4 @@
-package app.edugram.controllers;
+package app.edugram.controllers.Auth;
 
 import app.edugram.utils.PageAction;
 import app.edugram.utils.Notices;
@@ -16,7 +16,7 @@ import javafx.scene.layout.Region;
 import java.io.IOException;
 
 
-public class AuthController {
+public class LoginController {
     public Button hiddenRedirectButton;
     @FXML
     private Button cancelButton;

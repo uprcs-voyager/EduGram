@@ -1,7 +1,5 @@
-package app.edugram.controllers;
-import app.edugram.Main;
+package app.edugram.controllers.Components;
 import app.edugram.models.PostModel;
-import app.edugram.utils.PageAction;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

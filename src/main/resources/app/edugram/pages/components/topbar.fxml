@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="1344.0" styleClass="sidebar_background" stylesheets="@../../assets/css/topbar.css" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.TopbarController">
+<HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="1344.0" styleClass="sidebar_background" stylesheets="@../../assets/css/topbar.css" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.TopbarController">
     <padding>
         <Insets left="30.0" right="30.0" />
     </padding>

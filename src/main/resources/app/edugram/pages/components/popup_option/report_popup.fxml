@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="reportPopupRoot" alignment="TOP_CENTER" prefWidth="424.0" spacing="10.0" style="-fx-background-color: #7827ab; -fx-border-color: #7827ab; -fx-border-width: 1px; -fx-padding: 20px; -fx-background-radius: 10px; -fx-border-radius: 10px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.ReportPopUpController">
+<VBox fx:id="reportPopupRoot" alignment="TOP_CENTER" prefWidth="424.0" spacing="10.0" style="-fx-background-color: #7827ab; -fx-border-color: #7827ab; -fx-border-width: 1px; -fx-padding: 20px; -fx-background-radius: 10px; -fx-border-radius: 10px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.ReportPopUpController">
     <children>
         <Label fx:id="postTitle" style="-fx-text-fill: white;" text="[ judul Post ]">
 
