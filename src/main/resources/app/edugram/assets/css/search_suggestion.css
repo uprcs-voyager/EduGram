@@ -1,0 +1,81 @@
+/* Styling untuk dropdown saran pencarian */
+.suggestion-popup {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5); /* Bayangan tipis */
+    -fx-padding: 5px 0; /* Padding di dalam dropdown (atas/bawah 5px, kiri/kanan 0) */
+
+    /* PENTING: Batasi tinggi maksimal dropdown dan aktifkan scrolling */
+    -fx-max-height: 250px; /* Tinggi maksimal dropdown. Sesuaikan sesuai kebutuhan. */
+    -fx-overflow-y: auto; /* Tambahkan scrollbar vertikal jika konten melebihi max-height */
+
+    -fx-pref-width: 460px; /* Sesuaikan lebar dropdown agar cocok dengan bilah pencarian */
+
+    /* Efek animasi untuk masuk/keluar dropdown. Properti ini penting untuk nilai awal animasi di Java. */
+    -fx-opacity: 0;
+    -fx-scale-y: 0.8;
+    -fx-translate-y: -10px;
+    -fx-transform-origin: top center;
+    /* Transisi dikontrol di Java, tapi properti ini penting untuk nilai awal animasi */
+}
+
+/* Item saran individual di dalam dropdown */
+.suggestion-item {
+    -fx-padding: 8px 15px; /* Padding di dalam setiap item saran */
+    -fx-background-color: transparent; /* Latar belakang transparan secara default */
+    -fx-cursor: hand; /* Kursor berubah menjadi tangan saat dihover */
+    -fx-transition: -fx-background-color 0.1s ease-in-out; /* Transisi halus untuk warna latar belakang */
+}
+
+/* Efek hover saat mouse di atas item saran */
+.suggestion-item:hover {
+    -fx-background-color: #f0f0f0; /* Latar belakang abu-abu terang saat dihover */
+}
+
+/* Teks di dalam item saran */
+.suggestion-text {
+    -fx-font-size: 14px; /* Ukuran font teks saran */
+    -fx-text-fill: #333333; /* Warna teks gelap */
+}
+
+/* Label kategori (misalnya "Profil", "Tag") */
+.suggestion-category-label {
+    -fx-font-size: 11px; /* Ukuran font lebih kecil untuk kategori */
+    -fx-text-fill: #888888; /* Warna teks abu-abu untuk kategori */
+    -fx-padding: 5px 15px; /* Padding untuk label kategori */
+    -fx-font-weight: bold; /* Teks kategori tebal */
+}
+
+/* Styling khusus untuk TextField pencarian itu sendiri */
+.search-bar {
+    -fx-background-color: #f0f2f5; /* Warna latar belakang bilah pencarian */
+    -fx-background-radius: 20px; /* Sudut membulat */
+    -fx-border-radius: 20px; /* Sudut border membulat */
+    -fx-border-color: #e0e0e0; /* Warna border */
+    -fx-font-size: 14px; /* Ukuran font teks input */
+    -fx-padding: 5px 15px; /* Padding di dalam TextField */
+    -fx-prompt-text-fill: #888888; /* Warna teks placeholder */
+}
+
+/* Styling umum untuk latar belakang topbar */
+.sidebar_background {
+    -fx-background-color: #ffffff; /* Latar belakang putih */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5); /* Efek bayangan tipis */
+}
+
+/* Styling untuk tombol username di topbar */
+.username_button {
+    -fx-background-color: transparent; /* Latar belakang transparan */
+    -fx-text-fill: #333333; /* Warna teks gelap */
+    -fx-font-size: 14px; /* Ukuran font */
+    -fx-font-weight: bold; /* Teks tebal */
+    -fx-cursor: hand; /* Kursor berubah menjadi tangan saat dihover */
+}
+
+/* Efek hover untuk tombol username */
+.username_button:hover {
+    -fx-text-fill: #007bff; /* Contoh warna hover (biru cerah) */
+}

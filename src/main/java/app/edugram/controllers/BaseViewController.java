@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class BaseViewController implements Initializable {
+public class BaseViewController implements Initializable{
 
     // Pastikan di baseView.fxml, BorderPane root memiliki fx:id="mainBorderPane"
     @FXML
@@ -20,6 +20,7 @@ public class BaseViewController implements Initializable {
     // Nama field ini SANGAT PENTING: harus [fx:id] + "Controller".
     @FXML
     private SidebarController sidebarController;
+    @FXML private TopbarController topbarController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

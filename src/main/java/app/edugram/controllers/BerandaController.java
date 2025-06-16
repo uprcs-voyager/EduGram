@@ -14,9 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class BerandaController extends BaseController implements Initializable {
 
@@ -30,6 +28,8 @@ public class BerandaController extends BaseController implements Initializable {
     private boolean hasMorePosts = true;
     private List<PostModel> allPosts = new ArrayList<>();
     private VBox loadingContainer; // Programmatically created loading indicator
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

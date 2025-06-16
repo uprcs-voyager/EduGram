@@ -2,6 +2,7 @@ package app.edugram.models;
 
 import app.edugram.utils.Sessions;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserModel extends BaseModel implements CRUDable<UserModel> {
@@ -182,6 +183,33 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
             }
         }
     }
+
+    public static List<String> getAllUsernames() {
+        List<String> usernames = new ArrayList<>();
+        ConnectDB db = new ConnectDB();
+        Connection con = db.getConnetion();
+        if (con == null) {
+            System.out.println("UserModel.getAllUsernames: Can't connect to db");
+            return usernames;
+        }
+
+        String query = "SELECT * FROM user ORDER BY username ASC";
+        try (PreparedStatement prepare = con.prepareStatement(query);
+              ResultSet rs = prepare.executeQuery()) {
+            while(rs.next()) {
+                usernames.add(rs.getString("username"));
+            } } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("UserModel.getAllUsernames: error fetching usernames");
+            } finally {
+            db.closeConnection();
+         }
+        return usernames;
+    }
+
+
+
+
 //    ========================================
 //    ============ AUTHENTICATION ============
 //    ========================================

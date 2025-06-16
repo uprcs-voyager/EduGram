@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox stylesheets="@../../assets/css/search_suggestion.css" fx:id="suggestionVBoxContent" alignment="TOP_LEFT" prefWidth="460.0"
+      styleClass="suggestion-popup"
+      xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+</VBox>
