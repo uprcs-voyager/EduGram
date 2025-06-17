@@ -1,6 +1,7 @@
 package app.edugram.controllers;
 import app.edugram.Main;
 import app.edugram.controllers.Components.PostFrameController;
+import app.edugram.controllers.Components.SidebarController;
 import app.edugram.models.PostModel;
 import javafx.application.Platform;
 import javafx.concurrent.Task;

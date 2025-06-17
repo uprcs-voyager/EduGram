@@ -27,7 +27,9 @@ public class BaseViewController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sidebarController.setNavigationHandler(pageName -> loadPage(pageName));
-
+        if (sidebarController != null) {
+            sidebarController.setMainBorderPane(mainBorderPane);
+        }
         loadPage("beranda");
     }
 
@@ -36,7 +38,6 @@ public class BaseViewController implements Initializable{
         try {
             sidebarController.updateSelectionState(fxmlName);
 
-            // Path ke file FXML halaman (misal: "beranda.fxml", "explore.fxml")
             URL fxmlUrl = getClass().getResource("/app/edugram/pages/" + fxmlName + ".fxml");
             if (fxmlUrl == null) {
                 System.err.println("FATAL: Tidak bisa menemukan file FXML: " + fxmlName + ".fxml");

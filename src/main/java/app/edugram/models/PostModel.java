@@ -238,6 +238,21 @@ public class PostModel extends BaseModel implements CRUDable{
                     p.id_post DESC; 
                         """;
                 break;
+            case "bookmark":
+                query += """
+                        LEFT JOIN save s ON p.id_post = s.id_post
+                        WHERE s.id_user = """+ Sessions.getUserId() +"""
+                         GROUP BY p.id_post
+                        ORDER BY p.id_post DESC; 
+                        """;
+                break;
+            case "like":
+                query += """
+                        WHERE l.id_user = """+ Sessions.getUserId() +"""
+                         GROUP BY p.id_post
+                        ORDER BY p.id_post DESC; 
+                        """;
+                break;
             case "beranda":
                 List<String> UPM = UserPrefTagModel.listAll(); // user's preferred tags
                 boolean isThere= UPM != null && !UPM.isEmpty();

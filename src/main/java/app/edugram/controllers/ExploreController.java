@@ -39,6 +39,12 @@ public class ExploreController extends BaseController implements Initializable, 
     private List<PostModel> allPosts = new ArrayList<>(); // Fixed syntax
     private VBox loadingContainer;
 
+    public String whatPage = "explore";
+
+    public void setWhatPage(String whatPage) {
+        this.whatPage = whatPage;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("ExploreController initialized");
@@ -253,7 +259,7 @@ public class ExploreController extends BaseController implements Initializable, 
     public List<PostModel> initData() {
         System.out.println("initData() called");
         PostModel post = new PostModel();
-        List<PostModel> posts = post.listAll("explore");
+        List<PostModel> posts = post.listAll(whatPage);
         System.out.println("initData() returning " + posts.size() + " posts");
         return posts;
     }
