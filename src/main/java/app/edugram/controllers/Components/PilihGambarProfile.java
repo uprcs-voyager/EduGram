@@ -1,4 +1,4 @@
-package app.edugram.controllers;
+package app.edugram.controllers.Components;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,7 +12,6 @@ import javafx.stage.Window;
 import javafx.scene.control.Alert;
 
 import java.io.File;
-import java.io.IOException;
 
 public class PilihGambarProfile {
 

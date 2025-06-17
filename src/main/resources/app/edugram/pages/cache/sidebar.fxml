@@ -107,7 +107,7 @@
             <children>
                <ImageView fx:id="profileImageView" fitHeight="76.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@../../assets/Image/Icons/pfp_placeholder.jpg" />
+                     <Image url="@../../userData/Images/profile_pictures/pfp_placeholder.jpg" />
                   </image>
                   <VBox.margin>
                      <Insets bottom="13.0" top="23.0" />

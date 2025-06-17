@@ -39,7 +39,7 @@
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <ImageView fx:id="profileImageView2" fitHeight="34.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../assets/Image/Icons/pfp_placeholder.jpg" />
+                  <Image url="@../../userData/Images/profile_pictures/pfp_placeholder.jpg" />
                </image>
                <HBox.margin>
                   <Insets right="9.0" />

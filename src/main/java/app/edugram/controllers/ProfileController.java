@@ -1,6 +1,8 @@
 package app.edugram.controllers;
 
 import app.edugram.Main;
+import app.edugram.controllers.Components.PostFrameController;
+import app.edugram.controllers.Components.SmallPostFrameController;
 import app.edugram.models.PostModel;
 import app.edugram.utils.PostClickHandler;
 import app.edugram.utils.Sessions;
@@ -210,8 +212,8 @@ public class ProfileController implements Initializable, PostClickHandler {
         try {
             Image dummyProfilePic = new Image(getClass().getResource("/app/edugram/userData/images/profile_pictures/lapwiing.jpg").toExternalForm());
             profilePictureView.setImage(dummyProfilePic);
-            profilePictureView.setFitWidth(120);
-            profilePictureView.setFitHeight(120);
+            profilePictureView.setFitWidth(45);
+            profilePictureView.setFitHeight(45);
             Circle clip = new Circle(profilePictureView.getFitWidth() / 2,
                     profilePictureView.getFitHeight() / 2,
                     profilePictureView.getFitWidth() / 2);

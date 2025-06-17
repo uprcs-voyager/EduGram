@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="vboxsmall" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.SmallPostFrameController">
+<VBox fx:id="vboxsmall" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.SmallPostFrameController">
    <children>
       <GridPane fx:id="smallpostgrid" alignment="CENTER">
          <columnConstraints>

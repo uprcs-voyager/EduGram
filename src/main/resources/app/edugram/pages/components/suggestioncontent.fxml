@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
 
-<VBox stylesheets="@../../assets/css/search_suggestion.css" fx:id="suggestionVBoxContent" alignment="TOP_LEFT" prefWidth="460.0"
-      styleClass="suggestion-popup"
-      xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-
-</VBox>
+<StackPane styleClass="suggestion-popup" stylesheets="@../../assets/css/search_suggestion.css" fx:id="suggestionContent" xmlns="http://javafx.com/javafx/23.0.1"   xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+            <content>
+                <VBox fx:id="suggestionVBoxContent" alignment="TOP_LEFT" prefWidth="460.0" >
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</StackPane>

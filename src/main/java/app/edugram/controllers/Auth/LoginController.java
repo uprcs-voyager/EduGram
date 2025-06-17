@@ -1,4 +1,4 @@
-package app.edugram.controllers;
+package app.edugram.controllers.Auth;
 
 import app.edugram.utils.PageAction;
 import app.edugram.utils.Notices;
@@ -16,7 +16,7 @@ import javafx.scene.layout.Region;
 import java.io.IOException;
 
 
-public class AuthController {
+public class LoginController {
     public Button hiddenRedirectButton;
     @FXML
     private Button cancelButton;
@@ -29,7 +29,7 @@ public class AuthController {
 
     @FXML
     public void initialize() {
-        if(checkCookie()) {
+        if(CookieUtil.checkCookie()) {
             Platform.runLater(() -> {
                 hiddenRedirectButton.fire(); // This creates a proper ActionEvent
             });
@@ -44,13 +44,6 @@ public class AuthController {
         }catch (Exception e){
             System.out.println("Auth.Initialize: (notice) This content doesn't load / contain image");
         }
-    }
-
-    public boolean checkCookie() {
-        UserCookie cookie = CookieUtil.loadCookie();
-        System.out.println("Checking cookie for user: '" + cookie.getUsername() + "'");
-
-        return UserModel.ValidateUser(cookie.getUsername(), cookie.getPassword(), true);
     }
 
     @FXML
@@ -120,10 +113,5 @@ public class AuthController {
     @FXML
     public void gotoRegis(ActionEvent event){
         PageAction.switchPage(event, "signup.fxml");
-    }
-
-    @FXML
-    public void gotoLogin(ActionEvent event){
-        PageAction.switchPage(event, "login.fxml");
     }
 }

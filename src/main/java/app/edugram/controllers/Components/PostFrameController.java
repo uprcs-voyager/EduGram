@@ -1,5 +1,6 @@
-package app.edugram.controllers;
+package app.edugram.controllers.Components;
 import app.edugram.Main;
+import app.edugram.controllers.ProfileController;
 import app.edugram.models.DislikeModel;
 import app.edugram.models.LikeModel;
 import app.edugram.models.PostModel;
@@ -11,8 +12,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,7 +21,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="popupRoot" alignment="CENTER_LEFT" spacing="5.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-width: 1px; -fx-padding: 10px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.PostOptionPopUpController">
+<VBox fx:id="popupRoot" alignment="CENTER_LEFT" spacing="5.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-width: 1px; -fx-padding: 10px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.PostOptionPopUpController">
     <children>
         <Button fx:id="reportButton" mnemonicParsing="false" prefWidth="120.0" styleClass="popup-button" text="Report">
          <cursor>

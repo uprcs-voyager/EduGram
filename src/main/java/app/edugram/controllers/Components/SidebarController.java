@@ -1,4 +1,4 @@
-package app.edugram.controllers;
+package app.edugram.controllers.Components;
 
 import app.edugram.Main;
 import app.edugram.utils.Sessions;
@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
-import javafx.stage.Popup;
 import javafx.stage.Window;
 import javafx.stage.Stage;
 import javafx.scene.Scene;

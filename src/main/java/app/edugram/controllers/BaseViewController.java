@@ -1,5 +1,7 @@
 package app.edugram.controllers;
 
+import app.edugram.controllers.Components.SidebarController;
+import app.edugram.controllers.Components.TopbarController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

@@ -1,27 +1,11 @@
-package app.edugram.controllers;
-import app.edugram.Main;
+package app.edugram.controllers.Components;
 import app.edugram.models.PostModel;
-import app.edugram.utils.Sessions;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.scene.control.Label;
-import app.edugram.models.PostModel;
-import javafx.stage.Window;
 import javafx.scene.control.Alert;
 
 

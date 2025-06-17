@@ -109,7 +109,7 @@
                <children>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../assets/Image/Icons/pfp_placeholder.jpg" />
+                        <Image url="@../../userData/Images/profile_pictures/pfp_placeholder.jpg" />
                      </image>
                      <VBox.margin>
                         <Insets bottom="6.0" top="16.0" />
@@ -266,7 +266,7 @@
             <Region minWidth="200.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../assets/Image/Icons/pfp_placeholder.jpg" />
+                  <Image url="@../../userData/Images/profile_pictures/pfp_placeholder.jpg" />
                </image>
                <HBox.margin>
                   <Insets right="22.0" />
@@ -301,7 +301,7 @@
                                  <children>
                                     <ImageView fitHeight="78.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../assets/Image/Icons/pfp_placeholder.jpg" />
+                                          <Image url="@../../userData/Images/profile_pictures/pfp_placeholder.jpg" />
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="56.0" prefWidth="359.0" text="Username" />

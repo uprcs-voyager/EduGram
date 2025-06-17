@@ -1,5 +1,7 @@
 package app.edugram.controllers;
 import app.edugram.Main;
+import app.edugram.controllers.Components.PostFrameController;
+import app.edugram.controllers.Components.SmallPostFrameController;
 import app.edugram.models.PostModel;
 import app.edugram.utils.PostClickHandler;
 import javafx.application.Platform;

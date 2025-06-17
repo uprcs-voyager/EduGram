@@ -13,6 +13,7 @@ module app.edugram {
     requires jdk.jfr;
     requires java.desktop;
     requires com.google.gson;
+    requires javafx.swing;
 
     opens app.edugram to javafx.fxml;
     exports app.edugram;
@@ -21,5 +22,9 @@ module app.edugram {
     exports app.edugram.controllers.cache;
     opens app.edugram.controllers.cache to javafx.fxml;
     opens app.edugram.utils.cookies to com.google.gson;
+    exports app.edugram.controllers.Auth;
+    opens app.edugram.controllers.Auth to javafx.fxml;
+    exports app.edugram.controllers.Components;
+    opens app.edugram.controllers.Components to javafx.fxml;
 
 }

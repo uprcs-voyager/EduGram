@@ -5,21 +5,13 @@
     -fx-border-width: 1px;
     -fx-background-radius: 8px;
     -fx-border-radius: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5); /* Bayangan tipis */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0, 0, 5); /* Bayangan tipis */
     -fx-padding: 5px 0; /* Padding di dalam dropdown (atas/bawah 5px, kiri/kanan 0) */
 
-    /* PENTING: Batasi tinggi maksimal dropdown dan aktifkan scrolling */
-    -fx-max-height: 250px; /* Tinggi maksimal dropdown. Sesuaikan sesuai kebutuhan. */
-    -fx-overflow-y: auto; /* Tambahkan scrollbar vertikal jika konten melebihi max-height */
 
-    -fx-pref-width: 460px; /* Sesuaikan lebar dropdown agar cocok dengan bilah pencarian */
+    -fx-max-height: 200px;
 
-    /* Efek animasi untuk masuk/keluar dropdown. Properti ini penting untuk nilai awal animasi di Java. */
-    -fx-opacity: 0;
-    -fx-scale-y: 0.8;
-    -fx-translate-y: -10px;
-    -fx-transform-origin: top center;
-    /* Transisi dikontrol di Java, tapi properti ini penting untuk nilai awal animasi */
+    -fx-pref-width: 460px;
 }
 
 /* Item saran individual di dalam dropdown */

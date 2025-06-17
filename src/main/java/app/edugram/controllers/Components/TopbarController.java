@@ -1,4 +1,5 @@
-package app.edugram.controllers;
+package app.edugram.controllers.Components;
+
 import app.edugram.Main;
 import app.edugram.models.UserModel;
 import app.edugram.models.UserPrefTagModel;
@@ -11,40 +12,32 @@ import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Priority;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import javafx.scene.control.Separator;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.control.ScrollPane; // Tambahkan import ScrollPane
+import javafx.stage.Popup;
 import javafx.stage.Window;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.Set;
-import javafx.stage.Popup;
-import javafx.stage.Window;
 
 public class TopbarController implements Initializable {
 
-    // FXML Components
+    // FXML Components dari topbar.fxml
     @FXML private ImageView logoImageView;
     @FXML private Label appNameLabel;
     @FXML private TextField searchTextField;
@@ -52,71 +45,99 @@ public class TopbarController implements Initializable {
     @FXML private ImageView profileImageView;
     @FXML private Button usernameButton;
 
-    @FXML private VBox suggestionVBoxContent;
+    // FXML IDs dari suggestioncontent.fxml
+    // suggestionContent adalah root (StackPane) dari suggestioncontent.fxml
+    private StackPane suggestionContent;
+    // mengambilnya secara manual
+    private VBox suggestionVBoxContent;
+
     private Popup suggestionPopup;
     private boolean isFullyInitialized = false;
 
-    // Callback interface untuk mengirim tag yang dipilih kembali ke controller utama
-
-
     @Override public void initialize(URL location, ResourceBundle resources) {
+        loadDefaultProfilePicture();
         setupPopup();
         setupSearchField();
         setupUserProfile();
         Platform.runLater(() -> {
             isFullyInitialized = true;
+            hideSuggestions();
         });
     }
 
     private void setupPopup() {
         suggestionPopup = new Popup();
-        suggestionPopup.setAutoHide(true); // Popup akan otomatis sembunyi jika klik di luar
+        suggestionPopup.setAutoHide(true);
 
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("pages/components/suggestioncontent.fxml"));
-            suggestionVBoxContent = loader.load();
+            // Muat StackPane sebagai root dari FXML suggestioncontent.fxml
+            suggestionContent = loader.load();
 
-            suggestionPopup.getContent().add(suggestionVBoxContent);
+            // *** PENTING: Ambil VBox di dalam StackPane secara manual ***
+            // suggestionContent (StackPane) punya anak ScrollPane
+            // ScrollPane punya content VBox
+            if (suggestionContent.getChildren().get(0) instanceof ScrollPane) {
+                ScrollPane scrollPane = (ScrollPane) suggestionContent.getChildren().get(0);
+                if (scrollPane.getContent() instanceof VBox) {
+                    suggestionVBoxContent = (VBox) scrollPane.getContent();
+                } else {
+                    System.err.println("Error: Konten ScrollPane di suggestioncontent.fxml bukan VBox.");
+                }
+            } else {
+                System.err.println("Error: Anak pertama StackPane di suggestioncontent.fxml bukan ScrollPane.");
+            }
+
+            if (suggestionVBoxContent == null) {
+                System.err.println("FATAL ERROR: suggestionVBoxContent null setelah setup popup. Pop-up mungkin tidak berfungsi.");
+
+            }
+
+            suggestionPopup.getContent().add(suggestionContent); // Tambahkan StackPane ke popup
         } catch (IOException e) {
-            System.err.println("Gagal memuat suggestion_content.fxml: " + e.getMessage());
+            System.err.println("Gagal memuat suggestioncontent.fxml: " + e.getMessage());
             e.printStackTrace();
         }
 
-        // Listener untuk menyembunyikan popup saat kehilangan fokus
         suggestionPopup.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            if (!newVal && !searchTextField.isFocused()) {
-                hideSuggestions();
+            if (!newVal && !searchTextField.isFocused() && !suggestionPopup.isShowing()) {
+                Platform.runLater(this::hideSuggestions);
             }
         });
+
+        if (suggestionContent != null) {
+            suggestionContent.setOnMouseExited(event -> {
+                if (!searchTextField.isFocused()) {
+                    hideSuggestions();
+                }
+            });
+        }
     }
 
 
     private void setupSearchField() {
         if (searchTextField != null) {
-            // Listener fokus untuk menampilkan/menyembunyikan popup
             searchTextField.focusedProperty().addListener((obs, oldVal, newVal) -> {
-                if (newVal) { // Jika mendapatkan fokus
-                    if (isFullyInitialized || !searchTextField.getText().isEmpty()) {
+                if (newVal) {
+                    if (isFullyInitialized) {
                         showSuggestions();
                         searchTextField.selectAll();
                     }
                 } else {
-                    Platform.runLater(() -> { // Beri sedikit waktu agar klik item saran terdaftar
-                        if (!searchTextField.isFocused() && !suggestionPopup.isShowing()) {
+                    Platform.runLater(() -> {
+                        if (!searchTextField.isFocused() && (suggestionContent == null || !suggestionContent.isHover())) {
                             hideSuggestions();
                         }
                     });
                 }
             });
 
-            // Listener untuk klik pada TextField
             searchTextField.setOnMouseClicked(event -> {
                 if (!suggestionPopup.isShowing()) {
                     showSuggestions();
                 }
             });
 
-            // Listener untuk klik pada ikon pencarian
             if (searchIconImageView != null) {
                 searchIconImageView.setOnMouseClicked(event -> {
                     if (!suggestionPopup.isShowing()) {
@@ -131,16 +152,13 @@ public class TopbarController implements Initializable {
 
     private void setupUserProfile() {
         if (usernameButton != null) {
-            // You can set the username dynamically here
-            // usernameButton.setText("Current User");
+            // Set username di sini jika diperlukan
         }
     }
 
     @FXML
     private void onUsernameButtonClick(ActionEvent event) {
         System.out.println("Username button clicked!");
-        // Add your username button logic here
-        // For example: show user profile, logout menu, etc.
     }
 
     private void onSearchKeyPressed(KeyEvent event) {
@@ -154,60 +172,57 @@ public class TopbarController implements Initializable {
         String searchQuery = searchTextField.getText().trim();
         if (!searchQuery.isEmpty()) {
             System.out.println("Searching for: " + searchQuery);
-            // Add your search logic here
-            // For example: filter posts, navigate to search results, etc.
         }
     }
 
-
     private void showSuggestions() {
-        if (suggestionPopup != null && suggestionVBoxContent != null && !suggestionPopup.isShowing()) {
-            populateSuggestions(); // Isi saran sebelum ditampilkan
+        // PENTING: Pastikan suggestionVBoxContent tidak null sebelum memanggil populateSuggestions
+        if (suggestionPopup != null && suggestionContent != null && suggestionVBoxContent != null && !suggestionPopup.isShowing()) {
+            populateSuggestions();
 
-            // Hitung posisi popup
             Bounds boundsInScene = searchTextField.localToScreen(searchTextField.getBoundsInLocal());
             double x = boundsInScene.getMinX();
-            double y = boundsInScene.getMaxY(); // Tepat di bawah TextField
+            double y = boundsInScene.getMaxY() + 5; // Tambahkan 5 piksel ke bawah
 
-            // Dapatkan Window dari Scene TextField
             Window window = searchTextField.getScene().getWindow();
-
-
-            // Tampilkan popup
             suggestionPopup.show(window, x, y);
 
-            // Terapkan animasi pada konten VBox di dalam popup
-            suggestionVBoxContent.setOpacity(0);
-            suggestionVBoxContent.setScaleY(0.8);
-            suggestionVBoxContent.setTranslateY(-10);
-            FadeTransition ft = new FadeTransition(Duration.millis(200), suggestionVBoxContent);
+            // Terapkan animasi pada StackPane suggestionContent (root popup)
+            suggestionContent.setOpacity(0);
+            suggestionContent.setScaleY(0.8);
+            suggestionContent.setTranslateY(0);
+
+            FadeTransition ft = new FadeTransition(Duration.millis(200), suggestionContent);
             ft.setFromValue(0); ft.setToValue(1);
-            ScaleTransition st = new ScaleTransition(Duration.millis(200), suggestionVBoxContent);
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), suggestionContent);
             st.setFromY(0.8); st.setToY(1);
-            TranslateTransition tt = new TranslateTransition(Duration.millis(200), suggestionVBoxContent);
-            tt.setFromY(-10); tt.setToY(0);
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(200), suggestionContent);
+            tt.setFromY(0);
+            tt.setToY(0);
 
             ft.play(); st.play(); tt.play();
             System.out.println("Saran pencarian ditampilkan (via Popup).");
+        } else if (suggestionVBoxContent == null) {
+            System.err.println("Warning: suggestionVBoxContent is null, cannot show suggestions.");
         }
     }
 
-
     private void hideSuggestions() {
         if (suggestionPopup != null && suggestionPopup.isShowing()) {
-            // Animasikan konten VBox di dalam popup sebelum menyembunyikan popup itu sendiri
-            if (suggestionVBoxContent != null) {
-                FadeTransition ft = new FadeTransition(Duration.millis(200), suggestionVBoxContent);
+            if (suggestionContent != null) {
+                FadeTransition ft = new FadeTransition(Duration.millis(200), suggestionContent);
                 ft.setFromValue(1); ft.setToValue(0);
 
-                ScaleTransition st = new ScaleTransition(Duration.millis(200), suggestionVBoxContent);
+                ScaleTransition st = new ScaleTransition(Duration.millis(200), suggestionContent);
                 st.setFromY(1); st.setToY(0.8);
 
-                TranslateTransition tt = new TranslateTransition(Duration.millis(200), suggestionVBoxContent);
-                tt.setFromY(0); tt.setToY(-10);
+                TranslateTransition tt = new TranslateTransition(Duration.millis(200), suggestionContent);
+                tt.setFromY(0);
+                tt.setToY(0);
 
                 ft.setOnFinished(e -> {
-                    suggestionPopup.hide(); // Sembunyikan popup setelah animasi selesai
+                    suggestionPopup.hide();
                 });
 
                 ft.play(); st.play(); tt.play();
@@ -219,15 +234,15 @@ public class TopbarController implements Initializable {
     }
 
     private void populateSuggestions() {
-        if (suggestionVBoxContent == null) return;
-        suggestionVBoxContent.getChildren().clear(); // Hapus saran sebelumnya
-        // --- Ambil data dari database ---
-        List<String> profileNames = UserModel.getAllUsernames();       // Ambil semua username dari UserModel
-        List<String> tagNames = UserPrefTagModel.getAllTags();     // GANTI: Ambil semua nama tag dari UserPrefTagModel
-        // --- Akhir pengambilan data dari database ---
+        if (suggestionVBoxContent == null) {
+            System.err.println("Error: suggestionVBoxContent is null, cannot populate suggestions.");
+            return;
+        }
+        suggestionVBoxContent.getChildren().clear();
 
+        List<String> profileNames = UserModel.getAllUsernames();
+        List<String> tagNames = UserPrefTagModel.getAllTags();
 
-        // Tambahkan saran Profil
         if (!profileNames.isEmpty()) {
             Label profileHeader = new Label("Profil");
             profileHeader.getStyleClass().add("suggestion-category-label");
@@ -237,14 +252,11 @@ public class TopbarController implements Initializable {
                 HBox item = createSuggestionItem(profileName);
                 suggestionVBoxContent.getChildren().add(item);
             }
-            // Tambahkan margin bawah setelah kategori Profil jika ada kategori lain
             VBox.setMargin(profileHeader, new javafx.geometry.Insets(5, 0, 5, 0));
         }
 
-        // Tambahkan saran Tag
         if (!tagNames.isEmpty()) {
             if (!profileNames.isEmpty()) {
-                // Tambahkan sedikit pemisah visual jika ada kategori Profil sebelumnya
                 suggestionVBoxContent.getChildren().add(new Separator());
             }
             Label tagHeader = new Label("Tag");
@@ -272,18 +284,16 @@ public class TopbarController implements Initializable {
         Label label = new Label(text);
         label.getStyleClass().add("suggestion-text");
         item.getChildren().add(label);
-        HBox.setHgrow(label, Priority.ALWAYS); // Izinkan label untuk tumbuh
+        HBox.setHgrow(label, Priority.ALWAYS);
 
-        // Tambahkan penanganan klik untuk setiap item saran
         item.setOnMouseClicked(event -> {
             System.out.println("Saran diklik: " + text);
-            searchTextField.setText(text); // Isi bidang pencarian dengan saran yang dipilih
-            hideSuggestions(); // Sembunyikan saran setelah pemilihan dengan animasi
+            searchTextField.setText(text);
+            hideSuggestions();
         });
 
         return item;
     }
-
 
     // Public methods for external access
     public void setUsername(String username) {
@@ -310,6 +320,21 @@ public class TopbarController implements Initializable {
             } catch (Exception e) {
                 System.err.println("Error loading profile image: " + e.getMessage());
             }
+        }
+    }
+
+    private void loadDefaultProfilePicture() {
+        try {
+            Image dummyProfilePic = new Image(getClass().getResource("/app/edugram/userData/images/profile_pictures/lapwiing.jpg").toExternalForm());
+            profileImageView.setImage(dummyProfilePic);
+            profileImageView.setFitWidth(45);
+            profileImageView.setFitHeight(45);
+            Circle clip = new Circle(profileImageView.getFitWidth() / 2,
+                    profileImageView.getFitHeight() / 2,
+                    profileImageView.getFitWidth() / 2);
+            profileImageView.setClip(clip);
+        } catch (Exception e) {
+            System.err.println("Gagal memuat gambar profil default: " + e.getMessage());
         }
     }
 }
