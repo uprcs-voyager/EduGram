@@ -23,7 +23,6 @@ import javax.imageio.ImageWriter;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.IIOImage;
 import javax.imageio.stream.ImageOutputStream;
-import java.net.CookieHandler;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 
@@ -33,7 +32,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Random;
@@ -143,7 +141,7 @@ public class SignupController {
         newUser.setUsername(username);
         newUser.setEmail(email);
         newUser.setPassword(password);
-        String newProfileName = isProfilePictureChanged() ? createNewProfileName() : "pfp_placeholder.jpg";
+        String newProfileName = isProfilePictureChanged() ? createNewFileName() : "pfp_placeholder.jpg";
         newUser.setProfilePic(newProfileName);
 
         if (newUser.create(newUser)) {
@@ -221,7 +219,7 @@ public class SignupController {
         return currentUrl != null && !currentUrl.contains("pfp_placeholder.jpg");
     }
 
-    private String createNewProfileName(){
+    private String createNewFileName(){
 //        ---- create new profile file's name ----
         Random randomInt = new Random();
         String getRandomNumber = String.valueOf(randomInt.nextInt(1000) + 1000);

@@ -1,9 +1,12 @@
 package app.edugram.controllers.Components;
 import app.edugram.models.PostModel;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Button;
@@ -16,7 +19,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
+import java.util.Random;
+
 import javafx.stage.Stage;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
 
 public class TambahPostController {
 
@@ -104,28 +118,9 @@ public class TambahPostController {
         }
 
         // Proses penyimpanan gambar ke direktori aplikasi
-        String imageFileName = System.currentTimeMillis() + "_" + selectedImageFile.getName(); // Nama unik untuk gambar
-        Path targetDirPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "app", "edugram", "userData", "Images", "posts");
-
-        // Pastikan direktori tujuan ada
-        if (!Files.exists(targetDirPath)) {
-            try {
-                Files.createDirectories(targetDirPath);
-                System.out.println("Created image directory: " + targetDirPath.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Error", "Gagal membuat direktori gambar: " + e.getMessage(), currentWindowForAlert);
-                return;
-            }
-        }
-        Path targetPath = targetDirPath.resolve(imageFileName);
-
-        try {
-            Files.copy(selectedImageFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("Gambar berhasil disimpan ke: " + targetPath.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error Menyimpan Gambar", "Gagal menyimpan gambar: " + e.getMessage(), currentWindowForAlert);
+        String imageFileName = createNewFileName(); // Nama unik untuk gambar
+        if(!storeProfileImage(imageFileName)){
+            showAlert(Alert.AlertType.WARNING, "Gagal upload image", "Image post gagal diupload!.", currentWindowForAlert);
             return;
         }
 
@@ -148,6 +143,81 @@ public class TambahPostController {
             showAlert(Alert.AlertType.ERROR, "Gagal", "Gagal membuat postingan. Silakan coba lagi.", currentWindowForAlert);
         }
 
+    }
+
+    private String createNewFileName(){
+//        ---- create new profile file's name ----
+        Random randomInt = new Random();
+        String getRandomNumber = String.valueOf(randomInt.nextInt(1000) + 1000);
+
+        LocalDateTime getDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+        String formatDate = getDateTime.format(formatter);
+//        ---- get extension ----
+        String imageUrl = imagePreview.getImage().getUrl();
+        String imageExtension = "";
+        if (imageUrl != null) {
+            imageExtension = imageUrl.substring(imageUrl.lastIndexOf(".") + 1).toLowerCase();
+            // Remove any query parameters if present
+            if (imageExtension.contains("?")) {
+                imageExtension = imageExtension.substring(0, imageExtension.indexOf("?"));
+            }
+            System.out.println("Extension: " + imageExtension);
+        }
+
+        String newProfileName = "post_" + getRandomNumber + formatDate + "." + imageExtension;
+        return newProfileName;
+    }
+
+    private boolean storeProfileImage(String newFileName) {
+        try {
+            // Create target directory if it doesn't exist
+            Path targetDir = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "app", "edugram", "userData", "Images", "posts");
+            if (!Files.exists(targetDir)) {
+                Files.createDirectories(targetDir);
+            }
+
+            // 1. Get the image from the ImageView
+            Image currentImage = imagePreview.getImage();
+            BufferedImage originalBufferedImage = SwingFXUtils.fromFXImage(currentImage, null);
+
+            // 2. *** FIX: Convert to RGB color space to prevent "Bogus input colorspace" error ***
+            // Create a new BufferedImage with a compatible RGB type
+            BufferedImage rgbImage = new BufferedImage(
+                    originalBufferedImage.getWidth(),
+                    originalBufferedImage.getHeight(),
+                    BufferedImage.TYPE_INT_RGB
+            );
+
+            // Draw the original image onto the new RGB image. This performs the conversion.
+            rgbImage.createGraphics().drawImage(originalBufferedImage, 0, 0, null);
+            // **********************************************************************************
+
+            File outputFile = targetDir.resolve(newFileName).toFile();
+
+            // 3. Compress and save the NEW RGB-converted image
+            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+            ImageWriter writer = writers.next();
+            ImageOutputStream ios = ImageIO.createImageOutputStream(outputFile);
+            writer.setOutput(ios);
+
+            ImageWriteParam param = writer.getDefaultWriteParam();
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            param.setCompressionQuality(0.8f); // 80% quality
+
+            // Write the rgbImage, NOT the original bufferedImage
+            writer.write(null, new IIOImage(rgbImage, null, null), param);
+
+            ios.close();
+            writer.dispose();
+
+            System.out.println("Post image stored and compressed: " + newFileName);
+            return true;
+        } catch (IOException e) {
+            System.err.println("Failed to store profile image: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private void showAlert(Alert.AlertType type, String title, String message, Window ownerWindow) {
