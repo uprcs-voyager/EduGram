@@ -5,13 +5,14 @@ public class Sessions {
     private static String username = "HeBoss";
     private static String nama = "BigBoss";
     private static String profilePicture = "hiboss.jpg";
-
+    private static String email;
     public static String currentPage = "beranda";
 
-    public static void setUser(int userId, String username, String nama, String profilePicture, String currentPage) {
+    public static void setUser(int userId,String email, String username, String nama, String profilePicture, String currentPage) {
         Sessions.userId = userId;
         Sessions.username = username;
         Sessions.nama = nama;
+        Sessions.email = email;
         Sessions.profilePicture = profilePicture;
         Sessions.currentPage = currentPage;
     }
@@ -26,6 +27,10 @@ public class Sessions {
 
     public static String getNama() {
         return nama;
+    }
+
+    public static String getEmail() {
+        return email;
     }
 
     public static String getProfilePicture() {
