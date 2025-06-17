@@ -119,7 +119,9 @@ public class SidebarController implements Initializable {
 
     @FXML
     public void onSettingsClick(MouseEvent mouseEvent) {
-    }
+        if (navigationHandler != null) {
+            navigationHandler.onNavigateToPage("setting");
+    } }
 
     @FXML
     public void onBookmarksClick(MouseEvent mouseEvent) {

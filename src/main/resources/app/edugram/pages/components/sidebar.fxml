@@ -106,7 +106,7 @@
                                     <image><Image url="@../../assets/Image/Icons/profile-1341-svgrepo-com.png" /></image>
                                     <cursor><Cursor fx:constant="HAND" /></cursor>
                                 </ImageView>
-                                <Label fx:id="navFollowing" alignment="CENTER" prefHeight="18.0" prefWidth="76.0" styleClass="text_color_white" text="634">
+                                <Label fx:id="navFollowing" alignment="CENTER" prefHeight="18.0" prefWidth="76.0" styleClass="text_color_white" text="666">
                                     <font><Font name="System Bold" size="18.0" /></font>
                                     <cursor><Cursor fx:constant="HAND" /></cursor>
                                 </Label>
@@ -119,7 +119,7 @@
                                     <image><Image url="@../../assets/Image/Icons/friend-svgrepo-com.png" /></image>
                                     <cursor><Cursor fx:constant="HAND" /></cursor>
                                 </ImageView>
-                                <Label fx:id="navFollowers" alignment="CENTER" prefHeight="27.0" prefWidth="56.0" styleClass="text_color_white" text="634">
+                                <Label fx:id="navFollowers" alignment="CENTER" prefHeight="27.0" prefWidth="56.0" styleClass="text_color_white" text="666">
                                     <font><Font name="System Bold" size="18.0" /></font>
                                     <cursor><Cursor fx:constant="HAND" /></cursor>
                                 </Label>
@@ -132,7 +132,7 @@
                                     <image><Image url="@../../assets/Image/Icons/plus-square-on-square-svgrepo-com.png" /></image>
                                     <cursor><Cursor fx:constant="HAND" /></cursor>
                                 </ImageView>
-                                <Label fx:id="navPosts" alignment="CENTER" prefHeight="27.0" prefWidth="65.0" styleClass="text_color_white" text="634">
+                                <Label fx:id="navPosts" alignment="CENTER" prefHeight="27.0" prefWidth="65.0" styleClass="text_color_white" text="666">
                                     <font><Font name="System Bold" size="18.0" /></font>
                                     <cursor><Cursor fx:constant="HAND" /></cursor>
                                 </Label>

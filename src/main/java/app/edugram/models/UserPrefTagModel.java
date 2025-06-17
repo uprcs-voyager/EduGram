@@ -51,4 +51,28 @@ public class UserPrefTagModel extends BaseModel implements Toggleable{
         }
         return result;
     }
-}
+
+    public static List<String> getAllTags(){
+        List<String> tags = new ArrayList<>();
+        ConnectDB db = new ConnectDB();
+        Connection con = db.getConnetion();
+        if(con == null){
+            System.out.println("failed to connect to DB");
+            return tags;
+        }
+
+        String query = "SELECT nama_tag FROM tag ORDER BY id_tag ASC";
+        try (PreparedStatement prepare = con.prepareStatement(query);
+            ResultSet rs = prepare.executeQuery()){
+                while(rs.next()) {
+                    tags.add(rs.getString("nama_tag"));
+                } } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error getting tags");
+        }finally{
+                db.closeConnection();
+
+    }
+        return tags;
+} }
+
