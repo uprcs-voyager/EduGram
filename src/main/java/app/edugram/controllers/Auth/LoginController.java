@@ -26,6 +26,7 @@ public class LoginController {
     public TextField namaInp;
     @FXML
     private ImageView image_login_bg;
+    @FXML private Button registerBtn;
 
     @FXML
     public void initialize() {
@@ -49,6 +50,11 @@ public class LoginController {
     @FXML
     public void hiddenRedirectAction(ActionEvent event) {
         PageAction.switchPage(event, "baseView.fxml"); // Real ActionEvent, will work!
+    }
+
+    @FXML
+    public void goToRegister(ActionEvent event) {
+        PageAction.switchPage(event, "signup.fxml"); // Real ActionEvent, will work!
     }
 
 
