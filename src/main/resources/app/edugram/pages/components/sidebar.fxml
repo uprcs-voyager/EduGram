@@ -23,7 +23,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
                             <children>
                                 <Line fx:id="berandaLine" endX="90.0" fill="#7c43ef" startX="-8.0" stroke="#7c43ef" strokeWidth="5.0" />
-                                <Button fx:id="berandaButton" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="42.0" prefWidth="149.0" stylesheets="@../../assets/css/sidebar.css" text="Beranda" onAction="#onBerandaClick">
+                                <Button fx:id="berandaButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onBerandaClick" prefHeight="42.0" prefWidth="149.0" stylesheets="@../../assets/css/sidebar.css" text="Beranda">
                                     <font><Font name="System Bold" size="16.0" /></font>
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -39,7 +39,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
                             <children>
                                 <Line fx:id="exploreLine" endX="90.0" fill="#7c43ef" startX="-8.0" stroke="#7c43ef" strokeWidth="5.0" styleClass="over" />
-                                <Button fx:id="exploreButton" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="42.0" prefWidth="149.0" stylesheets="@../../assets/css/sidebar.css" text="Explore" onAction="#onExploreClick">
+                                <Button fx:id="exploreButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onExploreClick" prefHeight="42.0" prefWidth="149.0" stylesheets="@../../assets/css/sidebar.css" text="Explore">
                                     <font><Font name="System Bold" size="16.0" /></font>
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -55,7 +55,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
                             <children>
                                 <Line fx:id="profileLine" endX="90.0" fill="#7c43ef" startX="-8.0" stroke="#7c43ef" strokeWidth="5.0" styleClass="over" />
-                                <Button fx:id="profileButton" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="42.0" prefWidth="149.0" stylesheets="@../../assets/css/sidebar.css" text="Profile" onAction="#onProfileClick">
+                                <Button fx:id="profileButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onProfileClick" prefHeight="42.0" prefWidth="149.0" stylesheets="@../../assets/css/sidebar.css" text="Profile">
                                     <font><Font name="System Bold" size="16.0" /></font>
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -129,7 +129,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="250.0" styleClass="profile">
                             <children>
                                 <ImageView fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                    <image><Image url="@../../assets/Image/Icons/plus-square-on-square-svgrepo-com.png" /></image>
+                                    <image><Image url="@../../assets/Image/Icons/video-playlist-svgrepo-com.png" /></image>
                                     <cursor><Cursor fx:constant="HAND" /></cursor>
                                 </ImageView>
                                 <Label fx:id="navPosts" alignment="CENTER" prefHeight="27.0" prefWidth="65.0" styleClass="text_color_white" text="666">
@@ -139,23 +139,54 @@
                             </children>
                             <padding><Insets left="33.0" /></padding>
                         </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="23.0" prefWidth="250.0" spacing="20.0">
+                     <children>
+                        <ImageView fx:id="navBookmarks" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onBookmarksClick" pickOnBounds="true" preserveRatio="true" styleClass="profile">
+                           <image>
+                              <Image url="@../../assets/Image/Icons/save-svgrepo-com.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                              <ImageView fx:id="navLike" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onLikeClick" pickOnBounds="true" preserveRatio="true" styleClass="profile">
+                                  <image>
+                              <Image url="@../../assets/Image/Icons/thumb-up-svgrepo-com.png" />
+                           </image>
+                                  <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                              </ImageView>
+                              <ImageView fx:id="navCreatePost" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onCreatePostClick" pickOnBounds="true" preserveRatio="true" styleClass="profile">
+                                  <image>
+                              <Image url="@../../assets/Image/Icons/plus-square-on-square-svgrepo-com.png" />
+                           </image>
+                                  <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                              </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="12.0" top="12.0" />
+                     </VBox.margin>
+                  </HBox>
                         <Line endX="111.0" fill="#7c43ef" startX="-134.0" stroke="#7c43ef" strokeWidth="5.0" />
                     </children>
                     <padding><Insets top="6.0" /></padding>
                 </VBox>
                 <HBox alignment="CENTER" prefHeight="224.0" prefWidth="250.0" stylesheets="@../../assets/css/sidebar.css" VBox.vgrow="ALWAYS">
                     <children>
-                        <ImageView fx:id="navCreatePost" fitHeight="41.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" styleClass="profile" onMouseClicked="#onCreatePostClick">
-                            <image><Image url="@../../assets/Image/Icons/plus-square-on-square-svgrepo-com.png" /></image>
-                            <cursor><Cursor fx:constant="HAND" /></cursor>
-                        </ImageView>
-                        <ImageView fx:id="navSetting" fitHeight="40.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" styleClass="profile" onMouseClicked="#onSettingsClick">
+                  <ImageView fx:id="navLogout" fitHeight="40.0" fitWidth="43.0" onMouseClicked="#onLogoutClick" pickOnBounds="true" preserveRatio="true" styleClass="profile">
+                     <image>
+                        <Image url="@../../assets/Image/Icons/logout.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                        <ImageView fx:id="navSetting" fitHeight="40.0" fitWidth="43.0" onMouseClicked="#onSettingsClick" pickOnBounds="true" preserveRatio="true" styleClass="profile">
                             <image><Image url="@../../assets/Image/Icons/settings-svgrepo-com.png" /></image>
                             <HBox.margin><Insets left="16.0" right="10.0" /></HBox.margin>
-                            <cursor><Cursor fx:constant="HAND" /></cursor>
-                        </ImageView>
-                        <ImageView fx:id="navBookmarks" fitHeight="47.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" styleClass="profile" onMouseClicked="#onBookmarksClick">
-                            <image><Image url="@../../assets/Image/Icons/save-svgrepo-com.png" /></image>
                             <cursor><Cursor fx:constant="HAND" /></cursor>
                         </ImageView>
                     </children>

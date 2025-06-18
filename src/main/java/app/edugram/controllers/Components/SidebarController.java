@@ -1,16 +1,23 @@
 package app.edugram.controllers.Components;
 
 import app.edugram.Main;
+import app.edugram.controllers.ExploreController;
+import app.edugram.utils.PageAction;
 import app.edugram.utils.Sessions;
+import app.edugram.utils.cookies.CookieUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Window;
@@ -35,6 +42,10 @@ public class SidebarController implements Initializable {
     // ... sisa field @FXML Anda ...
     @FXML private ImageView navProfilePicture;
     @FXML private ImageView navCreatePost;
+    @FXML private ImageView navLogout;
+    @FXML private ImageView navLike;
+    @FXML private ImageView navBookmarks;
+
     @FXML private Label navUsername;
 
     // Interface untuk berkomunikasi dengan BaseViewController
@@ -124,9 +135,48 @@ public class SidebarController implements Initializable {
     } }
 
     @FXML
-    public void onBookmarksClick(MouseEvent mouseEvent) {
+    public void onBookmarksClick(MouseEvent event) {
         if (navigationHandler != null) {
-            navigationHandler.onNavigateToPage("bookmark");
+            switchExplorePage(event, "bookmark");
+            System.out.println("Bookmark: clicked");
+        }
+    }
+
+    @FXML
+    public void onLikeClick(MouseEvent event) {
+        if (navigationHandler != null) {
+            switchExplorePage(event, "like");
+            System.out.println("save: clicked");
+        }
+    }
+    private BorderPane mainBorderPane;
+
+    public void setMainBorderPane(BorderPane mainBorderPane) {
+        this.mainBorderPane = mainBorderPane;
+    }
+
+    private void switchExplorePage(MouseEvent event, String pageName) {
+        try {
+            FXMLLoader loader = new FXMLLoader(PageAction.class.getResource("/app/edugram/pages/explore.fxml"));
+            Parent root = loader.load();
+
+            ExploreController explore = loader.getController();
+            explore.setWhatPage(pageName);
+
+            // Set the content to the center of BorderPane
+            mainBorderPane.setCenter(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void onLogoutClick(ActionEvent event) {
+        if (navigationHandler != null) {
+            CookieUtil.clearCookie();
+            Sessions.clear();
+            PageAction.switchPage(event, "login.fxml");
         }
     }
 
