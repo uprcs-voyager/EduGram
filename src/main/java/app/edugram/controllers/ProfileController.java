@@ -3,11 +3,14 @@ package app.edugram.controllers;
 import app.edugram.Main;
 import app.edugram.controllers.Components.PostFrameController;
 import app.edugram.controllers.Components.SmallPostFrameController;
+import app.edugram.models.FollowModel;
 import app.edugram.models.PostModel;
+import app.edugram.models.UserModel;
 import app.edugram.utils.PostClickHandler;
 import app.edugram.utils.Sessions;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,7 +28,9 @@ import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ProfileController implements Initializable, PostClickHandler {
@@ -41,6 +46,7 @@ public class ProfileController implements Initializable, PostClickHandler {
     @FXML private Label followingCountLabel;
     @FXML private Label bioLabel;
     @FXML private Button editProfileButton;
+    @FXML private Button followBtn;
 
     // --- FXML Elements for Post Grid ---
     @FXML private ScrollPane contentScrollPane;
@@ -75,15 +81,24 @@ public class ProfileController implements Initializable, PostClickHandler {
     public void setUserData(int userId) {
         this.whoseProfileId = userId;
         loadAllPostsAndDisplay();
+        loadUserProfileInformation();
     }
 
     public void loadUserProfileInformation(){
-        // Inisialisasi Tampilan Info Profil dengan Placeholder ---
-        usernameLabel.setText("@" + Sessions.getUsername());
-        postCountLabel.setText("??"); // Akan diupdate nanti
-        followersCountLabel.setText("??");
-        followingCountLabel.setText("??");
-        bioLabel.setText("Ini adalah halaman profil sementara yang menampilkan semua postingan.");
+        Map<String, String> user = UserModel.findUser(String.valueOf(whoseProfileId));
+        boolean isProfileMine = whoseProfileId == Sessions.getUserId();
+        if (user != null);
+        {
+            usernameLabel.setText(user.get("username"));
+            followersCountLabel.setText(user.get("follower"));
+            followingCountLabel.setText(user.get("following"));
+            bioLabel.setText("Ini adalah halaman profil sementara yang menampilkan semua postingan.");
+
+            editProfileButton.setVisible(isProfileMine);
+            followBtn.setVisible(!isProfileMine);
+            System.out.println(user.get("isFollow"));
+            followBtn.setText(user.get("isFollow").equals("1") ? "Followed" : "Follow");
+        }
 
         loadDefaultProfilePicture();
     }
@@ -238,4 +253,18 @@ public class ProfileController implements Initializable, PostClickHandler {
         contentContainer.getChildren().add(ProfileGridView);
     }
 
+    public void clickFollowButton(ActionEvent event) {
+        FollowModel follow = new FollowModel();
+        System.out.println(whoseProfileId);
+        if(!follow.exists(whoseProfileId)){
+            System.out.println("PorfileController.clickFollowButton: Setting");
+            List<String> value = List.of(String.valueOf(Sessions.getUserId()), String.valueOf(whoseProfileId));
+            follow.set(value);
+            followBtn.setText("Followed");
+        }else{
+            System.out.println("PorfileController.clickFollowButton: Unetting");
+            follow.unset(whoseProfileId);
+            followBtn.setText("Follow");
+        }
+    }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="edugramDB" uuid="6ab7c32f-d5d6-48ae-83a6-f88b86d28f2b">
+    <data-source source="LOCAL" name="edugramDB" uuid="7eb81e2a-78d0-4c68-83f5-34c96fa00bde">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>

@@ -1,4 +1,4 @@
-package app.edugram.controllers;
+package app.edugram.controllers.Components;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,30 +13,30 @@ import java.util.Set;
 
 public class TagFilterController {
 
-    @FXML private FlowPane tagContainer;
+    @FXML private static FlowPane tagContainer;
     @FXML private Button clearSelectionButton;
     @FXML private Button applyFilterButton;
 
     private Stage dialogStage;
-    private Set<String> selectedTags = new HashSet<>(); // Menyimpan nama tag yang dipilih
+    private static Set<String> selectedTags = new HashSet<>(); // Menyimpan nama tag yang dipilih
 
     // --- DATA PLACEHOLDER UNTUK TAG ---
-    private final List<String> DUMMY_TAGS = Arrays.asList(
-            "Nature", "Biology", "Science", "Technology", "Art",
-            "History", "Programming", "Education", "Food", "Travel",
-            "Photography", "Music", "Sports", "Health", "Business",
-            "Design", "Marketing", "Finance", "Writing", "Cooking"
-    );
+//    private final List<String> DUMMY_TAGS = Arrays.asList(
+//            "Nature", "Biology", "Science", "Technology", "Art",
+//            "History", "Programming", "Education", "Food", "Travel",
+//            "Photography", "Music", "Sports", "Health", "Business",
+//            "Design", "Marketing", "Finance", "Writing", "Cooking"
+//    );
     // --- Akhir DATA PLACEHOLDER ---
 
     // Dipanggil dari controller utama untuk inisialisasi modal
-    public void setDialogStageAndInitialTags(Stage dialogStage, Set<String> currentSelectedTags) {
-        this.dialogStage = dialogStage;
-        if (currentSelectedTags != null) {
-            this.selectedTags.addAll(currentSelectedTags); // Set tag yang sudah aktif sebelumnya
-        }
-        loadAndDisplayTags(); // Muat dan tampilkan tombol tag
-    }
+//    public void setDialogStageAndInitialTags(Stage dialogStage, Set<String> currentSelectedTags) {
+//        this.dialogStage = dialogStage;
+//        if (currentSelectedTags != null) {
+//            this.selectedTags.addAll(currentSelectedTags); // Set tag yang sudah aktif sebelumnya
+//        }
+//        loadAndDisplayTags(); // Muat dan tampilkan tombol tag
+//    }
 
     @FXML
     public void initialize() {
@@ -45,7 +45,7 @@ public class TagFilterController {
         applyFilterButton.setOnAction(event -> handleApplyFilter());
     }
 
-    private void loadAndDisplayTags() {
+    public static void loadAndDisplayTags(List<String> DUMMY_TAGS) {
         tagContainer.getChildren().clear(); // Bersihkan container
 
         if (DUMMY_TAGS.isEmpty()) {

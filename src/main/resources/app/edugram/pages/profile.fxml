@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<VBox fx:id="contentContainer" alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" styleClass="profile-page-root" stylesheets="@../assets/css/profile.css" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.ProfileController">
+<VBox fx:id="contentContainer" alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" styleClass="profile-page-root" stylesheets="@../assets/css/profile.css" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.ProfileController">
    <children>
       <ScrollPane fx:id="contentScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS">
          <content>
@@ -36,7 +36,7 @@
             <VBox alignment="CENTER" prefHeight="50.0" prefWidth="150.0"><Label fx:id="followersCountLabel" styleClass="stat-number" text="456" /><Label styleClass="stat-text" text="Followers" /></VBox>
             <VBox alignment="CENTER"><Label fx:id="followingCountLabel" styleClass="stat-number" text="789" /><Label styleClass="stat-text" text="Following" /></VBox>
          </HBox>
-         <Button fx:id="editProfileButton" alignment="CENTER" contentDisplay="CENTER" prefHeight="33.0" prefWidth="638.0" styleClass="action-button" text="Edit Profile">
+         <Button fx:id="followBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#clickFollowButton" prefHeight="33.0" prefWidth="638.0" styleClass="action-button" text="Follow">
                <effect>
                   <DisplacementMap>
                      <mapData>
@@ -44,6 +44,15 @@
                      </mapData>
                   </DisplacementMap>
                </effect></Button>
+                        <Button fx:id="editProfileButton" alignment="CENTER" contentDisplay="CENTER" prefHeight="33.0" prefWidth="638.0" styleClass="action-button" text="Edit Profile">
+                           <effect>
+                              <DisplacementMap>
+                                 <mapData>
+                                    <FloatMap />
+                                 </mapData>
+                              </DisplacementMap>
+                           </effect>
+                        </Button>
       </VBox>
       </HBox>
    <Label fx:id="bioLabel" prefHeight="44.0" prefWidth="109.0" text="This is a dummy bio.">

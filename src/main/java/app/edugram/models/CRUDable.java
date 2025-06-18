@@ -1,5 +1,6 @@
 package app.edugram.models;
 import java.util.List;
+import java.util.Map;
 
 public interface CRUDable<T> {
 
