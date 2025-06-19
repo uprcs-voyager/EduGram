@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderpaneComment" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.CommentController">
+   <top>
+      <HBox alignment="CENTER" prefHeight="43.0" prefWidth="600.0" styleClass="top_and_bottom" stylesheets="@../../assets/css/comment.css" BorderPane.alignment="BOTTOM_CENTER">
+         <children>
+            <Label prefHeight="20.0" prefWidth="189.0" text="Comment's On">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="currentPostTitle" prefHeight="18.0" prefWidth="223.0" text="Post Title">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Line endX="-63.0" rotate="90.0" startX="-100.0" />
+            <ImageView fitHeight="42.0" fitWidth="43.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../assets/Image/Icons/comment.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="commentTextfield" promptText="Write your comment here..." /> <HBox alignment="CENTER" prefHeight="63.0" prefWidth="600.0" styleClass="top_and_bottom" stylesheets="@../../assets/css/comment.css">
+            <children>
+               <Button fx:id="cancelCommentBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="139.0" text="Cancel Comment">
+                  <HBox.margin>
+                     <Insets right="284.0" />
+                  </HBox.margin>
+                  <styleClass>
+                     <String fx:value="button" />
+                     <String fx:value="button_cancel" />
+                  </styleClass>
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </Button>
+               <Button fx:id="postCommentBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="139.0" text="Comment">
+                  <styleClass>
+                     <String fx:value="button_comment" />
+                     <String fx:value="button" />
+                  </styleClass>
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </Button>
+            </children>
+         </HBox>
+         </children>
+      </VBox>
+   </bottom>
+   <center>
+      <ScrollPane fx:id="rootScrollpane" fitToWidth="true" BorderPane.alignment="CENTER">
+         <content>
+            <VBox fx:id="vboxCommentsContainer" prefWidth="584.0" /> </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

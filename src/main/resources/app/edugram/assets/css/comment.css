@@ -1,0 +1,23 @@
+.top_and_bottom {
+    -fx-background-color: 	#b9d8ff;
+}
+
+.white_words{
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-effect: none;
+    -fx-border-width: 2px;
+    -fx-border-radius: 3;
+    -fx-border-color: black;
+    -fx-text-fill: white;
+}
+
+.button_cancel {
+    -fx-background-color: #e72c3b;
+}
+
+.button_comment {
+    -fx-background-color: #7c43ef;
+}

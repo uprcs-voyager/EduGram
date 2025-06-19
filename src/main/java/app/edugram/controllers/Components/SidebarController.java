@@ -42,7 +42,7 @@ public class SidebarController implements Initializable {
     // ... sisa field @FXML Anda ...
     @FXML private ImageView navProfilePicture;
     @FXML private ImageView navCreatePost;
-    @FXML private ImageView navLogout;
+    @FXML private Button navLogout;
     @FXML private ImageView navLike;
     @FXML private ImageView navBookmarks;
 

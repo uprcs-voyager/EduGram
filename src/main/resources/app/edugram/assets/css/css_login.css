@@ -22,6 +22,11 @@
 }
 
 .register-button {
+    -fx-background-color: #0903cf;
+    -fx-text-fill: white;
+}
+
+.register-button {
     -fx-background-color: white;
     -fx-text-fill: black;
     -fx-border-color: #e5e5e5;
