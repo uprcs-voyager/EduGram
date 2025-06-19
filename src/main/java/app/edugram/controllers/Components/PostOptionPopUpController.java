@@ -125,13 +125,13 @@ public class PostOptionPopUpController {
 
                 System.out.println("Report popup shown at top center of window.");
             } else {
-                System.err.println("Owner window not available for positioning report popup.");
+                System.err.println("Owner window not available for positioning ereport popup.");
                 reportPopup.show(null);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Failed to load report popup: " + e.getMessage());
+            System.err.println("Failed to load ereport popup: " + e.getMessage());
     }
 
 }
