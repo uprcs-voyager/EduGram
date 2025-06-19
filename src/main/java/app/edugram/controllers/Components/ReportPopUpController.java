@@ -1,5 +1,8 @@
 package app.edugram.controllers.Components;
 import app.edugram.models.PostModel;
+import app.edugram.models.ReportModel;
+import app.edugram.utils.Notices;
+import app.edugram.utils.Sessions;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -72,6 +75,7 @@ public class ReportPopUpController {
             return; // Hentikan proses jika alasan kosong
         }
 
+        insertReport();
 
         System.out.println("Tombol Laporkan di pop-up laporan diklik.");
         System.out.println("Postingan Dilaporkan: " + reportedPostTitle);
@@ -84,6 +88,22 @@ public class ReportPopUpController {
         }
         System.out.println("Laporan berhasil dikirim! (Demo)");
     }
+
+    private void insertReport(){
+        ReportModel rep = new ReportModel();
+        rep.setData(
+                String.valueOf(currentPost.getId()),
+                String.valueOf(Sessions.getUserId()),
+                reportReasonTextArea.getText()
+        );
+        if(rep.validate()){
+            Notices.customNote("Already reported", "Anda hanya dapat lapor sekali(1x) saja ");
+            System.out.println("ReportPopUpController.insertReport");
+            return;
+        }
+
+        rep.create(rep);
     }
+}
 
 

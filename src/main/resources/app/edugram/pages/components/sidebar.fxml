@@ -176,14 +176,16 @@
                 </VBox>
                 <HBox alignment="CENTER" prefHeight="224.0" prefWidth="250.0" stylesheets="@../../assets/css/sidebar.css" VBox.vgrow="ALWAYS">
                     <children>
-                  <ImageView fx:id="navLogout" fitHeight="40.0" fitWidth="43.0" onMouseClicked="#onLogoutClick" pickOnBounds="true" preserveRatio="true" styleClass="profile">
-                     <image>
-                        <Image url="@../../assets/Image/Icons/logout.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
+                        <Button fx:id="logoutButton" onAction="#onLogoutClick" styleClass="icon-button">
+                            <graphic>
+                                <ImageView fitHeight="40.0" fitWidth="43.0" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../assets/Image/Icons/logout.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+
                         <ImageView fx:id="navSetting" fitHeight="40.0" fitWidth="43.0" onMouseClicked="#onSettingsClick" pickOnBounds="true" preserveRatio="true" styleClass="profile">
                             <image><Image url="@../../assets/Image/Icons/settings-svgrepo-com.png" /></image>
                             <HBox.margin><Insets left="16.0" right="10.0" /></HBox.margin>
