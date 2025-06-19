@@ -67,6 +67,7 @@ public class PostOptionPopUpController {
         if (ownerPopup != null) {
             ownerPopup.hide();
         }
+        editPopUp();
     }
 
     private void handleDelete() {
@@ -133,4 +134,43 @@ public class PostOptionPopUpController {
             System.err.println("Failed to load report popup: " + e.getMessage());
     }
 
-} }
+}
+
+    private void editPopUp () {
+        try {
+            Popup editPopUp = new Popup();
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("pages/components/popup_option/edit_post_pop_up.fxml"));
+            VBox editPostpopup = loader.load();
+
+            EditPopUpController editController = loader.getController();
+            editController.setPopup(editPopUp);
+            editController.setParentPopup(this.ownerPopup);
+            editController.setPostData(this.currentPost);
+            editController.setPostFrameController(this.postFrameController);
+
+            editPopUp.getContent().add(editPostpopup);
+
+            if (ownerPopup != null && ownerPopup.getOwnerWindow() != null) {
+                Window ownerWindow = ownerPopup.getOwnerWindow();
+                double x = ownerWindow.getX() + (ownerWindow.getWidth() / 2) - (editPostpopup.prefWidth(-1) / 2);
+                double y = ownerWindow.getY()+100;
+
+                editPopUp.show(ownerWindow, x, y);
+
+                System.out.println("Report popup shown at top center of window.");
+            } else {
+                System.err.println("Owner window not available for positioning report popup.");
+                editPopUp.show(null);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load report popup: " + e.getMessage());
+        }
+
+    }
+
+
+
+}
+

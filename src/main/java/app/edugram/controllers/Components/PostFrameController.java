@@ -17,10 +17,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.util.List;
@@ -229,7 +231,12 @@ public class PostFrameController {
 
     @FXML
     void onCommentClicked(ActionEvent event) {
-        System.out.println("comment button clicked for post  " + currentPost.getId());
+        if (currentPost == null) {
+            System.err.println("No current post selected to show comments.");
+            return;
+        }
+        System.out.println("Showing comment popup for post " + currentPost.getId());
+        showCommentPopup();
     }
 
     @FXML
@@ -280,6 +287,38 @@ public class PostFrameController {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Failed to load post options popup.");
+        }
+    }
+
+    private void showCommentPopup() {
+        try {
+            Popup popup = new Popup();
+
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("pages/components/comment.fxml"));
+            BorderPane popupRoot = loader.load();
+            CommentController commentController = loader.getController();
+
+            commentController.setPopup(popup);
+            commentController.setPostData(currentPost.getId(), currentPost.getTitle());
+
+            popup.getContent().add(popupRoot);
+            Window ownerWindow = Main.getPrimaryStage();
+
+            if (ownerWindow != null) {
+                // Posisi popup di tengah layar owner
+                double x = ownerWindow.getX() + ownerWindow.getWidth() / 2 - popupRoot.prefWidth(-1) / 2; // gunakan popupRoot
+                double y = ownerWindow.getY() + ownerWindow.getHeight() / 2 - popupRoot.prefHeight(-1) / 2; // gunakan popupRoot
+
+                popup.show(ownerWindow, x, y);
+                popup.setAutoHide(true);
+                popup.setHideOnEscape(true);
+            } else {
+                System.err.println("Main Stage not found. Cannot show comment popup.");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load comment .");
         }
     }
 

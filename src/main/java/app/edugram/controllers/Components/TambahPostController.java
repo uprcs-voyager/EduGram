@@ -38,6 +38,7 @@ public class TambahPostController {
     @FXML private TextField titleInput;
     @FXML private TextArea textareainput;
     @FXML private TextField imagePathInput;
+    @FXML private TextField tagsInput;
     @FXML private Button browseImageButton;
     @FXML private ImageView imagePreview;
     @FXML private Button cancelButton;
@@ -96,6 +97,7 @@ public class TambahPostController {
     private void handleCreatePost() {
         String title = titleInput.getText().trim();
         String description = textareainput.getText().trim();
+        String tags = tagsInput.getText().trim();
 
         Window currentWindowForAlert = null;
         if (dialogStage != null) {
@@ -114,6 +116,10 @@ public class TambahPostController {
         }
         if (selectedImageFile == null) {
             showAlert(Alert.AlertType.WARNING, "Gambar Belum Dipilih", "Mohon pilih gambar untuk postingan Anda.", currentWindowForAlert);
+            return;
+        }
+        if (tags.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Input Kosong", "Deskripsi postingan tidak boleh kosong.", currentWindowForAlert);
             return;
         }
 
