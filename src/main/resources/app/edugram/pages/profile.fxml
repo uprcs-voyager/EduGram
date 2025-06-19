@@ -25,11 +25,17 @@
                     <children>
       <HBox fx:id="hbox_profile" alignment="CENTER">
       <VBox alignment="CENTER">
-            <ImageView fx:id="profilePictureView" styleClass="profile-picture">
-            <clip>
-                  <Circle />
-               </clip>
-            </ImageView>
+                        <ImageView fx:id="profilePictureView" fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="false">
+                           <image>
+                              <Image url="@../userData/Images/profile_pictures/pfp_placeholder.jpg" />
+                           </image>
+                           <clip>
+                              <Circle centerX="64" centerY="64" radius="64" />
+                           </clip>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
          <Label fx:id="usernameLabel" styleClass="username-label" text="YourUsername" />
          <HBox alignment="CENTER" prefHeight="88.0" prefWidth="638.0">
             <VBox alignment="CENTER"><Label fx:id="postCountLabel" styleClass="stat-number" text="123" /><Label styleClass="stat-text" text="Posts" /></VBox>
@@ -53,6 +59,9 @@
                               </DisplacementMap>
                            </effect>
                         </Button>
+                        <padding>
+                           <Insets top="24.0" />
+                        </padding>
       </VBox>
       </HBox>
    <Label fx:id="bioLabel" prefHeight="44.0" prefWidth="109.0" text="This is a dummy bio.">

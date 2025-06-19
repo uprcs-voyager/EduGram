@@ -89,6 +89,17 @@ public class ProfileController implements Initializable, PostClickHandler {
         boolean isProfileMine = whoseProfileId == Sessions.getUserId();
         if (user != null);
         {
+            try {
+                String profileImagePath = "/app/edugram/userData/Images/profile_pictures/" + user.get("prof_pic");
+                URL resource = getClass().getResource(profileImagePath);
+                if (resource != null) {
+                    profilePictureView.setImage(new Image(resource.toExternalForm()));
+                } else {
+                    System.err.println("Profile picture resource not found: " + profileImagePath);
+                }
+            } catch (Exception e) {
+                System.err.println("Could not load profile picture: " + e.getMessage());
+            }
             usernameLabel.setText(user.get("username"));
             followersCountLabel.setText(user.get("follower"));
             followingCountLabel.setText(user.get("following"));

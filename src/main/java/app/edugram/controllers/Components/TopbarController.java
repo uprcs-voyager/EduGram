@@ -33,8 +33,10 @@ import javafx.stage.Popup;
 import javafx.stage.Window;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class TopbarController implements Initializable {
 
@@ -179,7 +181,7 @@ public class TopbarController implements Initializable {
     private void showSuggestions() {
         // PENTING: Pastikan suggestionVBoxContent tidak null sebelum memanggil populateSuggestions
         if (suggestionPopup != null && suggestionContent != null && suggestionVBoxContent != null && !suggestionPopup.isShowing()) {
-            populateSuggestions();
+            searchAction("");
 
             Bounds boundsInScene = searchTextField.localToScreen(searchTextField.getBoundsInLocal());
             double x = boundsInScene.getMinX();
@@ -234,46 +236,20 @@ public class TopbarController implements Initializable {
         }
     }
 
-    private void populateSuggestions() {
+    private void populateSuggestions(List<String> suggestions) {
         if (suggestionVBoxContent == null) {
             System.err.println("Error: suggestionVBoxContent is null, cannot populate suggestions.");
             return;
         }
         suggestionVBoxContent.getChildren().clear();
 
-        List<String> profileNames = UserModel.getAllUsernames();
-        List<String> tagNames = UserPrefTagModel.getAllTags();
-
-        if (!profileNames.isEmpty()) {
-            Label profileHeader = new Label("Profil");
-            profileHeader.getStyleClass().add("suggestion-category-label");
-            suggestionVBoxContent.getChildren().add(profileHeader);
-
-            for (String profileName : profileNames) {
-                HBox item = createSuggestionItem(profileName);
+        if (!suggestions.isEmpty()) {
+            System.out.println("======= Populating suggestions ======");
+            for (int i = 0; i < Math.min(10, suggestions.size()); i++) {
+                System.out.println(i);
+                HBox item = createSuggestionItem(suggestions.get(i));
                 suggestionVBoxContent.getChildren().add(item);
             }
-            VBox.setMargin(profileHeader, new javafx.geometry.Insets(5, 0, 5, 0));
-        }
-
-        if (!tagNames.isEmpty()) {
-            if (!profileNames.isEmpty()) {
-                suggestionVBoxContent.getChildren().add(new Separator());
-            }
-            Label tagHeader = new Label("Tag");
-            tagHeader.getStyleClass().add("suggestion-category-label");
-            suggestionVBoxContent.getChildren().add(tagHeader);
-
-            for (String tagName : tagNames) {
-                String displayTagName = "#" + tagName;
-                HBox item = createSuggestionItem(displayTagName);
-                suggestionVBoxContent.getChildren().add(item);
-            }
-            VBox.setMargin(tagHeader, new javafx.geometry.Insets(5, 0, 5, 0));
-        }
-
-        if (profileNames.isEmpty() && tagNames.isEmpty()) {
-            suggestionVBoxContent.getChildren().add(new Label("Tidak ada saran tersedia."));
         }
     }
 
@@ -342,7 +318,30 @@ public class TopbarController implements Initializable {
     @FXML
     public void searchBarAction(KeyEvent keyEvent) {
         String searchBarContent = searchTextField.getText();
-        System.out.println(searchBarContent);
-        TagFilterController.loadAndDisplayTags(TagModel.listAll(searchBarContent));
+        searchAction(searchBarContent);
+    }
+
+    public void searchAction(String searchKey){
+        List<String> suggestions = new ArrayList<>();
+
+        if(!searchKey.contains("@")){
+//            System.out.println("search tag");
+            List<String> filterTag = TagModel.listAll(searchKey.replace("#", ""));
+            for (int i = 0; i < filterTag.size(); i++ ) {
+                suggestions.add("#" + filterTag.get(i));
+            }
+        }
+        if(!searchKey.contains("#")){
+//            System.out.println("search user");
+            List<String> filterUser = new UserModel()
+                    .listAll(searchKey.replace("@", ""))
+                    .stream()
+                    .map(UserModel::getUsername)
+                    .toList();
+            for(String user : filterUser){
+                suggestions.add("@" + user);
+            }
+        }
+        populateSuggestions(suggestions);
     }
 }

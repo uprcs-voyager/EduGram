@@ -1,6 +1,7 @@
 package app.edugram.controllers.Components;
 import app.edugram.Main;
 import app.edugram.models.PostModel; // Pastikan PostModel sudah ada dan memiliki metode update
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -12,10 +13,20 @@ import javafx.scene.image.Image; // Import yang benar untuk Image
 import javafx.scene.image.ImageView; // Import yang benar untuk ImageView
 import javafx.scene.control.TextArea;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 
 public class EditPopUpController {
@@ -119,9 +130,13 @@ public class EditPopUpController {
     private void handleSave() {
         System.out.println("Save button clicked!");
 
-//        String newTitle = titlePostField.getText();
-//        String newDescription = descPostArea.getText();
-//        String newImageUrl = imagePostField.getText();
+        String newTitle = currentTitle.getText();
+        String newDescription = currentDesc.getText();
+        String newImageUrl = currentImage.getImage().getUrl();
+        System.out.println(newImageUrl);
+        String olfImageUrl = currentImageUrlField.getText();
+        System.out.println(olfImageUrl);
+
 //
 //        if (postToEdit != null) {
 //            // Lakukan validasi input jika diperlukan
@@ -254,6 +269,79 @@ public class EditPopUpController {
         alert.showAndWait();
     }
 
+    private String createNewFileName(){
+//        ---- create new profile file's name ----
+        Random randomInt = new Random();
+        String getRandomNumber = String.valueOf(randomInt.nextInt(1000) + 1000);
 
+        LocalDateTime getDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+        String formatDate = getDateTime.format(formatter);
+//        ---- get extension ----
+        String imageUrl = currentImage.getImage().getUrl();
+        String imageExtension = "";
+        if (imageUrl != null) {
+            imageExtension = imageUrl.substring(imageUrl.lastIndexOf(".") + 1).toLowerCase();
+            // Remove any query parameters if present
+            if (imageExtension.contains("?")) {
+                imageExtension = imageExtension.substring(0, imageExtension.indexOf("?"));
+            }
+            System.out.println("Extension: " + imageExtension);
+        }
+
+        String newProfileName = "post_" + getRandomNumber + formatDate + "." + imageExtension;
+        return newProfileName;
+    }
+
+    private boolean storeProfileImage(String newFileName) {
+        try {
+            // Create target directory if it doesn't exist
+            Path targetDir = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "app", "edugram", "userData", "Images", "posts");
+            if (!Files.exists(targetDir)) {
+                Files.createDirectories(targetDir);
+            }
+
+            // 1. Get the image from the ImageView
+            Image currentImage = this.currentImage.getImage();
+            BufferedImage originalBufferedImage = SwingFXUtils.fromFXImage(currentImage, null);
+
+            // 2. *** FIX: Convert to RGB color space to prevent "Bogus input colorspace" error ***
+            // Create a new BufferedImage with a compatible RGB type
+            BufferedImage rgbImage = new BufferedImage(
+                    originalBufferedImage.getWidth(),
+                    originalBufferedImage.getHeight(),
+                    BufferedImage.TYPE_INT_RGB
+            );
+
+            // Draw the original image onto the new RGB image. This performs the conversion.
+            rgbImage.createGraphics().drawImage(originalBufferedImage, 0, 0, null);
+            // **********************************************************************************
+
+            File outputFile = targetDir.resolve(newFileName).toFile();
+
+            // 3. Compress and save the NEW RGB-converted image
+            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+            ImageWriter writer = writers.next();
+            ImageOutputStream ios = ImageIO.createImageOutputStream(outputFile);
+            writer.setOutput(ios);
+
+            ImageWriteParam param = writer.getDefaultWriteParam();
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            param.setCompressionQuality(0.8f); // 80% quality
+
+            // Write the rgbImage, NOT the original bufferedImage
+            writer.write(null, new IIOImage(rgbImage, null, null), param);
+
+            ios.close();
+            writer.dispose();
+
+            System.out.println("Post image stored and compressed: " + newFileName);
+            return true;
+        } catch (IOException e) {
+            System.err.println("Failed to store profile image: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

@@ -92,6 +92,7 @@ public class PostOptionPopUpController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             PostModel del = new PostModel();
             del.delete(currentPost.getId());
+            del.deleteImage(currentPost.getPostContent());
         } else {
             // Pengguna mengklik Batal atau menutup alert
             System.out.println("Delete action cancelled for post: " + postTitle);

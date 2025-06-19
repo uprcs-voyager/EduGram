@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="vboxsmall" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.SmallPostFrameController">
+<VBox fx:id="vboxsmall" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.SmallPostFrameController">
    <children>
       <GridPane fx:id="smallpostgrid" alignment="CENTER">
          <columnConstraints>
@@ -18,12 +18,12 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="buttonpost" mnemonicParsing="false"  styleClass="button_hover" stylesheets="@../../assets/css/smallpost.css">
+            <Button fx:id="buttonpost" mnemonicParsing="false" styleClass="button_hover" stylesheets="@../../assets/css/smallpost.css">
                <graphic>
             
                                  <ImageView fx:id="smallpost" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" styleClass="button_hover">
                      <image>
-                        <Image url="@../../userData/images/posts/clouds-3840x2160-8k-4k-5k-wallpaper-abstract-purple-live-wallpaper-6469.jpg" />
+                        <Image url="@../../userData/Images/posts/unavailable-image.jpg" />
                      </image>
                   </ImageView>
                </graphic>
