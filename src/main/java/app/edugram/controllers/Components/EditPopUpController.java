@@ -128,60 +128,59 @@ public class EditPopUpController {
     }
 
     private void handleSave() {
-        System.out.println("Save button clicked!");
+        String title = currentTitle.getText().trim();
+        String description = currentDesc.getText().trim();
+        List<String> tags = Arrays.asList(currentTags.getText().trim().split("\\s+"));
 
-        String newTitle = currentTitle.getText();
-        String newDescription = currentDesc.getText();
-        String newImageUrl = currentImage.getImage().getUrl();
-        System.out.println(newImageUrl);
-        String olfImageUrl = currentImageUrlField.getText();
-        System.out.println(olfImageUrl);
+        Window currentWindowForAlert = null;
+        if (dialogStage != null) {
+            currentWindowForAlert = dialogStage; // Stage dialog ini adalah pemilik Alert
+        } else if (editPostpopup != null && editPostpopup.getScene() != null) {
+            currentWindowForAlert = editPostpopup.getScene().getWindow();
+        }
+        // Validasi input
+        if (title.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Input Kosong", "Judul postingan tidak boleh kosong.", currentWindowForAlert);
+            return;
+        }
+        if (description.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Input Kosong", "Deskripsi postingan tidak boleh kosong.", currentWindowForAlert);
+            return;
+        }
+        if (selectedImageFile == null) {
+            showAlert(Alert.AlertType.WARNING, "Gambar Belum Dipilih", "Mohon pilih gambar untuk postingan Anda.", currentWindowForAlert);
+            return;
+        }
+        if (tags.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Input Kosong", "Deskripsi postingan tidak boleh kosong.", currentWindowForAlert);
+            return;
+        }
 
-//
-//        if (postToEdit != null) {
-//            // Lakukan validasi input jika diperlukan
-//            if (newTitle.isEmpty() || newDescription.isEmpty() || newImageUrl.isEmpty()) {
-//                // Tampilkan pesan error ke pengguna
-//                System.err.println("Semua field harus diisi!");
-//                return;
-//            }
-//
-//            // Update data di model
-//            postToEdit.setTitle(newTitle);
-//            postToEdit.setDescription(newDescription);
-//            postToEdit.setPostContent(newImageUrl);
-//
-//            // Panggil metode update di PostModel (ini harus Anda implementasikan di PostModel Anda)
-//            // Contoh:
-//            try {
-//                // Pastikan PostModel Anda memiliki metode update yang mengambil ID dan data yang diupdate
-//                // Contoh hipotesis:
-//                postToEdit.update(
-//                        postToEdit.getId(),
-//                        newTitle,
-//                        newDescription,
-//                        newImageUrl
-//                );
-//                System.out.println("Post updated successfully!");
-//
-//                // Refresh UI di PostFrameController jika ada
-//                if (postFrameController != null) {
-//                    postFrameController.refreshPostDisplay(postToEdit); // Contoh metode refresh
-//                }
-//
-//                if (ownerPopup != null) {
-//                    ownerPopup.hide(); // Sembunyikan popup setelah berhasil
-//                }
-//
-//            } catch (Exception e) {
-//                System.err.println("Failed to update post: " + e.getMessage());
-//                e.printStackTrace();
-//                // Tampilkan alert error ke pengguna
-//            }
-//
-//        } else {
-//            System.err.println("No post data to save.");
-//        }
+        // Proses penyimpanan gambar ke direktori aplikasi
+        String imageFileName = createNewFileName(); // Nama unik untuk gambar
+        if(!storeProfileImage(imageFileName)){
+            showAlert(Alert.AlertType.WARNING, "Gagal upload image", "Image post gagal diupload!.", currentWindowForAlert);
+            return;
+        }
+
+        // Buat objek PostModel
+        PostModel newPost = new PostModel();
+        newPost.setTitle(title);
+        newPost.setDescription(description);
+        newPost.setPostContent(imageFileName); // Simpan hanya nama file ke database
+
+        // Panggil metode create dari PostModel untuk menyimpan ke database
+        boolean success = newPost.create(newPost); // PostModel.create() sudah handle Sessions.getUserId()
+
+        if (success) {
+            showAlert(Alert.AlertType.INFORMATION, "Sukses", "Postingan berhasil dibuat!", currentWindowForAlert);
+            if (dialogStage != null) {
+                dialogStage.close(); // <--- UBAH INI: Tutup Stage dialog setelah sukses
+
+            }
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Gagal", "Gagal membuat postingan. Silakan coba lagi.", currentWindowForAlert);
+        }
     }
 
     private void handleCancel() {
