@@ -122,6 +122,11 @@
                   </Button>
                </children>
             </HBox>
+            <Button fx:id="saveChangeBtn" mnemonicParsing="false" text="Save Changes">
+               <VBox.margin>
+                  <Insets left="228.0" top="100.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
    </children>
