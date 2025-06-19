@@ -176,7 +176,7 @@
                 </VBox>
                 <HBox alignment="CENTER" prefHeight="224.0" prefWidth="250.0" stylesheets="@../../assets/css/sidebar.css" VBox.vgrow="ALWAYS">
                     <children>
-                        <Button fx:id="navLogout" onAction="#onLogoutClick" styleClass="icon-button">
+                        <Button fx:id="logoutButton" onAction="#onLogoutClick" styleClass="icon-button">
                             <graphic>
                                 <ImageView fitHeight="40.0" fitWidth="43.0" preserveRatio="true">
                                     <image>
@@ -184,9 +184,6 @@
                                     </image>
                                 </ImageView>
                             </graphic>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
                         </Button>
 
                         <ImageView fx:id="navSetting" fitHeight="40.0" fitWidth="43.0" onMouseClicked="#onSettingsClick" pickOnBounds="true" preserveRatio="true" styleClass="profile">

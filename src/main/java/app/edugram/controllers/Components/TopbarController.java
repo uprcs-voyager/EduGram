@@ -1,6 +1,7 @@
 package app.edugram.controllers.Components;
 
 import app.edugram.Main;
+import app.edugram.models.TagModel;
 import app.edugram.models.UserModel;
 import app.edugram.models.UserPrefTagModel;
 import javafx.application.Platform;
@@ -336,5 +337,12 @@ public class TopbarController implements Initializable {
         } catch (Exception e) {
             System.err.println("Gagal memuat gambar profil default: " + e.getMessage());
         }
+    }
+
+    @FXML
+    public void searchBarAction(KeyEvent keyEvent) {
+        String searchBarContent = searchTextField.getText();
+        System.out.println(searchBarContent);
+        TagFilterController.loadAndDisplayTags(TagModel.listAll(searchBarContent));
     }
 }
