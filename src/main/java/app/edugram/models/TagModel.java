@@ -10,7 +10,7 @@ import java.util.List;
 public class TagModel {
     public static List<String> listAll(String keyword) {
         List<String> tags = new ArrayList<>();
-        String sql = "SELECT nama_tag FROM tag WHERE nama_tag LIKE '%"+keyword+"%'";
+        String sql = "SELECT nama_tag FROM tag WHERE nama_tag LIKE '%"+keyword+"%' LIMIT 10";
 
         ConnectDB db = new ConnectDB();
         Connection conn = db.getConnetion();

@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<VBox fx:id="rootContainer" maxHeight="550.0" prefHeight="550.0" prefWidth="1211.0" styleClass="postCard" stylesheets="@../../assets/css/beranda.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.PostFrameController">
+<VBox fx:id="rootContainer" maxHeight="550.0" prefHeight="550.0" prefWidth="1211.0" styleClass="postCard" stylesheets="@../../assets/css/beranda.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.PostFrameController">
    <children>
       <Button fx:id="backtoexplore" mnemonicParsing="false" prefHeight="50.0" prefWidth="95.0" styleClass="actionButton" VBox.vgrow="ALWAYS">
          <graphic>
@@ -42,7 +42,7 @@
                   <StackPane alignment="CENTER_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="0">
                      <ImageView fx:id="postContent" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" styleClass="postImage">
                         <image>
-                           <Image url="@../../userData/Images/posts/DeepSeeAngel.jpg" />
+                           <Image url="@../../userData/Images/posts/unavailable-image.jpg" />
                         </image>
                      </ImageView>
                   </StackPane>

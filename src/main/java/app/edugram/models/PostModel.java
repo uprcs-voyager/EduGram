@@ -3,6 +3,7 @@ package app.edugram.models;
 import app.edugram.utils.Notices;
 import app.edugram.utils.Sessions;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,6 +110,7 @@ public class PostModel extends BaseModel implements CRUDable{
             PreparedStatement stmt = con.prepareStatement(query))
         {
             stmt.setInt(1, id);
+
             return stmt.executeUpdate() > 0;
         }catch (SQLException e){
             System.err.println("Error deleting post: " + e.getMessage());
@@ -297,6 +299,11 @@ public class PostModel extends BaseModel implements CRUDable{
         return query;
     }
 
+    public static void deleteImage(String imgName){
+        File file = new File("src/main/resources/app/edugram/userData/Images/posts/" + imgName);
+        if(!file.exists())System.out.println("PostModel.deleteImage: file does not exists :(");
+        System.out.println("PostModel.deleteImage: " + (file.delete() ? "Berhasil dihapus dari file" : "Gagal dihapus dari file"));
+    }
 //    ================================ GETTER SETTER ================================
 //     GETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTER
 //    ===============================================================================

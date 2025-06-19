@@ -131,8 +131,28 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
 
     @Override
     public List<UserModel> listAll(String type) {
-        return List.of();
+        List<UserModel> users = new ArrayList<>();
+        String sql = "SELECT username FROM user WHERE username LIKE ? LIMIT 10";
+
+        ConnectDB db = new ConnectDB();
+        Connection conn = db.getConnetion();
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, "%" + type + "%"); // safely use LIKE
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                UserModel user = new UserModel();
+                user.setUsername(rs.getString("username"));
+                users.add(user);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
+
 
 
     public static Map<String, String> findUser(String id) {
