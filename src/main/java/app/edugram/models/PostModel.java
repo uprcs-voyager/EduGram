@@ -204,7 +204,7 @@ public class PostModel extends BaseModel implements CRUDable{
     }
 
     private String getQuery(String type){
-        System.out.println(type);
+        System.out.println("PostModel.getQUery-GetType: "+type);
         String query = """
                 SELECT
                     p.id_post,
@@ -296,6 +296,13 @@ public class PostModel extends BaseModel implements CRUDable{
                             p.created_at desc; 
                         """;
         }
+        if(type.startsWith("explore-")){
+            String searchSubject = type.split("-")[1];
+
+            query += "WHERE t.nama_tag = '" + searchSubject + "' GROUP BY p.id_post ORDER BY p.created_at desc;";
+        }
+        System.out.println(type);
+        System.out.println("================================== Running ts bruv ==================================");
         return query;
     }
 
@@ -304,6 +311,7 @@ public class PostModel extends BaseModel implements CRUDable{
         if(!file.exists())System.out.println("PostModel.deleteImage: file does not exists :(");
         System.out.println("PostModel.deleteImage: " + (file.delete() ? "Berhasil dihapus dari file" : "Gagal dihapus dari file"));
     }
+
 //    ================================ GETTER SETTER ================================
 //     GETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTER
 //    ===============================================================================

@@ -1,9 +1,12 @@
 package app.edugram.controllers.Components;
 
 import app.edugram.Main;
+import app.edugram.controllers.ExploreController;
+import app.edugram.controllers.ProfileController;
 import app.edugram.models.TagModel;
 import app.edugram.models.UserModel;
 import app.edugram.models.UserPrefTagModel;
+import app.edugram.utils.PageAction;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,10 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -31,6 +31,8 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.ScrollPane; // Tambahkan import ScrollPane
 import javafx.stage.Popup;
 import javafx.stage.Window;
+
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -343,5 +345,44 @@ public class TopbarController implements Initializable {
             }
         }
         populateSuggestions(suggestions);
+    }
+
+    private BorderPane mainBorderPane;
+
+    public void setMainBorderPane(BorderPane mainBorderPane) {
+        this.mainBorderPane = mainBorderPane;
+    }
+
+    @FXML
+    public void onSearchBtnClick(ActionEvent event) {
+        String searchText = searchTextField.getText();
+        if(searchText.contains("#")){
+            try {
+                FXMLLoader loader = new FXMLLoader(PageAction.class.getResource("/app/edugram/pages/explore.fxml"));
+                Parent root = loader.load();
+
+                ExploreController explore = loader.getController();
+                explore.setWhatPage("explore-" + searchText.replace("#", ""));
+
+                // Set the content to the center of BorderPane
+                mainBorderPane.setCenter(root);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (searchText.contains("@")) {
+            System.out.println("user");
+            try {
+                FXMLLoader loader = new FXMLLoader(PageAction.class.getResource("/app/edugram/pages/profile.fxml"));
+                Parent root = loader.load();
+
+                ProfileController profileFrameController = loader.getController();
+                profileFrameController.setUserData(UserModel.getUserId(searchText.replace("@", "")));
+
+                mainBorderPane.setCenter(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

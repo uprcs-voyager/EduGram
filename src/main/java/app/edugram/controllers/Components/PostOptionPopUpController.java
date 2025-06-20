@@ -147,6 +147,9 @@ public class PostOptionPopUpController {
             editController.setPopup(editPopUp);
             editController.setParentPopup(this.ownerPopup);
             editController.setPostData(this.currentPost);
+//            currentPost.getTags().forEach(tag -> {
+//                System.out.println(tag);
+//            });
             editController.setPostFrameController(this.postFrameController);
 
             editPopUp.getContent().add(editPostpopup);

@@ -1,7 +1,6 @@
 package app.edugram.controllers;
 import app.edugram.Main;
 import app.edugram.controllers.Components.PostFrameController;
-import app.edugram.controllers.Components.SidebarController;
 import app.edugram.models.PostModel;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -207,7 +206,7 @@ public class BerandaController extends BaseController implements Initializable {
 
         PostFrameController postFrameController = fxmlLoader.getController();
         postFrameController.setData(post);
-        postFrameController.setContetnContainer(contentContainer);
+        postFrameController.setContentContainer(contentContainer);
 
         postContentGrid.add(box, columns, row);
         GridPane.setMargin(box, new Insets(10));
