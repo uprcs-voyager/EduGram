@@ -153,8 +153,6 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
         return users;
     }
 
-
-
     public static Map<String, String> findUser(String id) {
         String sql = """
             SELECT
@@ -314,6 +312,22 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
             db.closeConnection();
          }
         return usernames;
+    }
+
+    public static Integer getUserId(String username) {
+        String sql = "SELECT id_user FROM user WHERE username = ?";
+        ConnectDB db = new ConnectDB();
+        try(Connection con = db.getConnetion();
+            PreparedStatement stmt = con.prepareStatement(sql);){
+            stmt.setString(1, username);
+
+            return stmt.executeQuery().getInt("id_user");
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            db.closeConnection();
+        }
+        return 0;
     }
 
 

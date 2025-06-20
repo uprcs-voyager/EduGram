@@ -5,7 +5,9 @@ import app.edugram.utils.Sessions;
 
 import java.io.File;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PostModel extends BaseModel implements CRUDable{
     private String postContent;
@@ -199,7 +201,7 @@ public class PostModel extends BaseModel implements CRUDable{
     }
 
     private String getQuery(String type){
-        System.out.println(type);
+        System.out.println("PostModel.getQUery-GetType: "+type);
         String query = """
                 SELECT
                     p.id_post,
@@ -291,6 +293,13 @@ public class PostModel extends BaseModel implements CRUDable{
                             p.created_at desc; 
                         """;
         }
+        if(type.startsWith("explore-")){
+            String searchSubject = type.split("-")[1];
+
+            query += "WHERE t.nama_tag = '" + searchSubject + "' GROUP BY p.id_post ORDER BY p.created_at desc;";
+        }
+        System.out.println(type);
+        System.out.println("================================== Running ts bruv ==================================");
         return query;
     }
 
@@ -299,95 +308,6 @@ public class PostModel extends BaseModel implements CRUDable{
         if(!file.exists())System.out.println("PostModel.deleteImage: file does not exists :(");
         System.out.println("PostModel.deleteImage: " + (file.delete() ? "Berhasil dihapus dari file" : "Gagal dihapus dari file"));
     }
-
-/////////////////////////////////////////    DUMMY AREAAAAAAA /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//private static final Map<Integer, PostModel> dummyPosts = new HashMap<>();
-//    static {
-//        // Inisialisasi beberapa post dummy
-//        dummyPosts.put(1, new PostModel(1, "Post A - Belajar JavaFX", "Ini adalah deskripsi post A tentang JavaFX.", "post_a.jpg", "101", "dev_java"));
-//        dummyPosts.put(2, new PostModel(2, "Post B - Algoritma", "Mempelajari algoritma dasar untuk pemrogram.", "post_b.png", "102", "algo_master"));
-//        dummyPosts.put(3, new PostModel(3, "Post C - Desain UI/UX", "Prinsip-prinsip desain antarmuka pengguna yang baik.", "post_c.jpg", "103", "design_guru"));
-//    }
-//    public static PostModel getPostByIdDummy(int postId) {
-//        return dummyPosts.get(postId);
-//    }
-
-
-
-//    //////////////////////////////// GEMINI ATTEMPT :( //////////////////////////////////////////////////
-@Override
-public PostModel read(int id) { // Ubah return type menjadi PostModel
-    String query = """
-                SELECT
-                    p.id_post,
-                    p.id_user,
-                    u.username,
-                    p.img_post,
-                    p.title_post,
-                    p.desc_post,
-                    u.prof_pic,
-                    p.created_at,
-                    COUNT(DISTINCT l.id_like) AS like_count,
-                    COUNT(DISTINCT dl.id_dislike) AS dislike_count,
-                    COUNT(DISTINCT c.id_com) AS comment_count,
-                    CASE
-                        WHEN COUNT(DISTINCT t.nama_tag) = 0 THEN NULL
-                        ELSE GROUP_CONCAT(DISTINCT t.nama_tag || '-' || t.type_tag)
-                    END AS tags
-                FROM post p
-                LEFT JOIN like l ON p.id_post = l.id_post
-                LEFT JOIN dislike dl ON p.id_post = dl.id_post
-                LEFT JOIN comment c ON p.id_post = c.id_post
-                JOIN user u ON p.id_user = u.id_user
-                LEFT JOIN postTag pt ON p.id_post = pt.id_post
-                LEFT JOIN tag t ON pt.id_tag = t.id_tag
-                WHERE p.id_post = ?
-                GROUP BY p.id_post;
-                """;
-    ConnectDB db = new ConnectDB();
-    PostModel post = null;
-
-    try (Connection con = db.getConnetion();
-         PreparedStatement pstmt = con.prepareStatement(query)) {
-
-        pstmt.setInt(1, id);
-        try (ResultSet rs = pstmt.executeQuery()) {
-            if (rs.next()) {
-                post = new PostModel();
-                post.setId(rs.getInt("id_post"));
-                post.setTitle(rs.getString("title_post"));
-                post.setDescription(rs.getString("desc_post"));
-                post.setUserId(rs.getString("id_user"));
-                post.setPostUsername(rs.getString("username"));
-                post.setPostContent(rs.getString("img_post"));
-                post.setLike(rs.getString("like_count"));
-                post.setDislike(rs.getString("dislike_count"));
-                post.setProfile(rs.getString("prof_pic"));
-
-                String getPostTags = rs.getString("tags");
-                if (getPostTags != null && !getPostTags.isEmpty()) {
-                    post.setTags(Arrays.asList(getPostTags.split(",")));
-                } else {
-                    post.setTags(new ArrayList<>());
-                }
-            }
-        }
-    } catch (SQLException e) {
-        System.err.println("Error reading post by ID: " + e.getMessage());
-        e.printStackTrace();
-    } finally {
-        db.closeConnection();
-    }
-    return post;
-}
-    //    //////////////////////////////// GEMINI ATTEMPT :( //////////////////////////////////////////////////
-
-
-
-
-
-
-
 
 //    ================================ GETTER SETTER ================================
 //     GETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTERGETTER SETTER
@@ -461,5 +381,75 @@ public PostModel read(int id) { // Ubah return type menjadi PostModel
     public void setPostUsername(String postUsername) {
         this.postUsername = postUsername;
     }
+
+    @Override
+    public PostModel read(int id) { // Ubah return type menjadi PostModel
+        String query = """
+                SELECT
+                    p.id_post,
+                    p.id_user,
+                    u.username,
+                    p.img_post,
+                    p.title_post,
+                    p.desc_post,
+                    u.prof_pic,
+                    p.created_at,
+                    COUNT(DISTINCT l.id_like) AS like_count,
+                    COUNT(DISTINCT dl.id_dislike) AS dislike_count,
+                    COUNT(DISTINCT c.id_com) AS comment_count,
+                    CASE
+                        WHEN COUNT(DISTINCT t.nama_tag) = 0 THEN NULL
+                        ELSE GROUP_CONCAT(DISTINCT t.nama_tag || '-' || t.type_tag)
+                    END AS tags
+                FROM post p
+                LEFT JOIN like l ON p.id_post = l.id_post
+                LEFT JOIN dislike dl ON p.id_post = dl.id_post
+                LEFT JOIN comment c ON p.id_post = c.id_post
+                JOIN user u ON p.id_user = u.id_user
+                LEFT JOIN postTag pt ON p.id_post = pt.id_post
+                LEFT JOIN tag t ON pt.id_tag = t.id_tag
+                WHERE p.id_post = ?
+                GROUP BY p.id_post;
+                """;
+        ConnectDB db = new ConnectDB();
+        PostModel post = null;
+
+        try (Connection con = db.getConnetion();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    post = new PostModel();
+                    post.setId(rs.getInt("id_post"));
+                    post.setTitle(rs.getString("title_post"));
+                    post.setDescription(rs.getString("desc_post"));
+                    post.setUserId(rs.getString("id_user"));
+                    post.setPostUsername(rs.getString("username"));
+                    post.setPostContent(rs.getString("img_post"));
+                    post.setLike(rs.getString("like_count"));
+                    post.setDislike(rs.getString("dislike_count"));
+                    post.setProfile(rs.getString("prof_pic"));
+
+                    String getPostTags = rs.getString("tags");
+                    if (getPostTags != null && !getPostTags.isEmpty()) {
+                        post.setTags(Arrays.asList(getPostTags.split(",")));
+                    } else {
+                        post.setTags(new ArrayList<>());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error reading post by ID: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            db.closeConnection();
+        }
+        return post;
+    }
+
+
+
+
 }
 

@@ -1,5 +1,6 @@
 package app.edugram.controllers.Components;
 import app.edugram.models.PostModel;
+import app.edugram.models.TagModel;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -21,7 +22,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import javafx.stage.Stage;
@@ -97,7 +100,7 @@ public class TambahPostController {
     private void handleCreatePost() {
         String title = titleInput.getText().trim();
         String description = textareainput.getText().trim();
-        String tags = tagsInput.getText().trim();
+        List<String> tags = Arrays.asList(tagsInput.getText().trim().split("\\s+"));
 
         Window currentWindowForAlert = null;
         if (dialogStage != null) {
@@ -140,6 +143,7 @@ public class TambahPostController {
         boolean success = newPost.create(newPost); // PostModel.create() sudah handle Sessions.getUserId()
 
         if (success) {
+            tagValidation(tags);
             showAlert(Alert.AlertType.INFORMATION, "Sukses", "Postingan berhasil dibuat!", currentWindowForAlert);
             if (dialogStage != null) {
                 dialogStage.close(); // <--- UBAH INI: Tutup Stage dialog setelah sukses
@@ -223,6 +227,15 @@ public class TambahPostController {
             System.err.println("Failed to store profile image: " + e.getMessage());
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public void tagValidation(List<String> tags){
+        for(String tag : tags){
+            if(!TagModel.validate(tag)){
+                TagModel.create(tag.replace("#", ""));
+            }
+
         }
     }
 

@@ -30,6 +30,7 @@ public class BaseViewController implements Initializable{
         if (sidebarController != null) {
             sidebarController.setMainBorderPane(mainBorderPane);
         }
+        topbarController.setMainBorderPane(mainBorderPane);
         loadPage("beranda");
     }
 

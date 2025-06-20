@@ -209,7 +209,7 @@ public class PostFrameController {
     }
 
     private VBox contentContainer;
-    public void setContetnContainer(VBox contentContainer){
+    public void setContentContainer(VBox contentContainer){
         this.contentContainer = contentContainer;
     }
     @FXML

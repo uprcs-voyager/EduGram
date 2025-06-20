@@ -40,11 +40,15 @@
                             <children>
                                 <TextField fx:id="searchTextField" onKeyReleased="#searchBarAction" prefHeight="26.0" prefWidth="407.0" promptText="Search" styleClass="search-bar">
                                 </TextField>
-                                <ImageView fx:id="searchIconImageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../assets/Image/Icons/searchIcon.png" />
-                                    </image>
-                                </ImageView>
+                                <Button fx:id="searchButton" styleClass="icon-button" onAction="#onSearchBtnClick" prefHeight="25.0" prefWidth="25.0">
+                                    <graphic>
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../../assets/Image/Icons/searchIcon.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
                             </children>
                         </HBox>
                     </children>
