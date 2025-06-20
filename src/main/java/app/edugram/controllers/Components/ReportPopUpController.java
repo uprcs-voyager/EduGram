@@ -11,6 +11,8 @@ import javafx.stage.Popup;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert;
 
+import java.time.LocalDateTime;
+
 
 public class ReportPopUpController {
     @FXML private VBox reportPopupRoot;
@@ -22,6 +24,8 @@ public class ReportPopUpController {
     private Popup ownerPopup;
     private Popup parentPopup;
     private PostModel currentPost;
+
+    private ReportController reportPageController;
 
     public void initialize() {
         cancelReportButton.setOnAction(e -> handleCancelReport());
@@ -44,6 +48,10 @@ public class ReportPopUpController {
             System.out.println("Post title is null");
         }
     }
+//    setter untuk ReportController
+    public void setReportPageController(ReportController controller) {
+        this.reportPageController = controller;
+    }
 
     private void handleCancelReport() {
         System.out.println("Cancel report");
@@ -53,57 +61,61 @@ public class ReportPopUpController {
     }
 
     private void handleSubmitReport() {
-        String reason = reportReasonTextArea.getText();
-        String reportedPostTitle = (currentPost != null) ? currentPost.getTitle() : "N/A";
+        String reason = reportReasonTextArea.getText().trim(); // Gunakan trim() untuk validasi
 
-        if (reason.trim().isEmpty()) { // Menggunakan trim() untuk mengabaikan spasi kosong
-            System.out.println("Alasan laporan tidak boleh kosong!");
-
-            Alert alert = new Alert(Alert.AlertType.WARNING); // Tipe WARNING
+        if (reason.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Peringatan");
-            alert.setHeaderText(null); // Tidak ada header text
+            alert.setHeaderText(null);
             alert.setContentText("Alasan laporan tidak boleh kosong. Mohon masukkan alasan Anda.");
-
-            // Set owner window agar alert muncul di atas pop-up laporan
             if (ownerPopup != null && ownerPopup.getOwnerWindow() != null) {
                 alert.initOwner(ownerPopup.getOwnerWindow());
-            } else {
-                System.err.println("Warning: Could not set owner window for validation alert.");
             }
-
-            alert.showAndWait(); // Tampilkan alert dan tunggu hingga ditutup
-            return; // Hentikan proses jika alasan kosong
+            alert.showAndWait();
+            return;
         }
 
-        insertReport();
+        // Buat objek ReportModel baru
+        ReportModel rep = new ReportModel();
+        rep.setData(
+                String.valueOf(currentPost.getId()),
+                String.valueOf(Sessions.getUserId()),
+                reason
+        );
 
-        System.out.println("Tombol Laporkan di pop-up laporan diklik.");
-        System.out.println("Postingan Dilaporkan: " + reportedPostTitle);
-        System.out.println("Alasan Laporan: " + reason);
+        if(rep.validate()){ // Cek apakah user sudah melaporkan post ini sebelumnya
+            Notices.customNote("Already reported", "Anda hanya dapat lapor sekali(1x) saja.");
+            System.out.println("Post already reported by this user.");
+            // Tutup pop-up jika sudah dilaporkan
+            if (ownerPopup != null) ownerPopup.hide();
+            if (parentPopup != null) parentPopup.hide();
+            return;
+        }
+
+        // Jika belum dilaporkan, buat laporan baru
+        rep.create(rep);
+        System.out.println("Report submitted successfully.");
+        if (reportPageController != null) {
+            // Ambil PostModel dari currentPost yang sudah diset
+            // Ambil username pelapor dari Sessions (atau dari User Model)
+            String reporterUsername = Sessions.getUsername(); // Asumsi Sessions.getUsername() tersedia
+            LocalDateTime reportTimestamp = LocalDateTime.now(); // Ambil timestamp saat ini
+            reportPageController.addOrUpdateReportedPost(currentPost, reporterUsername, reason, reportTimestamp);
+        } else {
+            System.err.println("ReportPageController is not set. Cannot update report UI.");
+        }
+        // --- Akhir Pembaruan UI ---
+
+        // Tutup pop-up setelah pengiriman
         if (ownerPopup != null) {
             ownerPopup.hide();
         }
         if (parentPopup != null) {
             parentPopup.hide();
         }
-        System.out.println("Laporan berhasil dikirim! (Demo)");
     }
 
-    private void insertReport(){
-        ReportModel rep = new ReportModel();
-        rep.setData(
-                String.valueOf(currentPost.getId()),
-                String.valueOf(Sessions.getUserId()),
-                reportReasonTextArea.getText()
-        );
-        if(rep.validate()){
-            Notices.customNote("Already reported", "Anda hanya dapat lapor sekali(1x) saja ");
-            System.out.println("ReportPopUpController.insertReport");
-            return;
-        }
 
-        rep.create(rep);
-    }
 }
 
 

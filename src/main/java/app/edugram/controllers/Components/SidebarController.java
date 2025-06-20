@@ -34,10 +34,13 @@ public class SidebarController implements Initializable {
     @FXML private Button berandaButton;
     @FXML private Button exploreButton;
     @FXML private Button profileButton;
+    @FXML private Button reportButton;
+    @FXML private Button profileBtn2;
 
     @FXML private Line berandaLine;
     @FXML private Line exploreLine;
     @FXML private Line profileLine;
+    @FXML private Line reportLine;
 
     // ... sisa field @FXML Anda ...
     @FXML private ImageView navProfilePicture;
@@ -78,10 +81,12 @@ public class SidebarController implements Initializable {
         berandaButton.getStyleClass().remove("activated_button");
         exploreButton.getStyleClass().remove("activated_button");
         profileButton.getStyleClass().remove("activated_button");
+        reportButton.getStyleClass().remove("activated_button");
 
         berandaLine.setVisible(false);
         exploreLine.setVisible(false);
         profileLine.setVisible(false);
+        reportLine.setVisible(false);
 
         // Terapkan style ke tombol yang benar
         switch (selectedPage.toLowerCase()) {
@@ -92,6 +97,10 @@ public class SidebarController implements Initializable {
             case "profile":
                 profileButton.getStyleClass().add("activated_button");
                 profileLine.setVisible(true);
+                break;
+            case "report":
+                reportButton.getStyleClass().add("activated_button");
+                reportLine.setVisible(true);
                 break;
             case "beranda":
             default:
@@ -124,6 +133,15 @@ public class SidebarController implements Initializable {
     }
 
     @FXML
+    public void onReportClick(ActionEvent event) {
+        if (navigationHandler != null) {
+            navigationHandler.onNavigateToPage("report");
+        }
+    }
+
+
+
+    @FXML
     public void onCreatePostClick(MouseEvent mouseEvent) {
         showCreatePostDialog();
     }
@@ -132,6 +150,12 @@ public class SidebarController implements Initializable {
     public void onSettingsClick(MouseEvent mouseEvent) {
         if (navigationHandler != null) {
             navigationHandler.onNavigateToPage("setting");
+        } }
+
+    @FXML
+    public void onProfileClick2(MouseEvent mouseEvent) {
+        if (navigationHandler != null) {
+            navigationHandler.onNavigateToPage("profile");
     } }
 
     @FXML

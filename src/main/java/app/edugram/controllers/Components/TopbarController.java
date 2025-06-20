@@ -58,6 +58,8 @@ public class TopbarController implements Initializable {
     private boolean isFullyInitialized = false;
 
     @Override public void initialize(URL location, ResourceBundle resources) {
+
+
         loadDefaultProfilePicture();
         setupPopup();
         setupSearchField();

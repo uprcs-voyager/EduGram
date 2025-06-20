@@ -9,13 +9,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="238.0" prefWidth="721.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="reported" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="238.0" prefWidth="929.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.ReportedPostController">
    <children>
       <VBox alignment="CENTER" prefHeight="238.0" prefWidth="215.0">
          <children>
             <Label fx:id="reportedPostTitle" text="Reported Post Title" />
-            <ImageView fx:id="reportedImageView" fitHeight="213.0" fitWidth="255.0" pickOnBounds="true">
+            <Label fx:id="postedByLabel" text="Posted By: " />
+            <Label fx:id="postIdLabel" text="Post ID: " />
+            <ImageView fx:id="reportedImageView" fitHeight="178.0" fitWidth="255.0" pickOnBounds="true">
                <image>
                   <Image url="@../../userData/images/posts/2_upscayl_8x_ultramix-balanced-4x.png" />
                </image>
@@ -28,12 +29,15 @@
             <Insets bottom="14.0" />
          </HBox.margin>
       </VBox>
-      <VBox prefHeight="238.0" prefWidth="354.0">
+      <VBox prefHeight="238.0" prefWidth="591.0">
          <children>
-            <ScrollPane fx:id="reportScrollPane" prefHeight="302.0" prefWidth="354.0" />
+            <ScrollPane fx:id="reportScrollPane" prefHeight="239.0" prefWidth="474.0">
+               <content>
+                  <VBox fx:id="reportReasonContainer" prefHeight="340.0" prefWidth="336.0" />
+               </content></ScrollPane>
          </children>
       </VBox>
-      <VBox alignment="CENTER" prefHeight="238.0" prefWidth="111.0">
+      <VBox alignment="CENTER" prefHeight="238.0" prefWidth="127.0">
          <children>
             <Button fx:id="deletePostBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="88.0" text="Delete Post">
                <VBox.margin>
