@@ -24,6 +24,7 @@ public class PostOptionPopUpController {
     private PostFrameController postFrameController;
     private PostModel postModel;
     private PostModel currentPost;
+    private ReportController reportPageController;
 
     public void initialize() {
         reportButton.setOnAction(event -> handleReport());
@@ -34,6 +35,10 @@ public class PostOptionPopUpController {
         reportButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white;");
         editButton.setStyle("-fx-background-color: #2196f3; -fx-text-fill: white;");
         deleteButton.setStyle("-fx-background-color: #607d8b; -fx-text-fill: white;");
+    }
+
+    public void setReportPageController(ReportController controller) {
+        this.reportPageController = controller;
     }
 
     public void setPostData(PostModel post) {
@@ -114,6 +119,7 @@ public class PostOptionPopUpController {
             reportController.setPopup(reportPopup);
             reportController.setParentPopup(this.ownerPopup);
             reportController.setPostData(this.currentPost);
+            reportController.setReportPageController(this.reportPageController);
 
             reportPopup.getContent().add(reportPopupContent);
 

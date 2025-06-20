@@ -1,0 +1,26 @@
+.border {
+    -fx-border-color: purple;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5;
+}
+
+.delete_button {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+    -fx-border-color: red;
+    -fx-border-radius: 5;
+}
+
+.notice_button {
+    -fx-text-fill: white;
+    -fx-background-color: grey;
+    -fx-border-color: grey;
+    -fx-border-radius: 5;
+}
+
+.current_report_button {
+    -fx-text-fill: black;
+    -fx-background-color: #efb758;
+    -fx-border-color: #efb758;
+    -fx-border-radius: 5;
+}

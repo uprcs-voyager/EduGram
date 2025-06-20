@@ -4,47 +4,37 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox fx:id="reported" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="238.0" prefWidth="929.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.ReportedPostController">
+<HBox fx:id="reported" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="238.0" prefWidth="1245.0" styleClass="border" stylesheets="@../../assets/css/reportedpost.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.ReportedPostController">
    <children>
       <VBox alignment="CENTER" prefHeight="238.0" prefWidth="215.0">
          <children>
             <Label fx:id="reportedPostTitle" text="Reported Post Title" />
             <Label fx:id="postedByLabel" text="Posted By: " />
             <Label fx:id="postIdLabel" text="Post ID: " />
-            <ImageView fx:id="reportedImageView" fitHeight="178.0" fitWidth="255.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../../userData/images/posts/2_upscayl_8x_ultramix-balanced-4x.png" />
-               </image>
-               <VBox.margin>
-                  <Insets top="8.0" />
-               </VBox.margin>
-            </ImageView>
          </children>
          <HBox.margin>
             <Insets bottom="14.0" />
          </HBox.margin>
       </VBox>
-      <VBox prefHeight="238.0" prefWidth="591.0">
+      <VBox prefHeight="238.0" prefWidth="815.0">
          <children>
-            <ScrollPane fx:id="reportScrollPane" prefHeight="239.0" prefWidth="474.0">
+            <ScrollPane fx:id="reportScrollPane" prefHeight="239.0" prefWidth="709.0">
                <content>
-                  <VBox fx:id="reportReasonContainer" prefHeight="340.0" prefWidth="336.0" />
+                  <VBox fx:id="reportReasonContainer" prefHeight="340.0" prefWidth="754.0" />
                </content></ScrollPane>
          </children>
       </VBox>
-      <VBox alignment="CENTER" prefHeight="238.0" prefWidth="127.0">
+      <VBox alignment="CENTER" prefHeight="238.0" prefWidth="254.0">
          <children>
-            <Button fx:id="deletePostBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="88.0" text="Delete Post">
+            <Button fx:id="deletePostBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="88.0" styleClass="delete_button" text="Delete Post">
                <VBox.margin>
                   <Insets bottom="50.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="noticeReportBtn" mnemonicParsing="false" text="Notice Report" />
+            <Button fx:id="noticeReportBtn" mnemonicParsing="false" styleClass="notice_button" text="Notice Report" />
          </children>
       </VBox>
    </children>

@@ -346,9 +346,8 @@ public class ReportModel extends BaseModel implements CRUDable{
         try(Connection con = db.getConnetion(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, reportItem.getPostId());
             ps.setString(2, reportItem.getUserId());
-            ps.setString(3, reportItem.keluhan);
-            ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
-            ps.setInt(5, 0); // is noticed ( default false )
+            ps.setString(3, reportItem.getKeluhan());
+            ps.setInt(4, 0); // is noticed ( default false )
 
             return ps.executeUpdate() > 0; // Return true if row was inserted
 

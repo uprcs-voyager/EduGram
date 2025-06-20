@@ -50,7 +50,7 @@ public class ReportController {
     @FXML
     public void initialize() {
         if (reportedPostsContainer != null) {
-            reportedPostsContainer = new VBox(5);
+            reportedPostsContainer = new VBox(25);
             reportedPostsContainer.setPadding(new javafx.geometry.Insets(10));
             currentReportScrollPane.setContent(reportedPostsContainer);
         }

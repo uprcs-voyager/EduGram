@@ -56,6 +56,7 @@ public class PostFrameController {
     private Popup currentOptionsPopup;
     private Runnable returnToExploreCallBack;
     private PostClickHandler postClickHandler;
+    private ReportController reportPageController;
 
     private final LikeModel likeModel = new LikeModel();
     private final DislikeModel dislikeModel = new DislikeModel();
@@ -81,6 +82,10 @@ public class PostFrameController {
 //      //////////////// back to explore button ///////////////////////////////////
             if (backtoexplore != null) {
             showBackButton(false); }
+    }
+
+    public void setReportPageController(ReportController controller) {
+        this.reportPageController = controller;
     }
 
     public void setData(PostModel postModel){
@@ -267,6 +272,7 @@ public class PostFrameController {
             popupController.setPopup(popup);
             popupController.setPostData(this.currentPost);
             popup.getContent().add(popupcontent);
+            popupController.setReportPageController(this.reportPageController);
 
             if (moreBtn.getScene() != null && moreBtn.getScene().getWindow() != null) {
                 // Konversi koordinat lokal tombol ke koordinat layar

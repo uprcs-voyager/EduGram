@@ -51,6 +51,10 @@ public class ExploreController extends BaseController implements Initializable, 
         System.out.println("postContentGrid: " + postContentGrid);
         System.out.println("contentScrollPane: " + contentScrollPane);
 
+        Platform.runLater(() -> {
+            postContentGrid.requestFocus();
+        });
+
         exploreGridView = contentScrollPane;
         tulisanExplore = hbox_explore;
 
@@ -287,6 +291,10 @@ public class ExploreController extends BaseController implements Initializable, 
 
             contentContainer.getChildren().clear();
             contentContainer.getChildren().add(postDetailView);
+
+            Platform.runLater(() -> {
+                postDetailView.requestFocus();
+            });
 
         } catch (IOException e) {
             e.printStackTrace();

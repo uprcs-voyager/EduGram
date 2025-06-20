@@ -208,7 +208,7 @@ public class SidebarController implements Initializable {
     private void showCreatePostDialog() {
         System.out.println("Attempting to show create post dialog from SidebarController...");
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("pages/components/tambahpostpopup.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("pages/components/popup_option/tambahpostpopup.fxml"));
             VBox createPostLayout = loader.load(); // Root dari FXML pop-up Anda
 
             TambahPostController controller = loader.getController();

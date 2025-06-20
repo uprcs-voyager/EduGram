@@ -30,11 +30,16 @@ public class ReportedPostController {
     @FXML private Button noticeReportBtn;
 
     private PostModel reportedPost;
-
+    private ReportController reportPageController;
     //    consturkutor buat FXMl loader
     public ReportedPostController() {
 
     }
+
+    public void setReportPageController(ReportController controller) {
+        this.reportPageController = controller;
+    }
+
 
     @FXML
     private void initialize() {
@@ -51,7 +56,9 @@ public class ReportedPostController {
     public void setReportedPostData(PostModel post) {
         this.reportedPost = post;
         reportedPostTitle.setText(post.getTitle());
-        postedByLabel.setText(post.getPostUsername());
+        postedByLabel.setText("Posted By: "+post.getPostUsername());
+        postIdLabel.setText("ID POST"+post.getId());
+
     }
 
     public void addReportReason(String reporterUsername, String reason, LocalDateTime timestamp) {
@@ -60,6 +67,7 @@ public class ReportedPostController {
             VBox reportReasonView = loader.load();
             ReportReasonController controller = loader.getController();
             controller.setReportData(reporterUsername, reason, timestamp);
+
 
             if (reportReasonContainer != null) {
                 reportReasonContainer.getChildren().add(reportReasonView);
