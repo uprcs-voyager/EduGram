@@ -1,118 +1,103 @@
 package app.edugram.models;
 
-import app.edugram.utils.Notices;
 import app.edugram.utils.Sessions;
 
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-// Gemini attempt
+public class CommentModel extends BaseModel implements Toggleable {
 
+    private String username;
+    private String commentText;
+    private String profilePicture;
+    private String createdAt;
 
-public class CommentModel {
-
-    public static class Comment {
-        private int id;
-        private int postId;
-        private int userId;
-        private String commentText;
-        private LocalDateTime timestamp;
-        private String username;
-
-        public Comment(int id, int postId, int userId, String commentText, LocalDateTime timestamp, String username) {
-            this.id = id;
-            this.postId = postId;
-            this.userId = userId;
-            this.commentText = commentText;
-            this.timestamp = timestamp;
-            this.username = username;
-        }
-
-        public int getId() { return id; }
-        public int getPostId() { return postId; }
-        public int getUserId() { return userId; }
-        public String getCommentText() { return commentText; }
-        public LocalDateTime getTimestamp() { return timestamp; }
-        public String getUsername() { return username; }
+    // Proper setter method
+    public void setData(String username, String commentText, String profilePicture, String createdAt) {
+        this.username = username;
+        this.commentText = commentText;
+        this.profilePicture = profilePicture;
+        this.createdAt = createdAt;
     }
 
-    public boolean addComment(Comment comment) {
-        String sql = "INSERT INTO comments (post_id, user_id, comment_text, created_at) VALUES (?, ?, ?, ?)";
+    // Getters
+    public String getUsername() { return username; }
+    public String getCommentText() { return commentText; }
+    public String getProfilePicture() { return profilePicture; }
+    public String getComCreatedAt() { return createdAt; }
+
+    @Override
+    public boolean validate() {
+        return false;
+    }
+
+    @Override
+    public boolean set(List<String> dbValue) {
+        String query = "INSERT INTO comment (id_user, id_post, comment_txt, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
         ConnectDB db = new ConnectDB();
-        try (Connection conn = db.getConnetion();
-             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setInt(1, comment.getPostId());
-            pstmt.setInt(2, comment.getUserId());
-            pstmt.setString(3, comment.getCommentText());
-            pstmt.setTimestamp(4, Timestamp.valueOf(comment.getTimestamp()));
-
-            int affectedRows = pstmt.executeUpdate();
-
-            if (affectedRows > 0) {
-                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        // Optional: Get generated ID if needed
-                    }
-                }
-                return true;
+        try (
+                Connection con = db.getConnetion();
+                PreparedStatement ps = con.prepareStatement(query)
+        ) {
+            // Set semua nilai dari dbValue ke prepared statement
+            for (int i = 0; i < dbValue.size(); i++) {
+                ps.setString(i + 1, dbValue.get(i));  // karena index PreparedStatement mulai dari 1
             }
+
+            return ps.executeUpdate() > 0; // return true jika berhasil insert
         } catch (SQLException e) {
-            System.err.println("Error adding comment: " + e.getMessage());
             e.printStackTrace();
+        } finally {
+            db.closeConnection();
         }
         return false;
     }
 
-    public List<Comment> getCommentsForPost(int postId) {
-        List<Comment> comments = new ArrayList<>();
-        String sql = "SELECT c.id, c.post_id, c.user_id, c.comment_text, c.created_at, u.username " +
-                "FROM comments c JOIN users u ON c.user_id = u.id " +
-                "WHERE c.post_id = ? ORDER BY c.created_at ASC";
 
-        ConnectDB db = new ConnectDB();
-        try (Connection conn = db.getConnetion();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, postId);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                int userId = rs.getInt("user_id");
-                String commentText = rs.getString("comment_text");
-                LocalDateTime timestamp = rs.getTimestamp("created_at").toLocalDateTime();
-                String username = rs.getString("username");
-
-                comments.add(new Comment(id, postId, userId, commentText, timestamp, username));
-            }
-        } catch (SQLException e) {
-            System.err.println("Error getting comments for post: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return comments;
+    @Override
+    public boolean unset(int tableId) {
+        String sql = "DELETE FROM comment WHERE id_post = " + tableId + " AND id_user = " + Sessions.getUserId();
+        return ConnectDB.startQueryExecution(sql, true);
     }
 
-    // Metode baru untuk mendapatkan nama file gambar profil berdasarkan userId
-    public String getProfilePictureFileName(int userId) {
-        String sql = "SELECT prof_pic FROM users WHERE id = ?";
+    @Override
+    public boolean exists(int tableId) {
+        String query = "SELECT * FROM comment WHERE id_post = " + tableId + " AND id_user = " + Sessions.getUserId();
+        return ConnectDB.startQueryExecution(query, false);
+    }
+
+    public List<CommentModel> listAll(int postId) {
+        String sql = "SELECT u.username, c.comment_txt, c.created_at, u.prof_pic " +
+                "FROM comment c " +
+                "LEFT JOIN user u ON c.id_user = u.id_user " +
+                "WHERE c.id_post = ?";
+
+        List<CommentModel> comments = new ArrayList<>();
         ConnectDB db = new ConnectDB();
-        try (Connection conn = db.getConnetion();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, userId);
-            ResultSet rs = pstmt.executeQuery();
+        try (Connection con = db.getConnetion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            if (rs.next()) {
-                return rs.getString("profile_picture");
+            ps.setInt(1, postId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String username = rs.getString("username");
+                String commentText = rs.getString("comment_txt");
+                String createdAt = rs.getString("created_at");
+                String profilePicture = rs.getString("prof_pic");
+
+                CommentModel comment = new CommentModel();
+                comment.setData(username, commentText, profilePicture, createdAt);
+                comments.add(comment);
             }
+
         } catch (SQLException e) {
-            System.err.println("Error getting profile picture file name for user " + userId + ": " + e.getMessage());
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null; // Mengembalikan null jika tidak ditemukan atau terjadi error
+
+        return comments;
     }
 }

@@ -66,7 +66,7 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
             return false;
         }
 
-        String query = "INSERT INTO user (username, password, nama, email, prof_pic, created_at, updated_at) VALUES (?, ?, ?, ?, ?, datetime('now', 'localtime'), datetime('now', 'localtime'))";
+        String query = "INSERT INTO user (username, password, nama, email, prof_pic, created_at, updated_at, type) VALUES (?, ?, ?, ?, ?, datetime('now', 'localtime'), datetime('now', 'localtime'), 'user')";
         try (PreparedStatement pstmt = con.prepareStatement(query)){
             System.out.println("UserModel.create: Inserting into database");
             pstmt.setString(1, item.username);
@@ -235,8 +235,10 @@ public class UserModel extends BaseModel implements CRUDable<UserModel> {
                     String sesName = rs.getString("nama");
                     String sesProfilePic = rs.getString("prof_pic");
                     String sesEmail = rs.getString("email");
+                    String sesType = rs.getString("type");
+                    String password = rs.getString("password");
 
-                    Sessions.setUser(sesIdUser, sesEmail,sesUsername, sesName, sesProfilePic, "beranda.fxml");
+                    Sessions.setUser(sesIdUser, sesEmail,sesUsername, sesName, sesProfilePic, password, sesType, "beranda.fxml");
                 }
                 return true;
             }

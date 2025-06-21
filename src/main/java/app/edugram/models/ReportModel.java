@@ -1,5 +1,7 @@
 package app.edugram.models;
 
+import app.edugram.utils.Sessions;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +16,8 @@ public class ReportModel extends BaseModel implements CRUDable{
     private String postId;
     private String userId;
     private String keluhan;
+
+    private String notice;
 
 
     public void setData(String id_post, String id_user, String keluhan) {
@@ -47,102 +51,6 @@ public class ReportModel extends BaseModel implements CRUDable{
 //        return false;
     }
 
-
-
-////    ///////////////////////////////////// DUMMY AREAAA ////////////////////////////////////////////////////////////////////
-//public static class ReportData {
-//    private int reportId;
-//    private int postId;
-//    private int reporterUserId;
-//    private String reason;
-//    private LocalDateTime timestamp;
-//
-//    public ReportData(int reportId, int postId, int reporterUserId, String reason, LocalDateTime timestamp) {
-//        this.reportId = reportId;
-//        this.postId = postId;
-//        this.reporterUserId = reporterUserId;
-//        this.reason = reason;
-//        this.timestamp = timestamp;
-//    }
-//
-//    // Getters
-//    public int getReportId() {
-//        return reportId;
-//    }
-//
-//    public int getPostId() {
-//        return postId;
-//    }
-//
-//    public int getReporterUserId() {
-//        return reporterUserId;
-//    }
-//
-//    public String getReason() {
-//        return reason;
-//    }
-//
-//    public LocalDateTime getTimestamp() {
-//        return timestamp;
-//    }
-//
-//}
-//
-//    private static int nextReportId = 1;
-//    private static Map<Integer, List<ReportData>> dummyReports = new HashMap<>();
-//    private ReportData currentReportData;
-//
-//    public void setDatas(String postIdStr, String reporterUserIdStr, String reason) {
-//        int postId = Integer.parseInt(postIdStr);
-//        int reporterUserId = Integer.parseInt(reporterUserIdStr);
-//        this.currentReportData = new ReportData(nextReportId++, postId, reporterUserId, reason, LocalDateTime.now());
-//    }
-//    public boolean validasi() {
-//        // Dalam aplikasi nyata, ini meriksa database
-//        // untuk melihat apakah user sudah melaporkan post ini sebelumnya.
-//        // Untuk dummy, implementasikan logika sederhana.
-//        if (currentReportData == null) return false;
-//
-//        List<ReportData> reportsForPost = dummyReports.get(currentReportData.getPostId());
-//        if (reportsForPost != null) {
-//            for (ReportData existingReport : reportsForPost) {
-//                if (existingReport.getReporterUserId() == currentReportData.getReporterUserId()) {
-//                    return true; // User ini sudah melaporkan post ini
-//                }
-//            }
-//        }
-//        return false; // Belum dilaporkan oleh user ini
-//    }
-//
-//    public void createe(ReportModel rep) {
-//        if (rep.currentReportData == null) {
-//            System.err.println("Report data is not set. Cannot create report.");
-//            return;
-//        }
-//
-//        dummyReports.computeIfAbsent(rep.currentReportData.getPostId(), k -> new ArrayList<>())
-//                .add(rep.currentReportData);
-//
-//        System.out.println("Report created (dummy): Post ID=" + rep.currentReportData.getPostId() +
-//                ", Reporter User ID=" + rep.currentReportData.getReporterUserId() +
-//                ", Reason=" + rep.currentReportData.getReason());
-//    }
-//
-//    // --- Dummy Methods untuk mengambil data laporan ---
-//    public static Map<Integer, List<ReportData>> getAllGroupedReportsDummy() {
-//        // Mengembalikan salinan dummyReports untuk menghindari modifikasi langsung
-//        return new HashMap<>(dummyReports);
-//    }
-//    public static List<ReportData> getReportsByPostIdDummy(int postId) {
-//        return dummyReports.getOrDefault(postId, new ArrayList<>());
-//    }
-
-
-
-
-
-
-
     @Override
     public Object read(int id) {
         return null;
@@ -150,12 +58,31 @@ public class ReportModel extends BaseModel implements CRUDable{
 
     @Override
     public boolean update(Object item) {
+        String sql = "UPDATE report SET isNoticed = ? WHERE id_post = ?";
+        ConnectDB db = new ConnectDB();
+        System.out.println();
+        Connection con = db.getConnetion();
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setString(1, notice);
+            ps.setString(2, postId);
+            ps.executeUpdate();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            db.closeConnection();
+        }
         return false;
     }
 
+    public String getNotice() {return notice;}
+
+    public void setNotice(String notice) {this.notice = notice;}
+
     @Override
     public boolean delete(int id) {
-        return false;
+        String query = "SELECT * FROM like  WHERE id_post = " + id;
+        return ConnectDB.startQueryExecution(query, false);
     }
 
     public String getPostId() {
@@ -182,20 +109,11 @@ public class ReportModel extends BaseModel implements CRUDable{
         this.keluhan = keluhan;
     }
 
-
-
-
     //
     @Override
     public List <ReportModel> listAll(String type) {
         return new ArrayList<>();
     }
-//
-
-    //Mengambil semua laporan dari database dan mengelompokkannya berdasarkan ID Post.
-    // Termasuk username pelapor (JOIN dengan tabel user).
-
-    //@return Map<Integer, List<ReportData>> di mana key adalah postId, dan value adalah list ReportData.
 
     public static Map<Integer, List<ReportData>> getAllGroupedReportsFromDatabase() {
         Map<Integer, List<ReportData>> groupedReports = new HashMap<>();
@@ -295,18 +213,6 @@ public class ReportModel extends BaseModel implements CRUDable{
         }
         return noticedReports;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     // Inner class untuk merepresentasikan satu entri laporan yang diambil dari DB
     public static class ReportData {

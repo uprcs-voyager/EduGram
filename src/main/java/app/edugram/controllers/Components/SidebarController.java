@@ -256,6 +256,10 @@ public class SidebarController implements Initializable {
     private void setNavData() {
         if (navProfilePicture != null && Sessions.getProfilePicture() != null) {
             try {
+                Boolean please = Sessions.getLevel().equals("admin") ? true : false;
+//                System.out.println(please);
+                reportButton.setVisible(please);
+                System.out.println("============Sessions level: " + Sessions.getLevel());
                 String profileImagePath = "/app/edugram/userData/Images/profile_pictures/" + Sessions.getProfilePicture();
                 URL resource = getClass().getResource(profileImagePath);
                 if (resource != null) {

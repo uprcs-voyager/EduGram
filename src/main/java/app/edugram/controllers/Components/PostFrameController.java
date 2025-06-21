@@ -99,16 +99,16 @@ public class PostFrameController {
         File postImageFile = postImagePath.toFile();
         File profileImageFile = profileImagePath.toFile();
 
-        if (postImageFile.exists() && profileImageFile.exists()) {
+        if (postImageFile.exists()) {
             postContent.setImage(new Image(postImageFile.toURI().toString()));
+        }else {
+            System.err.println("Post image not found: " + postImageFile.getAbsolutePath());
+        }
+
+        if(profileImageFile.exists()){
             postProfile.setImage(new Image(profileImageFile.toURI().toString()));
-        } else {
-            if (!postImageFile.exists()) {
-                System.err.println("Post image not found: " + postImageFile.getAbsolutePath());
-            }
-            if (!profileImageFile.exists()) {
-                System.err.println("Profile image not found: " + profileImageFile.getAbsolutePath());
-            }
+        }else {
+            System.err.println("Profile image not found: " + profileImageFile.getAbsolutePath());
         }
 
         postTitle.setText(postModel.getTitle());

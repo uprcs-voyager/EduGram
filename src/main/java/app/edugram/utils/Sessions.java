@@ -6,19 +6,32 @@ public class Sessions {
     private static String nama = "BigBoss";
     private static String profilePicture = "hiboss.jpg";
     private static String email;
+    private static String password;
+    private static String level;
     public static String currentPage = "beranda";
 
-    public static void setUser(int userId,String email, String username, String nama, String profilePicture, String currentPage) {
+    public static void setUser(int userId,String email, String username, String nama, String profilePicture, String password, String level, String currentPage) {
         Sessions.userId = userId;
         Sessions.username = username;
         Sessions.nama = nama;
         Sessions.email = email;
         Sessions.profilePicture = profilePicture;
+        Sessions.password = password;
+        Sessions.level = level;
+        System.out.println(level);
         Sessions.currentPage = currentPage;
     }
 
     public static int getUserId() {
         return userId;
+    }
+
+    public static String getLevel() {
+        return level;
+    }
+
+    public static String getPassword() {
+        return password;
     }
 
     public static String getUsername() {

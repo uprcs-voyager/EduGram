@@ -97,12 +97,21 @@ public class ReportedPostController {
 
     private void handleDeletePost() {
         System.out.println("Delete post clicked for Post ID: " + reportedPost.getId());
+        ReportModel report = new ReportModel();
+        report.setId(reportedPost.getId());
         // Implementasi logika hapus post dari database
         // Setelah dihapus, mungkin perlu memberi tahu ReportController untuk menghapus reportedPost ini dari tampilan
     }
 
     private void handleNoticeReport() {
         System.out.println("Notice report clicked for Post ID: " + reportedPost.getId());
+        ReportModel report = new ReportModel();
+        report.setNotice("1");
+        report.setPostId(String.valueOf(reportedPost.getId()));
+        System.out.println(reportedPost.getId());
+        if(report.update(reportedPost)){
+            System.out.println("berhasil");
+        }
         // Implementasi logika untuk menandai laporan ini sudah diperhatikan
         // Mungkin ubah status di database atau pindahkan ke tab "Noticed Report"
     }

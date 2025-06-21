@@ -1,10 +1,8 @@
 package app.edugram.controllers.Components;
 
 import app.edugram.models.CommentModel;
-import app.edugram.models.PostModel;
 import app.edugram.utils.Sessions;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -14,11 +12,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.scene.image.ImageView; // nampilkan gambar profil di komentar
 
-import java.io.File;
+import javax.swing.*;
+import javax.xml.stream.events.Comment;
+import java.awt.event.ActionEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -38,7 +37,7 @@ public class CommentController {
     private String postTitleText;
     private CommentModel commentModel;
 
-    private final String LAPWIING_IMAGE_PATH = "/app/edugram/userData/images/profile_pictures/lapwiing.jpg";
+    private final String commentorImagePath = "/app/edugram/userData/Images/profile_pictures/";
 
     public void initialize() {
         if (vboxCommentsContainer == null) {
@@ -72,32 +71,18 @@ public class CommentController {
 
     private void loadDummyComments() {
         vboxCommentsContainer.getChildren().clear(); // Bersihkan komentar lama
-        class DummyComment {
-            String username;
-            String commentText;
-            LocalDateTime timestamp;
-            String profilePicFileName; // Nama file gambar profil
 
-            DummyComment(String username, String commentText, String profilePicFileName, LocalDateTime timestamp) {
-                this.username = username;
-                this.commentText = commentText;
-                this.profilePicFileName = profilePicFileName;
-                this.timestamp = timestamp;
-            }
-        }
+        List<CommentModel> commentData = new CommentModel().listAll(postId);
 
-        List<DummyComment> dummyComments = Arrays.asList(
-                new DummyComment("user123", "Nice post! Keep up the good work!", "profile1.jpg", LocalDateTime.now().minusDays(2)),
-                new DummyComment("coder_gal", "This is really insightful. Thanks for sharing!", "profile2.png", LocalDateTime.now().minusHours(10)),
-                new DummyComment("dev_guy", "Agreed! Very helpful. What's next?", "profile3.jpg", LocalDateTime.now().minusHours(2)),
-                new DummyComment("design_pro", "Love the design elements in this content.", "lapwiing.jpg", LocalDateTime.now().minusMinutes(30))
-        );
-
-        if (!dummyComments.isEmpty()) {
-            for (DummyComment comment : dummyComments) {
+        if (!commentData.isEmpty()) {
+            for (CommentModel comment : commentData) {
                 // Panggil createCommentView tanpa mempedulikan profilePicFileName dari DummyComment
                 vboxCommentsContainer.getChildren().add(
-                        createCommentView(comment.username, comment.commentText, comment.timestamp) // profilePicFileName dihilangkan dari parameter
+                        createCommentView(
+                                comment.getUsername(),
+                                comment.getCommentText(),
+                                comment.getComCreatedAt(),
+                                comment.getProfilePicture()) // profilePicFileName dihilangkan dari parameter
                 );
             }
         } else {
@@ -110,65 +95,42 @@ public class CommentController {
     }
 
     private void handlePostComment() {
-
         String commentText = commentTextfield.getText().trim();
+
+        // Validasi input kosong
         if (commentText.isEmpty()) {
+            System.out.println("Komentar tidak boleh kosong.");
             return;
         }
 
-        // Ini hanya dummy fungsionalitas untuk frontend
-        String currentUser = "You"; // Atau ambil dari Sessions.getUserName() jika ada
-        LocalDateTime now = LocalDateTime.now();
+        String currentDate = DateTimeFormatter.ofPattern("dd-MM-yyyy").format(LocalDateTime.now());
 
-        vboxCommentsContainer.getChildren().add(
-                createCommentView(currentUser, commentText, now)
+        List<String> value = List.of(
+                String.valueOf(Sessions.getUserId()),
+                String.valueOf(postId),
+                commentText,
+                currentDate,
+                currentDate
         );
-        commentTextfield.clear(); // Bersihkan input field
-        System.out.println("Dummy comment added: " + commentText);
 
-        // Scroll ke komentar terbaru
-        rootScrollpane.vvalueProperty().bind(vboxCommentsContainer.heightProperty());
+        CommentModel comment = new CommentModel();
+        boolean isSuccess = comment.set(value);
 
+        if (isSuccess) {
+            // Bersihkan field komentar
+            commentTextfield.clear();
 
+            // Refresh komentar
+            loadDummyComments();
 
-
-
-
-
-//        String commentText = commentTextfield.getText().trim();
-//        if (commentText.isEmpty()) {
-//            // Tampilkan pesan kesalahan atau peringatan jika perlu
-//            return;
-//        }
-//
-//        int userId = Sessions.getUserId(); // Dapatkan ID pengguna yang sedang login
-//        String username = Sessions.getUsername(); // Dapatkan username yang sedang login
-//        if (userId == -1 || username == null || username.isEmpty()) {
-//            System.err.println("User session not valid. Cannot post comment.");
-//            // Tampilkan alert ke pengguna
-//            return;
-//        }
-//
-//        CommentModel.Comment newComment = new CommentModel.Comment(
-//                -1, // ID akan di-generate oleh DB
-//                postId,
-//                userId,
-//                commentText,
-//                LocalDateTime.now(),
-//                username
-//        );
-//
-//        boolean success = commentModel.addComment(newComment);
-//
-//        if (success) {
-//            commentTextfield.clear();
-//            loadComments(); // Muat ulang semua komentar
-//            System.out.println("Comment posted successfully!");
-//        } else {
-//            System.err.println("Failed to post comment.");
-//            // Tampilkan alert error ke pengguna
-//        }
+            // Opsional: Fokus balik ke kolom komentar
+            commentTextfield.requestFocus();
+        } else {
+            System.out.println("Gagal mengirim komentar.");
+            // Kamu bisa juga munculkan alert di sini jika mau.
+        }
     }
+
 
 
     private void handleCancelComment() {
@@ -177,7 +139,7 @@ public class CommentController {
         }
     }
 
-    private HBox createCommentView(String username, String commentText, LocalDateTime timestamp) {
+    private HBox createCommentView(String username, String commentText, String timestamp, String commenPfp) {
         HBox hbox = new HBox(10); // Spacing 10px antar elemen di HBox
         hbox.setPadding(new javafx.geometry.Insets(5));
         hbox.getStyleClass().add("comment-entry");
@@ -193,16 +155,16 @@ public class CommentController {
 
         Image profileImage = null;
         try {
-            profileImage = new Image(getClass().getResource(LAPWIING_IMAGE_PATH).toExternalForm());
+            profileImage = new Image(getClass().getResource(commentorImagePath + commenPfp).toExternalForm());
         } catch (IllegalArgumentException e) {
-            System.err.println("Error loading image from resource: " + LAPWIING_IMAGE_PATH);
+            System.err.println("Error loading image from resource: " + commentorImagePath);
             e.printStackTrace();
         }
 
         if (profileImage != null) {
             commentedUserPic.setImage(profileImage);
         } else {
-            System.err.println("Failed to load profile image for " + username + ". Check path: " + LAPWIING_IMAGE_PATH);
+            System.err.println("Failed to load profile image for " + username + ". Check path: " + commentorImagePath);
                }
 
         // Bulatkan gambar profil
@@ -221,9 +183,8 @@ public class CommentController {
         commentedTextLabel.setWrapText(true); // untuk teks panjang
         commentedTextLabel.getStyleClass().add("comment-text-label");
 
-        Label timestampLabel = new Label(timestamp.format(DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm")));
+        Label timestampLabel = new Label(timestamp.format(String.valueOf(DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm"))));
         timestampLabel.getStyleClass().add("comment-timestamp-label");
-
 
         vboxTextContent.getChildren().addAll(commentedUsernameLabel, commentedTextLabel, timestampLabel);
 
