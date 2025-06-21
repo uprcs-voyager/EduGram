@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_LEFT" prefHeight="82.0" prefWidth="472.0" spacing="5.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #ddd; -fx-border-width: 1px; -fx-border-radius: 5px; -fx-padding: 10px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.ReportReasonController">
+    <children>
+        <Label fx:id="reporterUsernameLabel" text="Reported by: @username">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <Label fx:id="reportReasonLabel" text="Alasan laporan akan ditampilkan di sini. Ini bisa jadi teks yang cukup panjang.">
+            <VBox.margin>
+                <Insets left="5.0" right="5.0" />
+            </VBox.margin>
+        </Label>
+        <Label fx:id="reportTimestampLabel" text="2025-06-20 10:30">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+    </children>
+</VBox>

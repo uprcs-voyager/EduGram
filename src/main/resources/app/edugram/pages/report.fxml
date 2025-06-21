@@ -7,22 +7,25 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<StackPane fx:controller="app.edugram.controllers.Components.ReportController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1277.0" stylesheets="@../assets/css/reportedpost.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.ReportController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="36.0" prefWidth="714.0">
+            <HBox alignment="CENTER" prefHeight="69.0" prefWidth="772.0">
                <children>
-                  <Button mnemonicParsing="false" text="Current Report">
+                  <Button fx:id="currentReportBtn" mnemonicParsing="false" styleClass="current_report_button" text="Current Report">
                      <HBox.margin>
                         <Insets right="100.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Noticed Report" />
+                  <Button fx:id="noticedReportBtn" mnemonicParsing="false" styleClass="notice_button" text="Noticed Report" />
                </children>
             </HBox>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="437.0" prefWidth="714.0" />
+            <ScrollPane fx:id="currentReportScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="582.0" prefWidth="896.0">
+               <content>
+                  <VBox fx:id="reportedPostsContainer" prefHeight="554.0" prefWidth="894.0" />
+               </content>
+            </ScrollPane>
          </children>
       </VBox>
    </children>

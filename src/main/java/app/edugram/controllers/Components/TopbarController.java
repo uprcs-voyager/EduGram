@@ -60,6 +60,8 @@ public class TopbarController implements Initializable {
     private boolean isFullyInitialized = false;
 
     @Override public void initialize(URL location, ResourceBundle resources) {
+
+
         loadDefaultProfilePicture();
         setupPopup();
         setupSearchField();
@@ -124,10 +126,9 @@ public class TopbarController implements Initializable {
         if (searchTextField != null) {
             searchTextField.focusedProperty().addListener((obs, oldVal, newVal) -> {
                 if (newVal) {
-                    if (isFullyInitialized) {
-                        showSuggestions();
+
                         searchTextField.selectAll();
-                    }
+
                 } else {
                     Platform.runLater(() -> {
                         if (!searchTextField.isFocused() && (suggestionContent == null || !suggestionContent.isHover())) {

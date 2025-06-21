@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="sidebarScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="1003.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.SidebarController">
+<ScrollPane fx:id="sidebarScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="1003.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.SidebarController">
     <content>
         <VBox fx:id="sidebarVBox" prefWidth="258.0" styleClass="sidebar_background" stylesheets="@../../assets/css/sidebar.css" VBox.vgrow="ALWAYS">
             <children>
@@ -67,6 +67,30 @@
                                 </Button>
                             </children>
                         </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="250.0">
+                     <children>
+                        <Line fx:id="reportLine" endX="90.0" fill="#7c43ef" startX="-8.0" stroke="#7c43ef" strokeWidth="5.0" styleClass="over" />
+                        <Button fx:id="reportButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onReportClick" prefHeight="42.0" prefWidth="149.0" stylesheets="@../../assets/css/sidebar.css" text="Reports">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/Image/Icons/danger.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <styleClass>
+                              <String fx:value="line_and_button" />
+                              <String fx:value="over" />
+                           </styleClass>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
                     </children>
                     <VBox.margin><Insets bottom="89.0" /></VBox.margin>
                 </VBox>
@@ -79,16 +103,13 @@
                         </Label>
                         <VBox alignment="CENTER" prefHeight="75.0" prefWidth="250.0">
                             <children>
-                                <ImageView fx:id="navProfilePicture" fitHeight="84.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="false">
+                                <ImageView fx:id="navProfilePicture" onMouseClicked="#onProfileClick2" fitHeight="87.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
                                         <Image url="@../../userData/Images/profile_pictures/pfp_placeholder.jpg" />
                                     </image>
                                     <clip>
                                         <Circle centerX="42" centerY="42" radius="42" />
                                     </clip>
-                                    <VBox.margin>
-                                        <Insets bottom="2.0" />
-                                    </VBox.margin>
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>

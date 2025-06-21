@@ -21,6 +21,8 @@ public class PostModel extends BaseModel implements CRUDable{
     private String userId;
     private String postUsername;
 
+    public PostModel() {}
+
     @Override
     public boolean validate() {
         return false;
@@ -64,11 +66,6 @@ public class PostModel extends BaseModel implements CRUDable{
         }finally {
             db.closeConnection();
         }
-    }
-
-    @Override
-    public Object read(int id) {
-        return null;
     }
 
     @Override
@@ -384,5 +381,75 @@ public class PostModel extends BaseModel implements CRUDable{
     public void setPostUsername(String postUsername) {
         this.postUsername = postUsername;
     }
+
+    @Override
+    public PostModel read(int id) { // Ubah return type menjadi PostModel
+        String query = """
+                SELECT
+                    p.id_post,
+                    p.id_user,
+                    u.username,
+                    p.img_post,
+                    p.title_post,
+                    p.desc_post,
+                    u.prof_pic,
+                    p.created_at,
+                    COUNT(DISTINCT l.id_like) AS like_count,
+                    COUNT(DISTINCT dl.id_dislike) AS dislike_count,
+                    COUNT(DISTINCT c.id_com) AS comment_count,
+                    CASE
+                        WHEN COUNT(DISTINCT t.nama_tag) = 0 THEN NULL
+                        ELSE GROUP_CONCAT(DISTINCT t.nama_tag || '-' || t.type_tag)
+                    END AS tags
+                FROM post p
+                LEFT JOIN like l ON p.id_post = l.id_post
+                LEFT JOIN dislike dl ON p.id_post = dl.id_post
+                LEFT JOIN comment c ON p.id_post = c.id_post
+                JOIN user u ON p.id_user = u.id_user
+                LEFT JOIN postTag pt ON p.id_post = pt.id_post
+                LEFT JOIN tag t ON pt.id_tag = t.id_tag
+                WHERE p.id_post = ?
+                GROUP BY p.id_post;
+                """;
+        ConnectDB db = new ConnectDB();
+        PostModel post = null;
+
+        try (Connection con = db.getConnetion();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    post = new PostModel();
+                    post.setId(rs.getInt("id_post"));
+                    post.setTitle(rs.getString("title_post"));
+                    post.setDescription(rs.getString("desc_post"));
+                    post.setUserId(rs.getString("id_user"));
+                    post.setPostUsername(rs.getString("username"));
+                    post.setPostContent(rs.getString("img_post"));
+                    post.setLike(rs.getString("like_count"));
+                    post.setDislike(rs.getString("dislike_count"));
+                    post.setProfile(rs.getString("prof_pic"));
+
+                    String getPostTags = rs.getString("tags");
+                    if (getPostTags != null && !getPostTags.isEmpty()) {
+                        post.setTags(Arrays.asList(getPostTags.split(",")));
+                    } else {
+                        post.setTags(new ArrayList<>());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error reading post by ID: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            db.closeConnection();
+        }
+        return post;
+    }
+
+
+
+
 }
 

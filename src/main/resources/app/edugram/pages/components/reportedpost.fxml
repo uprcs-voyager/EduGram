@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.edugram.controllers.Components.ReportedPostController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<HBox fx:id="reported" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="238.0" prefWidth="1245.0" styleClass="border" stylesheets="@../../assets/css/reportedpost.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.edugram.controllers.Components.ReportedPostController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="238.0" prefWidth="215.0">
+         <children>
+            <Label fx:id="reportedPostTitle" text="Reported Post Title" />
+            <Label fx:id="postedByLabel" text="Posted By: " />
+            <Label fx:id="postIdLabel" text="Post ID: " />
+         </children>
+         <HBox.margin>
+            <Insets bottom="14.0" />
+         </HBox.margin>
+      </VBox>
+      <VBox prefHeight="238.0" prefWidth="815.0">
+         <children>
+            <ScrollPane fx:id="reportScrollPane" prefHeight="239.0" prefWidth="709.0">
+               <content>
+                  <VBox fx:id="reportReasonContainer" prefHeight="340.0" prefWidth="754.0" />
+               </content></ScrollPane>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" prefHeight="238.0" prefWidth="254.0">
+         <children>
+            <Button fx:id="deletePostBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="88.0" styleClass="delete_button" text="Delete Post">
+               <VBox.margin>
+                  <Insets bottom="50.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="noticeReportBtn" mnemonicParsing="false" styleClass="notice_button" text="Notice Report" />
+         </children>
+      </VBox>
+   </children>
+</HBox>
